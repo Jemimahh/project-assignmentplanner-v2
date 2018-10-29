@@ -1,3 +1,14 @@
+"""
+    Assignment Planner
+    ~~~~~~
+
+    This code is based off of a microblog example application written as Flask tutorial with
+    Flask and sqlite3.
+
+    :copyright: (c) 2015 by Armin Ronacher.
+    :license: BSD, see LICENSE for more details.
+"""
+
 import os
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, g, redirect, url_for, render_template, flash
@@ -52,12 +63,13 @@ def close_db(error):
         g.sqlite_db.close()
 
 
+
 @app.route('/')
 def show_assignment():
     db = get_db()
     cur = db.execute('select * from assignments order by id desc')
-    entries = cur.fetchall()
-    return render_template('ShowAssignments.html', assignments=entries)
+    assignments = cur.fetchall()
+    return render_template('show_assignments.html', assignments=assignments)
 
 
 @app.route('/add', methods=['POST'])
