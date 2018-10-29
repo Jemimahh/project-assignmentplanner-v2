@@ -1,0 +1,33 @@
+{% extends "MainPageLayout.html" %}
+{% block body %}
+
+  <form action="{{ url_for('add_assignment') }}" method="post">
+    <dl>
+        <dt>Title:
+      <dd><input type="text" size="30" name="title">
+        <dt>Class:
+      <dd><input type="text" size="30" name="class">
+        <dt>Due Date:
+      <dd><input type="text" size="30" name="duedate">
+        <dt>Description:
+      <dd><textarea name="description" rows="5" cols="40"></textarea>
+      <dd><input type="submit" value="Share">
+    </dl>
+  </form>
+    <!--The previous form allows a user to search for entries with a category entry that-->
+        <!--matches ones in the database-->
+
+  <ul>
+  {% for entry in assignments %}
+    <li>
+        <h2>{{ entry.title }}</h2>
+        <h3>{{ entry.class }}</h3>
+        <h3>{{ entry.duedate }}</h3>
+        {{ entry.description|safe }}<br><br>
+    </li>
+  {% else %}
+    <li><em>You don't have any assignments currently.</em></li>
+  {% endfor %}
+  </ul>
+
+{% endblock %}
