@@ -71,16 +71,18 @@ Which user stories and tasks you plan to complete in the coming iteration and in
 
 + Edit Assignments
 
-+ Add category/flag/tag
++ Add category/flag
+
++ Write up a README report to put in the README.md file
 
 Who will be responsible for each user story planned for the next iteration, not the following two.
 
-+ We will partially do peer programming again. However, there will be some individual tasks as well
++ We will partially do peer programming again, mainly to fix issues from week 1. However, there will be some individual tasks as well:
 
 + Naing = Show assignments in a tab format and correct layout
 
 + Sargon = Filtering and Deleting assignments.
 
-+
++ Megan = Creating two pages to display assignments/add new assignments and edit feature
 
-+
++ Jemima = Add category/flag and write up a README report
