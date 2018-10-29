@@ -79,7 +79,7 @@ Who will be responsible for each user story planned for the next iteration, not 
 
 + Naing = Show assignments in a tab format and correct layout
 
-+ 
++ Sargon = Filtering and Deleting assignments.
 
 +
 
