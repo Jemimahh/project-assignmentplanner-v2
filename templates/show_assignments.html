@@ -1,31 +1,58 @@
 {% extends "MainPageLayout.html" %}
 {% block body %}
-  <form action="{{ url_for('add_assignment') }}" method="post">
-    <dl>
-        <dt>Title:
-      <dd><input type="text" size="30" name="title">
-        <dt>Class:
-      <dd><input type="text" size="30" name="class">
-        <dt>Due Date:
-      <dd><input type="date" name="duedate">
-        <dt>Description:
-      <dd><textarea name="description" rows="5" cols="40"></textarea>
-      <dd><input type="submit" value="Add">
-    </dl>
-  </form>
+    <form action="{{ url_for('add_assignment') }}" method="post">
+        <dl>
+            <dt>Title:
+            <dd><input type="text" size="30" name="title">
+            <dt>Class:
+            <dd><input type="text" size="30" name="class">
+            <dt>Due Date:
+            <dd><input type="date" name="duedate">
+            <dt>Description:
+            <dd><textarea name="description" rows="5" cols="40"></textarea>
+            <dd><input type="submit" value="Add">
+        </dl>
+    </form>
     <!--The previous form allows a user to search for entries with a category entry that-->
-        <!--matches ones in the database-->
+    <!--matches ones in the database-->
 
-  <ul>
-  {% for assignment in assignments %}
-    <li>
-        <h2>{{ assignment.title }}</h2>
-        <h3>{{ assignment.class }}</h3>
-        <h3>{{ assignment.duedate }}</h3>
-        {{ assignment.description|safe }}<br><br>
-    </li>
-  {% else %}
-    <li><em>You don't have any assignments currently.</em></li>
-  {% endfor %}
-  </ul>
+
+    <table class="table">
+        <tr>
+            <th>Title</th>
+            <th>Class</th>
+            <th>Due Date</th>
+            <td>Description</td>
+        </tr>
+
+        {% for assignment in assignments %}
+
+        <tr>
+            <td>{{ assignment.title }}</td>
+            <td>{{ assignment.class }}</td>
+            <td>{{ assignment.duedate }}</td>
+            <td>{{ assignment.description|safe }}</td>
+        </tr>
+        {% else %}
+        <em>You don't have any assignments currently.</em>
+        {% endfor %}
+
+    </table>
+
+    <!--
+
+    <ul>
+        {% for assignment in assignments %}
+        <li>
+            <h2>{{ assignment.title }}</h2>
+            <h3>{{ assignment.class }}</h3>
+            <h3>{{ assignment.duedate }}</h3>
+            {{ assignment.description|safe }}<br><br>
+        </li>
+        {% else %}
+        <li><em>You don't have any assignments currently.</em></li>
+        {% endfor %}
+    </ul>
+
+    -->
 {% endblock %}
