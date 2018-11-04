@@ -18,14 +18,15 @@
 
 
     <table class="table">
+        {% for assignment in assignments %}
+        {% if loop.first %}
         <tr>
             <th>Title</th>
             <th>Class</th>
             <th>Due Date</th>
             <td>Description</td>
         </tr>
-
-        {% for assignment in assignments %}
+        {% endif %}
 
         <tr>
             <td>{{ assignment.title }}</td>
