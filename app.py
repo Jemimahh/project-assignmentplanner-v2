@@ -67,8 +67,14 @@ def close_db(error):
 @app.route('/')
 def show_assignment():
     db = get_db()
-    cur = db.execute('select * from assignments order by id desc')
-    assignments = cur.fetchall()
+    if "category" in request.args:
+        cur = db.excute('SELECT * FROM assignments WHERE category = ? ORDER BY id desc'
+                        [request.args["category"]])
+        assignments = cur.fetchall()
+    else:
+        cur = db.execute('select * from assignments order by id desc')
+        assignments = cur.fetchall()
+
     return render_template('show_assignments.html', assignments=assignments)
 
 
@@ -76,7 +82,7 @@ def show_assignment():
 def add_assignment():
     db = get_db()
     db.execute('insert into assignments (title, class, duedate, description) values (?, ?, ?, ?)',
-               [request.form['title'], request.form['class'], request.form['duedate'], request.form['description']])
+               [request.form['title'], request.form['class'],request.form['category'], request.form['duedate'], request.form['description']])
     # request.form gets request in a post request
     # Puts the values from the show_entries.html form into the database as (title, category, text)
     db.commit()
