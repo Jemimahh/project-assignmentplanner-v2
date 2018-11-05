@@ -21,10 +21,10 @@
         {% for assignment in assignments %}
         {% if loop.first %}
         <tr>
-            <th>Title</th>
+            <th>Title <span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></th>
             <th>Class</th>
             <th>Due Date</th>
-            <td>Description</td>
+            <th>Description</th>
         </tr>
         {% endif %}
 
@@ -56,4 +56,7 @@
     </ul>
 
     -->
+
+<form class="arrow" url="{{ add_assignment }}" method="post"> asda </form>
+<form class="arrow" url="{{ add_assignment }}" method="post"> def </form>
 {% endblock %}
