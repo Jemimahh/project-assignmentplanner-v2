@@ -10,10 +10,6 @@
 <div>
   <h1>Personal Assignment Planner</h1>
 
-     <!--<form action="{{ url_for('redirect_mainpage') }}">-->
-         <!--<input type="submit" value="Add Assignment">-->
-     <!--</form>-->
-
      <a href="./main"><button>Add assignments</button></a>
     <br>
 
@@ -40,17 +36,5 @@
         {% endfor %}
 
     </table>
-
-<!--  <ul>
-  {% for assignment in assignments %}
-    <li>
-        <h2>{{ assignment.title }}</h2>
-        <h3>{{ assignment.class }}</h3>
-        <h3>{{ assignment.duedate }}</h3>
-        {{ assignment.description|safe }}<br><br>
-    </li>
-  {% else %}
-    <li><em>You don't have any assignments currently.</em></li>
-  {% endfor %}
-  </ul>-->
+    
 </div>
