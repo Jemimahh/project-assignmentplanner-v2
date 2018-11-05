@@ -92,3 +92,12 @@ def add_assignment():
     # Commits it to the database
     flash('New assignment was successfully saved.')
     return redirect(url_for('show_assignment'))
+
+
+@app.route('/delete', methods=['POST'])
+def del_assignment():
+    db = get_db()
+    db.execute('delete from assignments where id=?', [request.form['id']])
+    db.commit()
+    flash('Assignment has been deleted')
+    return redirect(url_for('show_assignment'))
