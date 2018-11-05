@@ -77,11 +77,17 @@ def show_assignment():
 
     return render_template('show_assignments.html', assignments=assignments)
 
+@app.route('/main')
+def redirect_mainpage():
+    db = get_db()
+    cur = db.execute('select * from assignments order by id desc')
+    assignments = cur.fetchall()
+    return render_template('MainPageLayout.html', assignments=assignments)
 
 @app.route('/add', methods=['POST'])
 def add_assignment():
     db = get_db()
-    db.execute('insert into assignments (title, class, duedate, description) values (?, ?, ?, ?)',
+    db.execute('insert into assignments (title, class, category, duedate, description) values (?, ?, ?, ?,?)',
                [request.form['title'], request.form['class'],request.form['category'], request.form['duedate'], request.form['description']])
     # request.form gets request in a post request
     # Puts the values from the show_entries.html form into the database as (title, category, text)
