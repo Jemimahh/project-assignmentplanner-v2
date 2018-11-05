@@ -67,15 +67,18 @@ def close_db(error):
 @app.route('/')
 def show_assignment():
     db = get_db()
-    if "category" in request.args:
-        cur = db.excute('SELECT * FROM assignments WHERE category = ? ORDER BY id desc'
-                        [request.args["category"]])
+
+    if "duedate" in request.args:
+        cur = db.execute('select id, title, class, duedate, description from assignments where duedate = ? order by id desc',
+                         [request.args["duedate"]])
         assignments = cur.fetchall()
     else:
-        cur = db.execute('select * from assignments order by id desc')
+        cur = db.execute('select id, title, class, duedate, description from assignments order by id desc')
         assignments = cur.fetchall()
 
-    return render_template('show_assignments.html', assignments=assignments)
+    cur = db.execute('select * from assignments order by id desc')
+    duedates = cur.fetchall()
+    return render_template('show_assignments.html', assignments=assignments, duedates=duedates)
 
 @app.route('/main')
 def redirect_mainpage():
@@ -94,4 +97,13 @@ def add_assignment():
     db.commit()
     # Commits it to the database
     flash('New assignment was successfully saved.')
+    return redirect(url_for('show_assignment'))
+
+
+@app.route('/delete', methods=['POST'])
+def del_assignment():
+    db = get_db()
+    db.execute('delete from assignments where id=?', [request.form['id']])
+    db.commit()
+    flash('Assignment has been deleted')
     return redirect(url_for('show_assignment'))
