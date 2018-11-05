@@ -29,6 +29,11 @@
         <h3>{{ assignment.class }}</h3>
         <h3>{{ assignment.duedate }}</h3>
         {{ assignment.description|safe }}<br><br>
+
+    <form action="{{ url_for('del_assignment') }}" method="post">
+        <input type="hidden" name="id" value="{{ assignment.id }}">
+        <button type="submit" class="del-button">Delete</button>
+    </form>
     </li>
   {% else %}
     <li><em>You don't have any assignments currently.</em></li>
