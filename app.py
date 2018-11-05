@@ -83,8 +83,3 @@ def add_assignment():
     # Commits it to the database
     flash('New assignment was successfully saved.')
     return redirect(url_for('show_assignment'))
-
-
-@app.route('/add')
-def show_add_assignment():
-    return render_template('MainPageLayout.html')
