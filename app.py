@@ -71,6 +71,12 @@ def show_assignment():
     assignments = cur.fetchall()
     return render_template('show_assignments.html', assignments=assignments)
 
+@app.route('/main')
+def redirect_mainpage():
+    db = get_db()
+    cur = db.execute('select * from assignments order by id desc')
+    assignments = cur.fetchall()
+    return render_template('MainPageLayout.html', assignments=assignments)
 
 @app.route('/add', methods=['POST'])
 def add_assignment():
