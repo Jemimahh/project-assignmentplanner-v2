@@ -9,10 +9,17 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <div>
   <h1>Personal Assignment Planner</h1>
+    
+    <ul class="duedates">
+    <li><a href="?">[all]</a></li>
+  {% for duedate in duedates %}
+    <li><a href="?duedate={{ duedate.duedate }}">{{ duedate.duedate}}</a></li>
+  {% endfor %}
+  </ul>
+  <ul>
 
      <a href="./main"><button>Add assignments</button></a>
     <br>
-
 
     <table class="table">
         {% for assignment in assignments %}
@@ -20,6 +27,7 @@
         <tr>
             <th>Title <span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></th>
             <th>Class <span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></th>
+             <th>category<span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></th>
             <th>Due Date <span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></th>
             <th>Description <span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></th>
         </tr>
@@ -28,6 +36,7 @@
         <tr>
             <td>{{ assignment.title }}</td>
             <td>{{ assignment.class }}</td>
+            <td>{{ assignment.category }}</td>
             <td>{{ assignment.duedate }}</td>
             <td>{{ assignment.description|safe }}</td>
         </tr>
@@ -36,5 +45,5 @@
         {% endfor %}
 
     </table>
-    
+
 </div>
