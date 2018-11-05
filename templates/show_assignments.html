@@ -16,6 +16,12 @@
     <!--The previous form allows a user to search for entries with a category entry that-->
         <!--matches ones in the database-->
 
+    <ul class="duedates">
+    <li><a href="?">[all]</a></li>
+  {% for duedate in duedates %}
+    <li><a href="?duedate={{ duedate.duedate }}">{{ duedate.duedate}}</a></li>
+  {% endfor %}
+  </ul>
   <ul>
   {% for assignment in assignments %}
     <li>
