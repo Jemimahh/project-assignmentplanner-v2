@@ -76,7 +76,7 @@ def show_assignment():
         cur = db.execute('select id, title, class, duedate, description from assignments order by id desc')
         assignments = cur.fetchall()
 
-    cur = db.execute('select * from assignments order by id desc')
+    cur = db.execute('select distinct duedate from assignments order by duedate asc')
     duedates = cur.fetchall()
     return render_template('show_assignments.html', assignments=assignments, duedates=duedates)
 
@@ -91,7 +91,7 @@ def redirect_mainpage():
 def add_assignment():
     db = get_db()
     db.execute('insert into assignments (title, class, category, duedate, description) values (?, ?, ?, ?,?)',
-               [request.form['title'], request.form['class'],request.form['category'], request.form['duedate'], request.form['description']])
+               [request.form['title'], request.form['class'], request.form['category'], request.form['duedate'], request.form['description']])
     # request.form gets request in a post request
     # Puts the values from the show_entries.html form into the database as (title, category, text)
     db.commit()
@@ -106,4 +106,30 @@ def del_assignment():
     db.execute('delete from assignments where id=?', [request.form['id']])
     db.commit()
     flash('Assignment has been deleted')
+    return redirect(url_for('show_assignment'))
+
+
+@app.route('/edit')
+def edit_entry():
+    db = get_db()
+    id = request.args.get('editid')
+    cur = db.execute('select * from assignments where id=?', [id])
+    assignments = cur.fetchall()
+    return render_template('edit_layout.html', assignments=assignments)
+
+
+@app.route('/edit', methods=['POST'])
+def update_entry():
+    db = get_db()
+    theid = request.form['id']
+    title = request.form['title']
+    theclass = request.form['class']
+    category = request.form['category']
+    duedate = request.form['duedate']
+    description = request.form['description']
+    db.execute('update assignments set title = ?, class = ?, category = ?, duedate = ?, description = ? where id = ?',
+               (title, theclass, category, duedate, description, theid))
+    db.commit()
+    # Commits it to the database
+    flash('New entry was successfully edited')
     return redirect(url_for('show_assignment'))
