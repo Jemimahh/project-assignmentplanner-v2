@@ -12,20 +12,17 @@
 ## Accomplishments this week:
 
 
-What was planned but not finished.
-What troubles/issues/roadblocks/difficulties you encountered.
-What adjustments to your overall design you discovered.
-One important thing you learned during this iteration.
-
 What each person was responsible for accomplishing.
 
-  + Naing = Find a way to combine date and time into one column in sql so that sorting becomes easier and more convenient. For instance, if two assignments are due the same day, then sort it also by time correctly when we click sort by day.
+  + Naing = Find a way to combine date and time into one column in sql so that sorting becomes easier and more convenient,
+  Unit Tests.
 
-  + Sargon = add sorting features for all parameters (title, category, etc).
+  + Sargon = Worked on adding sorting features for all parameters (title, category, etc), 
+  but will be fully implemented next week (few finishing touches still need to be made).
 
-  + Megan = edit feature. Add another page for editing as well. Start on Unit Tests.
+  + Megan = Edit feature, adding another page for editing as well, flask message, & start on Unit Tests.
 
-  + Jemima = add due time parameter (we only have date currently)
+  + Jemima = Add due time parameter (we only have date currently), Unit Tests
 
 What was completed.
 
@@ -37,60 +34,77 @@ What was completed.
 
 + Due time parameter implemented
 
++ Flask messages
+
 + Unit Tests for all elements except sorting feature were written
 
 What troubles/issues/roadblocks/difficulties you encountered.
 
-+ We each went about Unit Tests in different ways, so it was difficult to 
-decide on which approach would be best. For example, Naing tests for multiple 
-entries and tests them by deleting them in non-sequential order. However, some of 
-us had cases where we only used one entry and tested deletion for that one entry.
++ We weren’t sure how to correctly approach Unit Tests since we each had different things for 
+the Flaskr project. We tried our best to implement each aspect of each other's Unit Test code that
+we thought would work best.
+
++ Several time conflicts, so we were not able to meet as early as we wanted to.
 
 One tool or process or approach you used that you felt was especially helpful, and why.
 
-+ As mentioned, peer programming was very helpful again. We wouldn't be able to solve all the issues on our own remotely. Also, we managed to work together to make the code more technically accurate. For instance, the two buttons `Add assignment` and `View all assignments` do not need a `form`, and we edited the code to just use `<a>` for those buttons. Having each person explain their contributions allowed us to help them with the issues they were having too.
++ The debugging tool was one thing that we used to help us solve minor problems in our code. For example,
+we accidentally made changes due to typos in our code. The debugger was able to quickly identify those problems
+so that we could move on. 
 
++ Again, peer programming was really efficient after we all had our completed code. While several things
+were functional, it was nice to have others who could help make the code more efficient (getting rid of
+unnecessary code, etc). 
 
 What was planned but not finished.
 
-+ Edit feature was not done because we unexpectedly spent most of our time with git/github issues.
-
-What troubles/issues/roadblocks/difficulties you encountered.
-
-+ Again, git/github (specifically merging) was the major obstacle in this iteration.
-
++ Sorting and Unit Test for sorting were not completed. We decided to switch weeks for Account creation and 
+unit tests, so Account Creation was not completed as expected. 
 
 What adjustments to your overall design you discovered.
 
-+ We are going to meet earlier (we usually meet on Sunday night) from now onwards so that we can have more time to handle unforeseeable issues.
++ We ran into more time conflicts with meeting, so potentially looking at alternative days besides 
+Sunday to meet would be very beneficial. 
+
++ Unit tests made us realize that we could potentially add required fields, so that individuals have to
+have at least one field filled before adding a post.
+
+One important thing you learned during this iteration.
+
++ Each week, we find new benefits to working together. The Unit Test section really helped us to ask each
+other questions. We also learned that it is okay to split the work load if one individual is struggling. 
+We came across a few instances where it was challenging for an individual
 
 ## Plan for Following Iteration (Week 3):
 
 Which user stories and tasks you plan to complete in the coming iteration and in the two iterations following it.
 
-+ Add edit feature
++ "Login" page/function
 
-+ Add due time
++ "Create Account" page/function
 
-+ Combine date and time into one column (if that is possible)
++ SQL schema
 
-+ Add `sort` function for all columns
++ Sorting function
 
-+ Delete Assignments
++ Filter function (next iteration)
 
-+ Add category/flag
++ Potentially CSS/UI Styling (future iteration)
+
++ Password protection
 
 
 Who will be responsible for each user story planned for the next iteration, not the following two.
 
-+ Next week will be a combination of both individual and team work. The following will be individual work(s) assigned to each team member:
++ The following will be individual work(s) assigned to each team member:
 
-  + Naing = Find a way to combine date and time into one column in sql so that sorting becomes easier and more convenient. For instance, if two assignments are due the same day, then sort it also by time correctly when we click sort by day.
+  + Naing = "Login" page and feature
 
-  + Sargon = add sorting features for all parameters (title, category, etc).
+  + Sargon = Continue on implementing sorting features for all parameters (title, category, etc) & time zone
 
-  + Megan = edit feature. Add another page for editing as well. Start on Unit Tests.
+  + Megan = "Create Account" page and feature
 
-  + Jemima = add due time parameter (we only have date currently)
+  + Jemima = SQL schema for account creation
   
-+ All of us will research and brainstorm on how to implement "Create Account / Log in" feature. Also, we have to figure out how to send passwords securely over the web
++ We will still meet to help with each other's progress, as usual. However, we will
+ individually work on each part.
