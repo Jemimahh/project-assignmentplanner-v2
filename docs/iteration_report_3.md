@@ -20,7 +20,7 @@ What each person was responsible for accomplishing.
   + Sargon = Worked on adding sorting features for all parameters (title, category, etc), 
   but will be fully implemented next week (few finishing touches still need to be made).
 
-  + Megan = Edit feature, adding another page for editing as well, flask message, & start on Unit Tests.
+  + Megan = Edit feature, adding another page for editing as well, flask message, Travis CI, & start on Unit Tests.
 
   + Jemima = Add due time parameter (we only have date currently), Unit Tests
 
@@ -35,6 +35,8 @@ What was completed.
 + Due time parameter implemented
 
 + Flask messages
+
++ Travis CI Implemented
 
 + Unit Tests for all elements except sorting feature were written
 
