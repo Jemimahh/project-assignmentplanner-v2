@@ -51,16 +51,16 @@
         <tr>
             <td>
                 <form action="{{ url_for('edit_entry') }}" method="get" class="inline">
-                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></button>
+                    <button type="submit" class="btn btn-primary glyphicon glyphicon-pencil"></button>
                     <input type="hidden" value="{{ assignment.id }}" name="editid">
                 </form>
                 <form action="{{ url_for('del_assignment') }}" method="post" class="inline">
-                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-remove"></span></button>
+                    <button type="submit" class="btn btn-primary glyphicon glyphicon-remove"></button>
                     <input type="hidden" value="{{ assignment.id }}" name="id">
                 </form>
             </td>
             <td>{{ assignment.title }}</td>
-            <td>{{ assignment.class }}</td>
+            <td>{{ assignment.course }}</td>
             <td>{{ assignment.category }}</td>
             <td>{{ assignment.duedate }}</td>
             <td>{{ assignment.description|safe }}</td>
@@ -71,6 +71,8 @@
         {% endfor %}
 
     </table>
+    {% else %}
+        <em>No assignment entries here so far</em>
     {% endif %}
 
 </div>
