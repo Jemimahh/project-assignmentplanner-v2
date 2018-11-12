@@ -64,21 +64,26 @@ def close_db(error):
 
 
 
+
 @app.route('/')
 def show_assignment():
     db = get_db()
 
     if "duedate" in request.args:
-        cur = db.execute('select id, title, class, duedate, description from assignments where duedate = ? order by id desc',
+        cur = db.execute('select * from assignments where duedate = ? order by id desc',
                          [request.args["duedate"]])
         assignments = cur.fetchall()
     else:
-        cur = db.execute('select id, title, class, duedate, description from assignments order by id desc')
+        cur = db.execute('select * from assignments order by id asc')
         assignments = cur.fetchall()
 
+
     cur = db.execute('select distinct duedate from assignments order by duedate asc')
+
     duedates = cur.fetchall()
     return render_template('show_assignments.html', assignments=assignments, duedates=duedates)
+
+
 
 @app.route('/main')
 def redirect_mainpage():
@@ -90,8 +95,8 @@ def redirect_mainpage():
 @app.route('/add', methods=['POST'])
 def add_assignment():
     db = get_db()
-    db.execute('insert into assignments (title, class, category, duedate, description) values (?, ?, ?, ?,?)',
-               [request.form['title'], request.form['class'], request.form['category'], request.form['duedate'], request.form['description']])
+    db.execute('insert into assignments (title, course, category, duedate, description) values (?, ?, ?, ?,?)',
+               [request.form['title'], request.form['course'], request.form['category'], request.form['duedate'], request.form['description']])
     # request.form gets request in a post request
     # Puts the values from the show_entries.html form into the database as (title, category, text)
     db.commit()
@@ -109,27 +114,27 @@ def del_assignment():
     return redirect(url_for('show_assignment'))
 
 
-@app.route('/edit')
+@app.route('/edit', methods=['GET'])
 def edit_entry():
     db = get_db()
     id = request.args.get('editid')
-    cur = db.execute('select * from assignments where id=?', [id])
+    cur = db.execute('select * from assignments where id=?', request.args['editid'])
     assignments = cur.fetchall()
     return render_template('edit_layout.html', assignments=assignments)
 
 
-@app.route('/edit', methods=['POST'])
+@app.route('/edit_assignment', methods=['POST'])
 def update_entry():
     db = get_db()
     theid = request.form['id']
     title = request.form['title']
-    theclass = request.form['class']
+    course = request.form['course']
     category = request.form['category']
     duedate = request.form['duedate']
     description = request.form['description']
-    db.execute('update assignments set title = ?, class = ?, category = ?, duedate = ?, description = ? where id = ?',
-               (title, theclass, category, duedate, description, theid))
+    db.execute('update assignments set title = ?, course = ?, category = ?, duedate = ?, description = ? where id = ?',
+               (title, course, category, duedate, description, theid))
     db.commit()
     # Commits it to the database
     flash('New entry was successfully edited')
-    return redirect(url_for('show_assignment'))
+    return show_assignment()

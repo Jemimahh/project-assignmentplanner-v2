@@ -3,37 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Assignment Planner</title>
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
 </head>
 <div>
-  <h1>Personal Assignment Planner</h1>
+    <h1>Personal Assignment Planner</h1>
 
-    <ul>
+
+    <ul class="duedates">
         <li><a href="?">[all]</a></li>
-      {% for duedate in duedates %}
-        <li><a href="?duedate={{ duedate.duedate }}">{{ duedate.duedate }}</a></li>
-      {% endfor %}
+        {% for duedate in duedates %}
+        {% if '' not in duedate %}
+        <li><a href="?duedate={{ duedate.duedate }}">{{ duedate.duedate}}</a></li>
+        {% endif %}
+        {% endfor %}
     </ul>
 
-     <a href="./main"><button type="button" class="btn btn-primary">Add assignments</button></a>
+
+    <a href="./main"><button type="button" class="btn btn-primary">Add assignments</button></a>
     <br>
+
 
     {% for message in get_flashed_messages() %}
     <div class="flash">{{ message }}</div>
     {% endfor %}
     <br>
 
+    {% if assignments %}
     <table class="table">
-
-        {% for assignment in assignments %}
-        {% if loop.first %}
         <tr>
             <th>Edit/Delete </th>
             <th>Title <span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></th>
@@ -42,21 +46,21 @@
             <th>Due Date <span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></th>
             <th>Description <span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></th>
         </tr>
-        {% endif %}
+        {% for assignment in assignments %}
 
         <tr>
             <td>
                 <form action="{{ url_for('edit_entry') }}" method="get" class="inline">
-                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></button>
+                    <button type="submit" class="btn btn-primary glyphicon glyphicon-pencil"></button>
                     <input type="hidden" value="{{ assignment.id }}" name="editid">
                 </form>
                 <form action="{{ url_for('del_assignment') }}" method="post" class="inline">
-                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-remove"></span></button>
+                    <button type="submit" class="btn btn-primary glyphicon glyphicon-remove"></button>
                     <input type="hidden" value="{{ assignment.id }}" name="id">
                 </form>
             </td>
             <td>{{ assignment.title }}</td>
-            <td>{{ assignment.class }}</td>
+            <td>{{ assignment.course }}</td>
             <td>{{ assignment.category }}</td>
             <td>{{ assignment.duedate }}</td>
             <td>{{ assignment.description|safe }}</td>
@@ -67,6 +71,9 @@
         {% endfor %}
 
     </table>
+    {% else %}
+        <em>No assignment entries here so far</em>
+    {% endif %}
 
 </div>
 </html>
