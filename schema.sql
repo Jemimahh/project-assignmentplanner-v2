@@ -4,6 +4,6 @@ create table assignments (
   title text not null,
   class text not null,
   category text not null,
-  duedate date not null,
+  duedate text not null,
   description text not null
 );
