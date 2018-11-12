@@ -2,3 +2,7 @@ arrow {
     display: inline-block;
 }
 
+.inline {
+    float: left;
+    padding: 5px;
+}
