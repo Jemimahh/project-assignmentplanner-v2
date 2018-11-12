@@ -1,10 +1,8 @@
 """
     Assignment Planner
     ~~~~~~
-
     This code is based off of a microblog example application written as Flask tutorial with
     Flask and sqlite3.
-
     :copyright: (c) 2015 by Armin Ronacher.
     :license: BSD, see LICENSE for more details.
 """
@@ -63,22 +61,22 @@ def close_db(error):
         g.sqlite_db.close()
 
 
-
 @app.route('/')
 def show_assignment():
     db = get_db()
 
     if "duedate" in request.args:
-        cur = db.execute('select id, title, class, duedate, description from assignments where duedate = ? order by id desc',
+        cur = db.execute('select * from assignments where duedate = ? order by id desc',
                          [request.args["duedate"]])
         assignments = cur.fetchall()
     else:
-        cur = db.execute('select id, title, class, duedate, description from assignments order by id desc')
+        cur = db.execute('select * from assignments order by id desc')
         assignments = cur.fetchall()
 
     cur = db.execute('select distinct duedate from assignments order by duedate asc')
     duedates = cur.fetchall()
     return render_template('show_assignments.html', assignments=assignments, duedates=duedates)
+
 
 @app.route('/main')
 def redirect_mainpage():
@@ -86,6 +84,7 @@ def redirect_mainpage():
     cur = db.execute('select * from assignments order by id desc')
     assignments = cur.fetchall()
     return render_template('MainPageLayout.html', assignments=assignments)
+
 
 @app.route('/add', methods=['POST'])
 def add_assignment():
