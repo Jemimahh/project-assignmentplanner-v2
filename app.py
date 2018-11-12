@@ -64,6 +64,7 @@ def close_db(error):
 
 
 
+
 @app.route('/')
 def show_assignment():
     db = get_db()
@@ -73,12 +74,14 @@ def show_assignment():
                          [request.args["duedate"]])
         assignments = cur.fetchall()
     else:
-        cur = db.execute('select id, title, class, duedate, description from assignments order by id desc')
+        cur = db.execute('select id, title, class, duedate, description from assignments order by id asc')
         assignments = cur.fetchall()
 
-    cur = db.execute('select * from assignments order by id desc')
+    cur = db.execute('select distinct duedate from assignments order by duedate desc')
     duedates = cur.fetchall()
     return render_template('show_assignments.html', assignments=assignments, duedates=duedates)
+
+
 
 @app.route('/main')
 def redirect_mainpage():
