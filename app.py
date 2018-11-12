@@ -70,11 +70,11 @@ def show_assignment():
     db = get_db()
 
     if "duedate" in request.args:
-        cur = db.execute('select id, title, class, duedate, description from assignments where duedate = ? order by id desc',
+        cur = db.execute('select * from assignments where duedate = ? order by id desc',
                          [request.args["duedate"]])
         assignments = cur.fetchall()
     else:
-        cur = db.execute('select id, title, class, duedate, description from assignments order by id asc')
+        cur = db.execute('select * from assignments order by id asc')
         assignments = cur.fetchall()
 
 
