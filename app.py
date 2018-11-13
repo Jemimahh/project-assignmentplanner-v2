@@ -76,7 +76,7 @@ def show_assignment():
         cur = db.execute('select id, title, class, duedate, description from assignments order by id desc')
         assignments = cur.fetchall()
 
-    cur = db.execute('select * from assignments order by id desc')
+    cur = db.execute('select distinct duedate from assignments order by duedate asc')
     duedates = cur.fetchall()
     return render_template('show_assignments.html', assignments=assignments, duedates=duedates)
 

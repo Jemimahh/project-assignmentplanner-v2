@@ -25,6 +25,7 @@
         {% for assignment in assignments %}
         {% if loop.first %}
         <tr>
+          <th></th>
             <th>Title <span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></th>
             <th>Class <span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></th>
              <th>category<span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></th>
@@ -34,6 +35,10 @@
         {% endif %}
 
         <tr>
+        <td><form action="{{ url_for('del_assignment') }}" method="post">
+          <input type="hidden" name="id" value="{{ assignment.id }}">
+          <button type="submit" class="del-button">Delete</button>
+        </form></td>
             <td>{{ assignment.title }}</td>
             <td>{{ assignment.class }}</td>
             <td>{{ assignment.category }}</td>
