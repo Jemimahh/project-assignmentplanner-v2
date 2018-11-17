@@ -13,8 +13,17 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 </head>
-<div>
+<div class="container">
     <h1>Personal Assignment Planner</h1>
+
+
+<!--<nav class="navbar navbar-light bg-light">
+  <span class="navbar-brand mb-0 h1">Navbar</span>
+</nav>-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar</a>
+
+</nav>
 
 
     <ul class="duedates">
@@ -64,7 +73,6 @@
             <td>{{ assignment.category }}</td>
             <td>{{ assignment.duedate }}</td>
             <td>{{ assignment.description|safe }}</td>
-
         </tr>
         {% else %}
         <em>You don't have any assignments currently.</em>

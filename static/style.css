@@ -6,3 +6,13 @@ arrow {
     float: left;
     padding: 5px;
 }
+
+
+/* https://stackoverflow.com/questions/21587813/bootstrap-responsive-table-content-wrapping */
+td {
+  white-space: normal !important;
+  word-wrap: break-word;
+}
+table {
+  table-layout: fixed;
+}
