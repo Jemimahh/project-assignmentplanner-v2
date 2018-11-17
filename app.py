@@ -61,8 +61,6 @@ def close_db(error):
         g.sqlite_db.close()
 
 
-
-
 @app.route('/')
 def show_assignment():
     db = get_db()
