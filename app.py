@@ -82,13 +82,23 @@ def show_assignment():
     return render_template('show_assignments.html', assignments=assignments, duedates=duedates)
 
 
-
 @app.route('/main')
 def redirect_mainpage():
     db = get_db()
     cur = db.execute('select * from assignments order by id desc')
     assignments = cur.fetchall()
     return render_template('MainPageLayout.html', assignments=assignments)
+
+
+@app.route('/login')
+def redirect_login():
+    return render_template('Login.html')
+
+
+@app.route('/signup')
+def redirect_signup():
+    return render_template('CreateAccount.html')
+
 
 @app.route('/add', methods=['POST'])
 def add_assignment():
