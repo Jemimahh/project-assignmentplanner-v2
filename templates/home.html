@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
+    <link rel="icon" href="">
 
     <title>Assignment Planner</title>
 
     <!-- Bootstrap core CSS-->
-      
-    <link href="http://getbootstrap.com/docs/4.1/dist/css/bootstrap.min.css" rel="stylesheet">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <!-- Custom styles for this template -->
-    <link href="static/Home_page.css" rel="Home_page">
-  </head>
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='homepage.css') }}">
+
 
   <body class="text-center">
 
@@ -22,25 +22,28 @@
       <header class="masthead mb-auto">
         <div class="inner">
           <h3 class="masthead-brand">Assignment Planner</h3>
-          <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="nav-link active" href="#">Home</a>
-            <a class="nav-link" href="#">Features</a>
-            <a class="nav-link" href="#">Contact</a>
-          </nav>
         </div>
       </header>
-
+        <div class="sidenav">
+            <a href="#" title="Home"> <span class="glyphicon glyphicon-home"></span> </a>
+            <a href="./main" title=" Add Assignment">
+          <span class="glyphicon glyphicon-plus"></span>
+        </a>
+             <a href="#" title="View Schedule">
+          <span class="glyphicon glyphicon-calendar"></span>
+        </a>
+        </div>
       <main role="main" class="inner cover">
         <h1 class="cover-heading">This is the main page.</h1>
         <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
         <p class="lead">
-          <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
+          <!-- <a href="#" class="btn btn-lg btn-secondary">Learn more</a> -->
         </p>
       </main>
 
       <footer class="mastfoot mt-auto">
         <div class="inner">
-          <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+            <p>&copy; 2018 MangoTeam.com<p>
         </div>
       </footer>
     </div>
