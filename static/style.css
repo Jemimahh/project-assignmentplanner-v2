@@ -6,3 +6,8 @@ arrow {
     float: left;
     padding: 5px;
 }
+
+.login {
+    width: 30%;
+    margin: 30px auto;
+}

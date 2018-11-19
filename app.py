@@ -73,7 +73,6 @@ def show_assignment():
         cur = db.execute('select * from assignments order by id asc')
         assignments = cur.fetchall()
 
-
     cur = db.execute('select distinct duedate from assignments order by duedate asc')
 
     duedates = cur.fetchall()
