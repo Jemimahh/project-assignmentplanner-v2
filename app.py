@@ -136,3 +136,7 @@ def update_entry():
     # Commits it to the database
     flash('New entry was successfully edited')
     return show_assignment()
+
+@app.route('/home_page')
+def display_homepage():
+    return render_template('home.html')
