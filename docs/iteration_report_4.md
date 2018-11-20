@@ -1,4 +1,4 @@
-# Mango Team Iteration 2 
+# Mango Team Iteration 4
 
 ### Authors: Megan Dolan, Sargon Odicho, Jemima Egwurube, Naing Tun
 
@@ -94,7 +94,7 @@ Who will be responsible for each user story planned for the next iteration, not 
 
   + Megan = "Create Account" page and feature / SQL schema
 
-  + Jemima = SQL schema for account creation
+  + Jemima = implement css for account creation
   
 + We will still meet to help with each other's progress, as usual. However,Megan 
 and Naign would be meeting to work on the login feature.
