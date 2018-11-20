@@ -10,6 +10,7 @@
 import os
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, g, redirect, url_for, render_template, flash
+
 # create our little application :)
 app = Flask(__name__)
 
@@ -21,6 +22,7 @@ app.config.update(dict(
     SECRET_KEY='development key',
 ))
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
+
 
 
 def connect_db():
@@ -61,8 +63,6 @@ def close_db(error):
         g.sqlite_db.close()
 
 
-
-
 @app.route('/')
 def show_assignment():
     db = get_db()
@@ -72,15 +72,14 @@ def show_assignment():
                          [request.args["duedate"]])
         assignments = cur.fetchall()
     else:
-        cur = db.execute('select * from assignments order by id asc')
-        assignments = cur.fetchall()
 
+        cur = db.execute('select * from assignments order by id desc')
+        assignments = cur.fetchall()
 
     cur = db.execute('select distinct duedate from assignments order by duedate asc')
 
     duedates = cur.fetchall()
     return render_template('show_assignments.html', assignments=assignments, duedates=duedates)
-
 
 
 @app.route('/main')
@@ -89,6 +88,17 @@ def redirect_mainpage():
     cur = db.execute('select * from assignments order by id desc')
     assignments = cur.fetchall()
     return render_template('MainPageLayout.html', assignments=assignments)
+
+
+@app.route('/login')
+def redirect_login():
+    return render_template('Login.html')
+
+
+@app.route('/signup')
+def redirect_signup():
+    return render_template('CreateAccount.html')
+
 
 @app.route('/add', methods=['POST'])
 def add_assignment():
@@ -115,7 +125,6 @@ def del_assignment():
 @app.route('/edit', methods=['GET'])
 def edit_entry():
     db = get_db()
-    id = request.args.get('editid')
     cur = db.execute('select * from assignments where id=?', request.args['editid'])
     assignments = cur.fetchall()
     return render_template('edit_layout.html', assignments=assignments)
@@ -136,3 +145,63 @@ def update_entry():
     # Commits it to the database
     flash('New entry was successfully edited')
     return show_assignment()
+
+
+@app.route('/', methods=['POST'])
+def create_account():
+    db = get_db()
+    validate = db.execute('select username from accounts where username=?', [request.form['username']])
+    data = db.execute('select * from accounts')
+
+    if validate.fetchall():
+        flash('The username already exists. Try with another username')
+        for record in data:
+            print(dict(record))
+        return redirect(url_for('redirect_signup'))
+    else:
+        password = request.form['password']
+        re_password = request.form['password2']
+
+        if password != re_password:
+            flash('Passwords do not match. Try again.')
+            for record in data:
+                print(dict(record))
+            return redirect(url_for('redirect_signup'))
+        else:
+
+            db.execute('insert into accounts (username, password) values (?, ?)',
+                    [request.form['username'], password])
+            db.commit()
+        flash('Account creation successful.')
+
+    for record in data:
+        print(dict(record))
+    return redirect(url_for('redirect_login'))
+
+
+@app.route('/login_account', methods=['GET'])
+def login_account():
+    db = get_db()
+    username = request.args['username']
+    validate_account = db.execute('select username, password from accounts where username=?', [username])
+    data = validate_account
+    data = dict(data)
+    print(data)
+
+    if db.execute('select username, password from accounts where username=?', [username]).fetchall():
+        password = request.args['password']
+
+        if data.get(username) == password:
+            flash('Logged into ' + username)
+            return redirect(url_for('show_assignment'))
+
+        else:
+            flash('Wrong username and password. Try again')
+
+    else:
+        flash('Username does not exist')
+    return redirect(url_for('redirect_login'))
+
+@app.route('/homepage')
+def display_homepage():
+    return render_template('home.html')
