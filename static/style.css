@@ -1,3 +1,17 @@
 arrow {
     display: inline-block;
 }
+
+.inline {
+    float: left;
+    padding: 5px;
+}
+
+.flash { /* ref: http://flask.pocoo.org/docs/0.12/tutorial/ */
+    background: #CEE5F5;
+    padding: 0.5em;
+    border: 1px solid #AACBE2;
+}
+.accImg{
+    background-image: url('signUpBackground.jpg');
+}

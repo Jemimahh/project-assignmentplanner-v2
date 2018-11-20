@@ -1,0 +1,80 @@
+/*
+ * Globals
+ */
+
+/* Links */
+a,
+a:focus,
+a:hover {
+  color: #fff;
+  padding: .25rem 0
+}
+
+/*
+ * Base structure
+ */
+
+html,
+ body {
+    height: 100%;
+    background-color: #fff;
+}
+
+body {
+  display: -ms-flexbox;
+  display: flex;
+  color: black;
+}
+
+.cover-container {
+  max-width: 42em
+}
+
+/*
+ * Cover
+ */
+.cover {
+  padding: 0 1.5rem;
+}
+.cover .btn-lg {
+  padding: .75rem 1.25rem;
+  font-weight: 700;
+}
+
+.sidenav {
+    height: 100%;
+    width: 66px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color:black;
+    border-bottom-color: rgba(255, 255, 255, .25);
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #ffdb58;
+    display: block;
+}
+
+.sidenav a:hover {
+    color: #fff;
+}
+
+
+/*
+ * Footer
+ */
+.mastfoot {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+  color: rgba(255, 255, 255, .5);
+}

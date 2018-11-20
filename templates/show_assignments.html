@@ -1,53 +1,91 @@
-<!doctype html>
-<title>Assignment Planner</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-<div>
-  <h1>Personal Assignment Planner</h1>
+{% extends "layout_template.html" %}
+{% block body %}
+
+    <a href="./login"><button type="button" class="btn btn-primary">Login</button></a>
+    <br><br>
+    <a href="./signup"><button type="button" class="btn btn-primary">Create Account</button></a>
+    <br><br>
 
     <ul class="duedates">
-    <li><a href="?">[all]</a></li>
-  {% for duedate in duedates %}
-    <li><a href="?duedate={{ duedate.duedate }}">{{ duedate.duedate}}</a></li>
-  {% endfor %}
-  </ul>
-  <ul>
+        <li><a href="?">[all]</a></li>
+        {% for duedate in duedates %}
+            {% if '' not in duedate %}
+                <li><a href="?duedate={{ duedate.duedate }}">{{ duedate.duedate}}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
 
-     <a href="./main"><button>Add assignments</button></a>
+
+    <a href="./main"><button type="button" class="btn btn-primary">Add assignments</button></a>
     <br>
 
-    <table class="table">
-        {% for assignment in assignments %}
-        {% if loop.first %}
-        <tr>
-          <th></th>
-            <th>Title <span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></th>
-            <th>Class <span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></th>
-             <th>category<span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></th>
-            <th>Due Date <span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></th>
-            <th>Description <span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></th>
-        </tr>
-        {% endif %}
 
-        <tr>
-        <td><form action="{{ url_for('del_assignment') }}" method="post">
-          <input type="hidden" name="id" value="{{ assignment.id }}">
-          <button type="submit" class="del-button">Delete</button>
-        </form></td>
-            <td>{{ assignment.title }}</td>
-            <td>{{ assignment.class }}</td>
-            <td>{{ assignment.category }}</td>
-            <td>{{ assignment.duedate }}</td>
-            <td>{{ assignment.description|safe }}</td>
-        </tr>
-        {% else %}
-        <em>You don't have any assignments currently.</em>
-        {% endfor %}
+    <br>
 
-    </table>
-</div>
+    {% if assignments %}
+        <table class="table">
+
+                {% if arrange == "title" %} && order == "ASC": %}
+                <a href="?arrange=title" order="DESC">
+                {% else %}
+                    <a href="?arrange=title" order="ASC">
+                        {% endif %}
+             {% if arrange == "course" %} && order == "ASC": %}
+                <a href="?arrange=course" order="DESC">
+                {% else %}
+                    <a href="?arrange=course" order="ASC">
+                        {% endif %}
+             {% if arrange == "category" %} && order == "ASC": %}
+                <a href="?arrange=category" order="DESC">
+                {% else %}
+                    <a href="?arrange=category" order="ASC">
+                        {% endif %}
+             {% if arrange == "duedate" %} && order == "ASC": %}
+                <a href="?arrange=duedate" order="DESC">
+                {% else %}
+                    <a href="?arrange=duedate" order="ASC">
+                        {% endif %}
+             {% if arrange == "description" %} && order == "ASC": %}
+                <a href="?arrange=description" order="DESC">
+                {% else %}
+                    <a href="?arrange=description" order="ASC">
+                        {% endif %}
+            <tr>
+            <th>Edit/Delete </th>
+            <th>Title <a href="/?arrange=title"><span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+            <th>Course <a href="/?arrange=course"><span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+            <th>Category <a href="/?arrange=category"><span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+            <th>Due Date <a href="/?arrange=duedate"><span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+            <th>Description <a href="/?arrange=description"><span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+            </tr>
+            {% for assignment in assignments %}
+
+                <tr>
+                    <td>
+                        <form action="{{ url_for('edit_entry') }}" method="get" class="inline">
+                            <button type="submit" class="btn btn-primary glyphicon glyphicon-pencil"></button>
+                            <input type="hidden" value="{{ assignment.id }}" name="editid">
+                        </form>
+                        <form action="{{ url_for('del_assignment') }}" method="post" class="inline">
+                            <button type="submit" class="btn btn-primary glyphicon glyphicon-remove"></button>
+                            <input type="hidden" value="{{ assignment.id }}" name="id">
+                        </form>
+                    </td>
+                    <td>{{ assignment.title }}</td>
+                    <td>{{ assignment.course }}</td>
+                    <td>{{ assignment.category }}</td>
+                    <td>{{ assignment.duedate }}</td>
+                    <td>{{ assignment.description|safe }}</td>
+
+                </tr>
+            {% else %}
+                <em>You don't have any assignments currently.</em>
+            {% endfor %}
+
+        </table>
+    {% else %}
+        <em>No assignment entries here so far</em>
+    {% endif %}
+
+    </div>
+{% endblock %}

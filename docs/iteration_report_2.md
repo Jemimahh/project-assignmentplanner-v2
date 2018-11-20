@@ -70,7 +70,7 @@ Who will be responsible for each user story planned for the next iteration, not 
 
   + Sargon = add sorting features for all parameters (title, category, etc).
 
-  + Megan = edit feature. Add another page for editing as well. 
+  + Megan = edit feature. Add another page for editing as well. Start on Unit Tests.
 
   + Jemima = add due time parameter (we only have date currently)
   

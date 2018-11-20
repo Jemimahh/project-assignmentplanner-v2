@@ -1,0 +1,29 @@
+{% extends "layout_template.html" %}
+{% block body %}
+
+     <a href="./main"><button type="button" class="btn btn-primary">Add assignments</button></a>
+    <br><br>
+     <a href="./"><button type="button" class="btn btn-primary">View all assignments</button></a>
+    <br>
+    <br>
+
+    {% for assignment in assignments %}
+      <form action="{{ url_for('update_entry') }}" method="post" class="update-entry">
+        <dl>
+          <dd><input type="hidden" value="{{ assignment.id }}" name="id"></dd>
+          <dt>Title:
+          <dd><input type="text" size="30" name="title" value="{{ assignment.title }}">
+          <dt>Course:
+          <dd><input type="text" size="30" name="course" value="{{ assignment.course }}">
+          <dt>Category:
+          <dd><input type="text" size="30" name="category" value="{{ assignment.category }}">
+          <dt>Due Date:
+          <dd><input type="date" size="30" name="duedate" value="{{ assignment.duedate }}">
+          <dt>Description:
+          <dd><textarea name="description" rows="5" cols="40" placeholder="{{ assignment.text|safe }}"></textarea>
+          <dd><input type="submit" value="Confirm Changes">
+        </dl>
+      </form>
+    {% endfor %}
+
+{% endblock %}
