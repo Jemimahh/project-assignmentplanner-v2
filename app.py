@@ -206,7 +206,7 @@ def login_account():
 
         if data.get(username) == password:
             flash('Logged into ' + username)
-            return redirect(url_for('show_assignment'))
+            return redirect(url_for('homepage'))
 
         else:
             flash('Wrong username and password. Try again')

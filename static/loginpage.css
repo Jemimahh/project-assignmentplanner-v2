@@ -16,7 +16,7 @@ align-content: center;
 }
 
 .card{
-height: 400px;
+height: auto;
 margin-top: auto;
 margin-bottom: auto;
 width: 400px;
@@ -36,7 +36,6 @@ background-color: #FFC312;
 color: black;
 border:0 !important;
 }
-
 .remember{
 color: white;
 }

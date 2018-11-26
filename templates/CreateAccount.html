@@ -1,11 +1,16 @@
 {% extends "layout_template.html" %}
+{% block extracss %}
+    body{
+        background-image url("{{ url_for('static', filename= "signUpBackground.jpg") }}");
+    }
+{% endblock %}
 {% block body %}
     <div class="container accImg">
         <div class="jumbotron">
             <div class="row">
                 <center>
                     <h1>Sign-Up</h1>
-                    <a href="./"><button type="button" class="btn btn-primary">Home</button></a>
+                    <a href="./homepage"><button type="button" class="btn btn-primary">Home</button></a>
                     <br><br>
                 </center>
 
