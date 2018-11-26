@@ -73,22 +73,22 @@ def show_assignment():
                          [logged_in_account, request.args["duedate"]])
         assignments = cur.fetchall()
 
-    elif "arrange" in request.args:
+    elif "arrange" in request.args and "order" in request.args:
         cur = db.execute(
-            'select * from assignments where username=? order by {} asc'.format(request.args["arrange"],
-                [logged_in_account])
+                         'select * from assignments order by {} {}'.format(request.args["arrange"], request.args["order"],
+                                                                           [logged_in_account])
         )
         assignments = cur.fetchall()
 
     else:
 
-        cur = db.execute('select * from assignments where username=? order by id desc', [logged_in_account])
+        cur = db.execute('select * from assignments where username = ? order by id desc', [logged_in_account])
         assignments = cur.fetchall()
     cur = db.execute('select distinct duedate from assignments order by duedate asc')
 
 
     duedates = cur.fetchall()
-    return render_template('show_assignments.html', assignments=assignments, duedates=duedates)
+    return render_template('show_assignments.html', assignments=assignments, duedates=duedates, arrange=None, order=None)
 
 
 @app.route('/add')
