@@ -8,6 +8,7 @@ create table accounts (
 drop table if exists assignments;
 create table assignments (
   id integer primary key autoincrement,
+  username text not null,
   title text not null,
   course text not null,
   category text not null,
