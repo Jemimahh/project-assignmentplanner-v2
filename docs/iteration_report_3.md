@@ -1,4 +1,4 @@
-# Mango Team Iteration 2 
+# Mango Team Iteration 3
 
 ### Authors: Megan Dolan, Sargon Odicho, Jemima Egwurube, Naing Tun
 
