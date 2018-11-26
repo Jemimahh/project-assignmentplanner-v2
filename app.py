@@ -24,7 +24,6 @@ app.config.update(dict(
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
 
-
 def connect_db():
     """Connects to the specific database."""
     rv = sqlite3.connect(app.config['DATABASE'])
@@ -128,6 +127,8 @@ def add_assignment():
 
 @app.route('/delete', methods=['POST'])
 def del_assignment():
+    if not session.get('logged_in'):
+        abort(401)
     db = get_db()
     db.execute('delete from assignments where id=?', [request.form['id']])
     db.commit()
@@ -137,6 +138,8 @@ def del_assignment():
 
 @app.route('/edit', methods=['GET'])
 def edit_entry():
+    if not session.get('logged_in'):
+        abort(401)
     db = get_db()
     cur = db.execute('select * from assignments where id=?', request.args['editid'])
     assignments = cur.fetchall()
@@ -210,10 +213,17 @@ def login_account():
 
         else:
             flash('Wrong username and password. Try again')
-
     else:
         flash('Username does not exist')
     return redirect(url_for('redirect_login'))
+
+
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    flash('You were logged out')
+    return redirect(url_for('show_entries'))
+
 
 @app.route('/homepage')
 def display_homepage():
