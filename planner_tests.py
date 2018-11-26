@@ -22,6 +22,14 @@ class FlaskrTestCase(unittest.TestCase):
         rv = self.app.get('/')
         assert b'No assignment entries here so far' in rv.data
 
+    def create(self, username, password):
+        return self.app.post('/create_account', data=dict(username=username, password=password), follow_redirects=True)
+'''
+    def test_login(self):
+        rv = self.create("user", "pw")
+        rv = self.app.get('/login_account?username=user&password=pw')
+        assert b'Logged into user' in rv.data
+'''
     # modified login() code from the following source
     # http://flask.pocoo.org/docs/0.12/testing/
     def add_entry(self, title, course, category, duedate, description):
@@ -34,6 +42,7 @@ class FlaskrTestCase(unittest.TestCase):
         rv = self.add_entry('title1', 'CS253', 'None', '1111-11-11T11:11', 'D1')
         assert b"title1" in rv.data
         assert b"New assignment was successfully saved." in rv.data
+
 
     def delete_entry(self, delete):
         return self.app.post('/delete', data=dict(id=delete), follow_redirects=True)
@@ -79,6 +88,7 @@ class FlaskrTestCase(unittest.TestCase):
         assert b"None-edit" in rv.data
         assert b"2222-22-22T22:22" in rv.data
         assert b"D1-edit" in rv.data
+
 
 if __name__ == '__main__':
     unittest.main()
