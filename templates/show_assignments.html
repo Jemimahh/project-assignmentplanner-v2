@@ -24,31 +24,30 @@
 
     {% if assignments %}
         <table class="table">
-
-                {% if arrange == "title" %} && order == "ASC": %}
-                <a href="?arrange=title" order="DESC">
+             {% if arrange == "title" and order == "ASC" %}
+                <a href="?arrange=title&order=DESC">
                 {% else %}
-                    <a href="?arrange=title" order="ASC">
+                    <a href="?arrange=title&order=ASC">
                         {% endif %}
-             {% if arrange == "course" %} && order == "ASC": %}
-                <a href="?arrange=course" order="DESC">
+             {% if arrange == "course" and order == "ASC" %}
+                <a href="?arrange=course&order=DESC">
                 {% else %}
-                    <a href="?arrange=course" order="ASC">
+                    <a href="?arrange=course&order=ASC">
                         {% endif %}
-             {% if arrange == "category" %} && order == "ASC": %}
-                <a href="?arrange=category" order="DESC">
+             {% if arrange == "category" and order == "ASC" %}
+                <a href="?arrange=category&order=DESC">
                 {% else %}
-                    <a href="?arrange=category" order="ASC">
+                    <a href="?arrange=category&order=ASC">
                         {% endif %}
-             {% if arrange == "duedate" %} && order == "ASC": %}
-                <a href="?arrange=duedate" order="DESC">
+             {% if arrange == "duedate" and order == "ASC" %}
+                <a href="?arrange=duedate&order=DESC">
                 {% else %}
-                    <a href="?arrange=duedate" order="ASC">
+                    <a href="?arrange=duedate&order=ASC">
                         {% endif %}
-             {% if arrange == "description" %} && order == "ASC": %}
-                <a href="?arrange=description" order="DESC">
+             {% if arrange == "description" and order == "ASC" %}
+                <a href="?arrange=description&order=DESC">
                 {% else %}
-                    <a href="?arrange=description" order="ASC">
+                    <a href="?arrange=description&order=ASC">
                         {% endif %}
             <tr>
             <th>Edit/Delete </th>
