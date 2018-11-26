@@ -72,11 +72,13 @@ def show_assignment():
                          [request.args["duedate"]])
         assignments = cur.fetchall()
 
-    elif "arrange" in request.args:
-            cur = db.execute(
-                'select * from assignments order by {} asc'.format(request.args["arrange"])
-            )
-            assignments = cur.fetchall()
+    elif "arrange" in request.args and "order" in request.args:
+        arrange = request.args["arrange"]
+        cur = db.execute(
+                         'select * from assignments order by {} {}'.format(request.args["arrange"], request.args["order"])
+                        )
+        assignments = cur.fetchall()
+
     else:
 
         cur = db.execute('select * from assignments order by id desc')
@@ -86,7 +88,7 @@ def show_assignment():
 
 
     duedates = cur.fetchall()
-    return render_template('show_assignments.html', assignments=assignments, duedates=duedates)
+    return render_template('show_assignments.html', assignments=assignments, duedates=duedates, arrange=None, order=None)
 
 
 @app.route('/main')
