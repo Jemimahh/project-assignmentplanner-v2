@@ -7,7 +7,12 @@ arrow {
     padding: 5px;
 }
 
-.login {
-    width: 30%;
-    margin: 30px auto;
+
+.flash { /* ref: http://flask.pocoo.org/docs/0.12/tutorial/ */
+    background: #CEE5F5;
+    padding: 0.5em;
+    border: 1px solid #AACBE2;
+}
+.accImg{
+    background-image: url('signUpBackground.jpg');
 }

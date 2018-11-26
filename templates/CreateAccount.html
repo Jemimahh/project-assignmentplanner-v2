@@ -1,49 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Assignment Planner</title>
-
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-</head>
-<body>
-    <div class="container">
-        <div class="jumbotron">
-            <div class="row">
-                <center>
+{% extends "layout_template.html" %}
+{% block extracss %}
+body {
+    background-image: url("{{ url_for('static', filename='signUpBackground.jpg') }}");
+    }
+{% endblock %}
+{% block body %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='loginpage.css') }}">
+    <div class="container signupImg">
+        <div class="d-flex justify-content-center h-100">
+            <div class="card">
+                <div class="card-header">
                     <h1>Sign-Up</h1>
                     <a href="./"><button type="button" class="btn btn-primary">Home</button></a>
                     <br><br>
-                </center>
 
+                    <div class="card-body">
+                        <form action="{{ url_for('create_account') }}" method="POST">
 
-                <div style="width: 30%; margin: 30px auto;">
-                    <form action="/register" method="POST">
+                          <div class="input-group form-group">
+                              <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                              </div>
+                            <label for="Username1">Username:</label>
+                            <input type="text" name="username" class="form-control" id="Username1" aria-describedby="usernameHelp" placeholder="Enter Username" required>
+                            <small id="usernameHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                          </div>
 
-                      <div class="form-group">
-                        <label for="Username1">Email address:</label>
-                        <input type="text" name="username" class="form-control" id="Username1" aria-describedby="usernameHelp" placeholder="Enter Username" required>
-                        <small id="usernameHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                      </div>
-                      <div class="form-group">
-                        <label for="Password1">Password:</label>
-                        <input type="text" name="password" class="form-control" id="Password1" placeholder="Enter Password" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="Password2">Re-enter Password:</label>
-                        <input type="text" name="password2" class="form-control" id="Password2" placeholder="Re-Enter Password" required>
-                      </div>
+                          <div class="input-group form-group">
+                              <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                              </div>
+                            <label for="Password1">Password:</label>
+                            <input type="text" name="password" class="form-control" id="Password1" placeholder="Enter Password" required>
+                          </div>
 
-                    </form>
+                          <div class="form-group">
+                              <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                              </div>
+                            <label for="Password2">Re-enter Password:</label>
+                            <input type="text" name="password2" class="form-control" id="Password2" placeholder="Re-Enter Password" required>
+                          </div>
+
+                          <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                          </div>
+
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}
