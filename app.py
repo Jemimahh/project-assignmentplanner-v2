@@ -71,21 +71,15 @@ def show_assignment():
         cur = db.execute('select * from assignments where duedate = ? order by id desc',
                          [request.args["duedate"]])
         assignments = cur.fetchall()
+
+    elif "arrange" in request.args:
+            cur = db.execute(
+                'select * from assignments order by {} asc'.format(request.args["arrange"])
+            )
+            assignments = cur.fetchall()
     else:
 
         cur = db.execute('select * from assignments order by id desc')
-        assignments = cur.fetchall()
-
-    if "arrange" in request.args:
-        cur = db.execute(
-            'select * from assignments order by {} asc'.format(request.args["arrange"])
-        )
-        assignments = cur.fetchall()
-
-    elif "arrange" in request.args:
-        cur = db.execute(
-            'select * from assignments order by {} desc'.format(request.args["arrange"])
-        )
         assignments = cur.fetchall()
 
     cur = db.execute('select distinct duedate from assignments order by duedate asc')
