@@ -76,7 +76,20 @@ def show_assignment():
         cur = db.execute('select * from assignments order by id desc')
         assignments = cur.fetchall()
 
+    if "arrange" in request.args:
+        cur = db.execute(
+            'select * from assignments order by {} asc'.format(request.args["arrange"])
+        )
+        assignments = cur.fetchall()
+
+    elif "arrange" in request.args:
+        cur = db.execute(
+            'select * from assignments order by {} desc'.format(request.args["arrange"])
+        )
+        assignments = cur.fetchall()
+
     cur = db.execute('select distinct duedate from assignments order by duedate asc')
+
 
     duedates = cur.fetchall()
     return render_template('show_assignments.html', assignments=assignments, duedates=duedates)
@@ -103,7 +116,7 @@ def redirect_signup():
 @app.route('/add', methods=['POST'])
 def add_assignment():
     db = get_db()
-    db.execute('insert into assignments (title, course, category, duedate, description) values (?, ?, ?, ?,?)',
+    db.execute('insert into assignments (title, course, category, duedate, description) values (?, ?, ?, ?, ?)',
                [request.form['title'], request.form['course'], request.form['category'], request.form['duedate'], request.form['description']])
     # request.form gets request in a post request
     # Puts the values from the show_entries.html form into the database as (title, category, text)

@@ -19,17 +19,44 @@
     <a href="./main"><button type="button" class="btn btn-primary">Add assignments</button></a>
     <br>
 
+
     <br>
 
     {% if assignments %}
         <table class="table">
+
+                {% if arrange == "title" %} && order == "ASC": %}
+                <a href="?arrange=title" order="DESC">
+                {% else %}
+                    <a href="?arrange=title" order="ASC">
+                        {% endif %}
+             {% if arrange == "course" %} && order == "ASC": %}
+                <a href="?arrange=course" order="DESC">
+                {% else %}
+                    <a href="?arrange=course" order="ASC">
+                        {% endif %}
+             {% if arrange == "category" %} && order == "ASC": %}
+                <a href="?arrange=category" order="DESC">
+                {% else %}
+                    <a href="?arrange=category" order="ASC">
+                        {% endif %}
+             {% if arrange == "duedate" %} && order == "ASC": %}
+                <a href="?arrange=duedate" order="DESC">
+                {% else %}
+                    <a href="?arrange=duedate" order="ASC">
+                        {% endif %}
+             {% if arrange == "description" %} && order == "ASC": %}
+                <a href="?arrange=description" order="DESC">
+                {% else %}
+                    <a href="?arrange=description" order="ASC">
+                        {% endif %}
             <tr>
-                <th>Edit/Delete </th>
-                <th>Title <span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></th>
-                <th>Class <span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></th>
-                <th>Category <span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></th>
-                <th>Due Date <span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></th>
-                <th>Description <span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></th>
+            <th>Edit/Delete </th>
+            <th>Title <a href="/?arrange=title"><span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+            <th>Course <a href="/?arrange=course"><span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+            <th>Category <a href="/?arrange=category"><span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+            <th>Due Date <a href="/?arrange=duedate"><span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+            <th>Description <a href="/?arrange=description"><span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
             </tr>
             {% for assignment in assignments %}
 
