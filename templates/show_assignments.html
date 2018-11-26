@@ -1,10 +1,17 @@
 {% extends "layout_template.html" %}
 {% block body %}
 
-    <a href="./login"><button type="button" class="btn btn-primary">Login</button></a>
-    <br><br>
+    {% if not session.get(username) %}
+        <a href="./login"><button type="button" class="btn btn-primary">Login</button></a>
+        <br><br>
+    {% else %}
+        <a href="{{ url_for('logout') }}"><button type="button" class="btn btn-primary">Logout</button></a>
+        <br><br>
+    {% endif %}
+
     <a href="./signup"><button type="button" class="btn btn-primary">Create Account</button></a>
     <br><br>
+
 
     <ul class="duedates">
         <li><a href="?">[all]</a></li>
@@ -16,7 +23,7 @@
     </ul>
 
 
-    <a href="./main"><button type="button" class="btn btn-primary">Add assignments</button></a>
+    <a href="./add"><button type="button" class="btn btn-primary">Add assignments</button></a>
     <br>
 
 
@@ -50,12 +57,12 @@
                     <a href="?arrange=description&order=ASC">
                         {% endif %}
             <tr>
-            <th>Edit/Delete </th>
-            <th>Title <a href="/?arrange=title"><span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
-            <th>Course <a href="/?arrange=course"><span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
-            <th>Category <a href="/?arrange=category"><span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
-            <th>Due Date <a href="/?arrange=duedate"><span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
-            <th>Description <a href="/?arrange=description"><span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+                <th>Edit/Delete </th>
+                <th>Title <a href="/?arrange=title"><span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+                <th>Course <a href="/?arrange=course"><span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+                <th>Category <a href="/?arrange=category"><span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+                <th>Due Date <a href="/?arrange=duedate"><span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+                <th>Description <a href="/?arrange=description"><span class="glyphicon glyphicon-chevron-down arrow"></span><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
             </tr>
             {% for assignment in assignments %}
 
