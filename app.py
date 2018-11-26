@@ -88,11 +88,13 @@ def show_assignment():
 
 
     duedates = cur.fetchall()
-    return render_template('show_assignments.html', assignments=assignments, duedates=duedates)
+    username = logged_in_account
+    return render_template('show_assignments.html', assignments=assignments, duedates=duedates, username=username)
 
 
 @app.route('/add')
 def redirect_add_assignment():
+    username = logged_in_account
     return render_template('MainPageLayout.html')
 
 
@@ -157,7 +159,7 @@ def update_entry():
     return show_assignment()
 
 
-@app.route('/', methods=['POST'])
+@app.route('/create_account', methods=['POST'])
 def create_account():
     db = get_db()
     validate = db.execute('select username from accounts where username=?', [request.form['username']])
@@ -207,7 +209,8 @@ def login_account():
             logged_in_account = username
             flash('Logged into ' + username)
 
-            return render_template('show_assignments.html', username=logged_in_account)
+
+            return render_template('home.html', username=logged_in_account)
 
         else:
             flash('Wrong username and password. Try again')
