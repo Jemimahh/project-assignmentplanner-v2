@@ -9,7 +9,8 @@
 
 import os
 from sqlite3 import dbapi2 as sqlite3
-from flask import Flask, request, g, redirect, url_for, render_template, flash
+from flask import Flask, request, session, g, redirect, url_for, abort, \
+     render_template, flash
 
 # create our little application :)
 app = Flask(__name__)
@@ -23,7 +24,7 @@ app.config.update(dict(
 ))
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
-
+logged_in_account = ""
 
 def connect_db():
     """Connects to the specific database."""
@@ -68,26 +69,21 @@ def show_assignment():
     db = get_db()
 
     if "duedate" in request.args:
-        cur = db.execute('select * from assignments where duedate = ? order by id desc',
-                         [request.args["duedate"]])
-        assignments = cur.fetchall()
-    else:
-
-        cur = db.execute('select * from assignments order by id desc')
-        assignments = cur.fetchall()
-
-    if "arrange" in request.args:
-        cur = db.execute(
-            'select * from assignments order by {} asc'.format(request.args["arrange"])
-        )
+        cur = db.execute('select * from assignments where username = ? and duedate = ? order by id desc',
+                         [logged_in_account, request.args["duedate"]])
         assignments = cur.fetchall()
 
     elif "arrange" in request.args:
         cur = db.execute(
-            'select * from assignments order by {} desc'.format(request.args["arrange"])
+            'select * from assignments where username=? order by {} asc'.format(request.args["arrange"],
+                [logged_in_account])
         )
         assignments = cur.fetchall()
 
+    else:
+
+        cur = db.execute('select * from assignments where username=? order by id desc', [logged_in_account])
+        assignments = cur.fetchall()
     cur = db.execute('select distinct duedate from assignments order by duedate asc')
 
 
@@ -95,12 +91,9 @@ def show_assignment():
     return render_template('show_assignments.html', assignments=assignments, duedates=duedates)
 
 
-@app.route('/main')
-def redirect_mainpage():
-    db = get_db()
-    cur = db.execute('select * from assignments order by id desc')
-    assignments = cur.fetchall()
-    return render_template('MainPageLayout.html', assignments=assignments)
+@app.route('/add')
+def redirect_add_assignment():
+    return render_template('MainPageLayout.html')
 
 
 @app.route('/login')
@@ -115,9 +108,13 @@ def redirect_signup():
 
 @app.route('/add', methods=['POST'])
 def add_assignment():
+    if not session.get(logged_in_account):
+        abort(401)
+
     db = get_db()
-    db.execute('insert into assignments (title, course, category, duedate, description) values (?, ?, ?, ?, ?)',
-               [request.form['title'], request.form['course'], request.form['category'], request.form['duedate'], request.form['description']])
+    db.execute('insert into assignments (username, title, course, category, duedate, description) values (?, ?, ?, ?, ?, ?)',
+               [logged_in_account, request.form['title'], request.form['course'], request.form['category'],
+                request.form['duedate'], request.form['description']])
     # request.form gets request in a post request
     # Puts the values from the show_entries.html form into the database as (title, category, text)
     db.commit()
@@ -199,14 +196,18 @@ def login_account():
     validate_account = db.execute('select username, password from accounts where username=?', [username])
     data = validate_account
     data = dict(data)
-    print(data)
 
     if db.execute('select username, password from accounts where username=?', [username]).fetchall():
         password = request.args['password']
 
         if data.get(username) == password:
+            global logged_in_account
+            session[username] = True
+            session['logged_in'] = True
+            logged_in_account = username
             flash('Logged into ' + username)
-            return redirect(url_for('homepage'))
+
+            return render_template('show_assignments.html', username=logged_in_account)
 
         else:
             flash('Wrong username and password. Try again')
@@ -215,6 +216,17 @@ def login_account():
         flash('Username does not exist')
     return redirect(url_for('redirect_login'))
 
+@app.route('/logout')
+def logout():
+    global logged_in_account
+    session.pop('logged_in', None)
+    session.pop(logged_in_account, None)
+    flash('You were logged out')
+    logged_in_account = ""
+    return redirect(url_for('redirect_login'))
+
 @app.route('/homepage')
 def display_homepage():
     return render_template('home.html')
+
+
