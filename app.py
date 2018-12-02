@@ -243,50 +243,53 @@ def display_homepage():
     return render_template('home.html', username = logged_in_account)
 
 
-@app.route('/asd')
+# @app.route('/calendar')
+# def display_calendar():
+#     db = get_db()
+#
+#     if "duedate" in request.args:
+#         cur = db.execute('select * from assignments where username = ? and duedate = ? order by id desc',
+#                          [logged_in_account, request.args["duedate"]])
+#         assignments = cur.fetchall()
+#
+#     elif "arrange" in request.args:
+#         cur = db.execute(
+#                          'select * from assignments where username = ? order by {} ASC'.format(request.args["arrange"],
+#                                                                             [logged_in_account])
+#         )
+#         assignments = cur.fetchall()
+#
+#     elif "sort" in request.args:
+#         cur = db.execute('select * from assignments where username = ? order by {} DESC'.format(request.args["sort"],
+#                                                                             [logged_in_account])
+#         )
+#
+#         assignments = cur.fetchall()
+#
+#     else:
+#
+#         cur = db.execute('select * from assignments where username = ? order by id desc', [logged_in_account])
+#         assignments = cur.fetchall()
+#     cur = db.execute('select distinct duedate from assignments order by duedate asc')
+#
+#     duedates = cur.fetchall()
+#
+#     mo = 12 # mo = request.args[month]
+#     yr = 2018 # yr = request.args[year]
+#     print(calendar.month(yr,mo))
+#     print("display")
+#     return render_template('Calendar.html', username = logged_in_account, assignments=assignments, duedates=duedates)
+
+@app.route('/calendar')
 def display_calendar():
-    db = get_db()
+    return render_template('Calendar.html')
 
-    if "duedate" in request.args:
-        cur = db.execute('select * from assignments where username = ? and duedate = ? order by id desc',
-                         [logged_in_account, request.args["duedate"]])
-        assignments = cur.fetchall()
-
-    elif "arrange" in request.args:
-        cur = db.execute(
-                         'select * from assignments where username = ? order by {} ASC'.format(request.args["arrange"],
-                                                                            [logged_in_account])
-        )
-        assignments = cur.fetchall()
-
-    elif "sort" in request.args:
-        cur = db.execute('select * from assignments where username = ? order by {} DESC'.format(request.args["sort"],
-                                                                            [logged_in_account])
-        )
-
-        assignments = cur.fetchall()
-
-    else:
-
-        cur = db.execute('select * from assignments where username = ? order by id desc', [logged_in_account])
-        assignments = cur.fetchall()
-    cur = db.execute('select distinct duedate from assignments order by duedate asc')
-
-    duedates = cur.fetchall()
-
-    mo = 12 # mo = request.args[month]
-    yr = 2018 # yr = request.args[year]
-    # print(calendar.month(yr,mo))
-    print("display")
-    return render_template('Calendar.html', username = logged_in_account, assignments=assignments, duedates=duedates)
-
-
-@app.route('/calendar', methods=['GET'])
+@app.route('/showcalendar', methods=['GET'])
 def input_calendar():
-    mo = request.args['month']
-    yr = request.args['year']
-    #newCal = calendar.HTMLCalendar(calendar.SUNDAY)
-    #calendar = newCal.formatmonth(yr,mo)
+    mo = int(request.args['month'])
+    yr = int(request.args['year'])
+    myCal = calendar.HTMLCalendar(calendar.SUNDAY)
+    newCal = myCal.formatmonth(yr, mo)
+    print (newCal)
     print("hello")
-    #print(calender)
-    return render_template('Calendar.html')#, calendar=newCal)
+    return render_template('Calendar.html', calendar = newCal, username = logged_in_account)

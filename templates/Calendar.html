@@ -145,24 +145,18 @@
 
 
 <form action="{{ url_for('input_calendar') }}" method="GET">
-    <table>
-        <th>Calendar</th>
-        <td>
-            <tr>Type in the month: </tr>
-            <tr><input type="text" name="month" class="form-control" placeholder="Enter month"></tr>
-        </td>
-        <td>
-            <tr>Type in the year: </tr>
-            <tr><input type="text" name="year" class="form-control" placeholder="Enter year"></tr>
-        </td>
-        <td><button type="submit" class="btn btn-primary">Submit</button></td>
-    </table>
+    <dl>
+        <dt>Type in the numerical value of the month:
+      <dd><input type="text" size="30" name="month">
+        <dt>Type in the numerical value of the year:
+      <dd><input type="text" size="30" name="year">
+      <dd><input type="submit" value="Show Calendar">
+    </dl>
 </form>
 <br><br><br>
 
 {% if calendar != "" %}
-<div> works </div>
-<div> works </div>
+<div> {{ calendar|safe }} </div>
 
 {% else %}
 <p> error </p>
