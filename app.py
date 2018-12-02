@@ -7,7 +7,7 @@
     :license: BSD, see LICENSE for more details.
 """
 
-import os
+import os, calendar
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
@@ -64,7 +64,7 @@ def close_db(error):
         g.sqlite_db.close()
 
 
-@app.route('/')
+@app.route('/assignments')
 def show_assignment():
     db = get_db()
 
@@ -103,6 +103,10 @@ def show_assignment():
 def redirect_add_assignment():
     return render_template('MainPageLayout.html')
 
+
+@app.route('/')
+def redirect_opening():
+    return render_template('OpeningPage.html')
 
 @app.route('/login')
 def redirect_login():
@@ -165,7 +169,7 @@ def update_entry():
     return show_assignment()
 
 
-@app.route('/', methods=['POST'])
+@app.route('/assignments', methods=['POST'])
 def create_account():
     db = get_db()
     validate = db.execute('select username from accounts where username=?', [request.form['username']])
@@ -197,16 +201,16 @@ def create_account():
     return redirect(url_for('redirect_login'))
 
 
-@app.route('/login_account', methods=['GET'])
+@app.route('/login_account', methods=['POST'])
 def login_account():
     db = get_db()
-    username = request.args['username']
+    username = request.form['username']
     validate_account = db.execute('select username, password from accounts where username=?', [username])
     data = validate_account
     data = dict(data)
 
     if db.execute('select username, password from accounts where username=?', [username]).fetchall():
-        password = request.args['password']
+        password = request.form['password']
 
         if data.get(username) == password:
             global logged_in_account
@@ -214,7 +218,7 @@ def login_account():
             session['logged_in'] = True
             logged_in_account = username
             flash('Logged into ' + username)
-            return render_template('show_assignments.html', username=logged_in_account)
+            return redirect(url_for('show_assignment'))
 
         else:
             flash('Wrong username and password. Try again')
@@ -222,6 +226,7 @@ def login_account():
     else:
         flash('Username does not exist')
     return redirect(url_for('redirect_login'))
+
 
 @app.route('/logout')
 def logout():
@@ -232,6 +237,56 @@ def logout():
     logged_in_account = ""
     return redirect(url_for('redirect_login'))
 
+
 @app.route('/homepage')
 def display_homepage():
-    return render_template('home.html')
+    return render_template('home.html', username = logged_in_account)
+
+
+@app.route('/asd')
+def display_calendar():
+    db = get_db()
+
+    if "duedate" in request.args:
+        cur = db.execute('select * from assignments where username = ? and duedate = ? order by id desc',
+                         [logged_in_account, request.args["duedate"]])
+        assignments = cur.fetchall()
+
+    elif "arrange" in request.args:
+        cur = db.execute(
+                         'select * from assignments where username = ? order by {} ASC'.format(request.args["arrange"],
+                                                                            [logged_in_account])
+        )
+        assignments = cur.fetchall()
+
+    elif "sort" in request.args:
+        cur = db.execute('select * from assignments where username = ? order by {} DESC'.format(request.args["sort"],
+                                                                            [logged_in_account])
+        )
+
+        assignments = cur.fetchall()
+
+    else:
+
+        cur = db.execute('select * from assignments where username = ? order by id desc', [logged_in_account])
+        assignments = cur.fetchall()
+    cur = db.execute('select distinct duedate from assignments order by duedate asc')
+
+    duedates = cur.fetchall()
+
+    mo = 12 # mo = request.args[month]
+    yr = 2018 # yr = request.args[year]
+    # print(calendar.month(yr,mo))
+    print("display")
+    return render_template('Calendar.html', username = logged_in_account, assignments=assignments, duedates=duedates)
+
+
+@app.route('/calendar', methods=['GET'])
+def input_calendar():
+    mo = request.args['month']
+    yr = request.args['year']
+    #newCal = calendar.HTMLCalendar(calendar.SUNDAY)
+    #calendar = newCal.formatmonth(yr,mo)
+    print("hello")
+    #print(calender)
+    return render_template('Calendar.html')#, calendar=newCal)

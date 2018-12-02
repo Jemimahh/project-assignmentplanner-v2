@@ -1,4 +1,7 @@
 {% extends "layout_template.html" %}
+
+<!--Log-in page-->
+
 {% block extracss %}
 body {
     background-image: url("{{ url_for('static', filename='estee-janssens-396874-unsplash.jpg') }}");
@@ -15,7 +18,7 @@ body {
                     <br><br>
 
                     <div class="card-body">
-                        <form action={{ url_for('login_account') }} method="GET" >
+                        <form action={{ url_for('login_account') }} method="POST" >
                             <div class="input-group form-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
