@@ -1,4 +1,7 @@
 <!doctype html>
+
+<!--Layout template-->
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,21 +9,69 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Bootstrap core CSS-->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='homepage.css') }}">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
+    <!--CSS Insert-->
+    <style type="text/css">
+        {% block extracss %}{% endblock %}
+    </style>
+
 </head>
-<div class="container">
-    <h1>Personal Assignment Planner</h1>
 
-  {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-    <br>
-  {% block body %}{% endblock %}
-</div>
+<body class="text-center">
+        <div class="sidenav">
+            <a href="./homepage" title="Home">
+                <span class="glyphicon glyphicon-home"></span>
+            </a>
+            <a href="./add" title=" Add Assignment">
+                <span class="glyphicon glyphicon-plus"></span>
+            </a>
+            <a href="./assignments" title="View Schedule">
+                <span class="glyphicon glyphicon-th-list"></span>
+            </a>
+            <a href="./calendar" title="View Calendar">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </a>
+        </div>
 
+        <div class="container">
+            <h1>Personal Assignment Planner</h1>
+          {% for message in get_flashed_messages() %}
+            <div class="flash">{{ message }}</div>
+          {% endfor %}
+            <br>
+            <!--Body Insert-->
+          {% block body %}{% endblock %}
+
+        </div>
+
+
+      <footer class="mastfoot mt-auto">
+        <div class="inner">
+            <p>&copy; 2018 MangoTeam.com<p>
+        </div>
+      </footer>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="http://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script>
+    <script src="http://getbootstrap.com/docs/4.1/dist/js/bootstrap.min.js"></script>
+
+</body>
 </html>
