@@ -115,8 +115,9 @@ def redirect_login():
 
 @app.route('/signup')
 def redirect_signup():
+    #if (logged_in_account == " "):
     return render_template('CreateAccount.html')
-
+    #return redirect(url_for('display_homepage'))
 
 @app.route('/add', methods=['POST'])
 def add_assignment():
@@ -177,8 +178,8 @@ def create_account():
 
     if validate.fetchall():
         flash('The username already exists. Try with another username')
-        for record in data:
-            print(dict(record))
+        #for record in data:
+        #    print(dict(record))
         return redirect(url_for('redirect_signup'))
     else:
         password = request.form['password']
@@ -186,8 +187,8 @@ def create_account():
 
         if password != re_password:
             flash('Passwords do not match. Try again.')
-            for record in data:
-                print(dict(record))
+            #for record in data:
+            #    print(dict(record))
             return redirect(url_for('redirect_signup'))
         else:
 
@@ -196,9 +197,11 @@ def create_account():
             db.commit()
         flash('Account creation successful.')
 
-    for record in data:
-        print(dict(record))
-    return redirect(url_for('redirect_login'))
+    #for record in data:
+    #    print(dict(record))
+    if logged_in_account == "":
+        return redirect(url_for('redirect_login'))
+    return redirect(url_for('display_homepage'))
 
 
 @app.route('/login_account', methods=['POST'])
