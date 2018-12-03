@@ -85,7 +85,7 @@
 
 
 <!--{% endblock %}-->
-<!--{% block body %}-->
+{% block body %}
 
 <!--<div class="month">-->
   <!--<ul>-->
@@ -145,28 +145,85 @@
 
 
 <form action="{{ url_for('input_calendar') }}" method="GET">
-    <table>
-        <th>Calendar</th>
-        <td>
-            <tr>Type in the month: </tr>
-            <tr><input type="text" name="month" class="form-control" placeholder="Enter month"></tr>
-        </td>
-        <td>
-            <tr>Type in the year: </tr>
-            <tr><input type="text" name="year" class="form-control" placeholder="Enter year"></tr>
-        </td>
-        <td><button type="submit" class="btn btn-primary">Submit</button></td>
-    </table>
+    <dl>
+        <dt>Type in the numerical value of the month:
+      <dd><input type="text" size="30" name="month">
+        <dt>Type in the numerical value of the year:
+      <dd><input type="text" size="30" name="year">
+      <dd><input type="submit" value="Show Calendar">
+    </dl>
 </form>
 <br><br><br>
 
-{% if calendar %}
-<div> {{ calendar }} </div>
+{% if calendar != "" %}
+<div> {{ calendar|safe }} </div>
 
 {% else %}
 <p> error </p>
 {% endif %}
 
 
+<!--<div class="table-responsive-md">-->
+    <!--{% if assignments %}-->
+        <!--<table class="table">-->
+             <!--{% if arrange == "title" %}-->
+                <!--<a href="?arrange=title">-->
+             <!--{% endif %}-->
+             <!--{% if arrange == "course" %}-->
+                <!--<a href="?arrange=course">-->
+             <!--{% endif %}-->
+             <!--{% if arrange == "category" %}-->
+                <!--<a href="?arrange=category">-->
+             <!--{% endif %}-->
+             <!--{% if arrange == "duedate" %}-->
+                <!--<a href="?arrange=duedate">-->
+             <!--{% endif %}-->
+             <!--{% if arrange == "description" %}-->
+                <!--<a href="?arrange=description">-->
+                        <!--{% endif %}-->
+
+             <!--{% if sort == "title" %}-->
+                 <!--<a href="?sort=title">-->
+             <!--{% endif %}-->
+             <!--{% if sort == "course" %}-->
+                 <!--<a href="?sort=course">-->
+             <!--{% endif %}-->
+             <!--{% if sort == "category" %}-->
+                 <!--<a href="?sort=category">-->
+             <!--{% endif %}-->
+             <!--{% if sort == "duedate" %}-->
+                 <!--<a href="?sort=duedate">-->
+             <!--{% endif %}-->
+             <!--{% if sort == "description" %}-->
+                 <!--<a href="?sort=description">-->
+             <!--{% endif %}-->
+
+            <!--<tr>-->
+                <!--<th>Title <a href="/?sort=title"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=title"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>-->
+                <!--<th>Course <a href="/?sort=course"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=course"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>-->
+                <!--<th>Category <a href="/?sort=category"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=category"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>-->
+                <!--<th>Due Date <a href="/?sort=duedate"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=duedate"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>-->
+                <!--<th>Description <a href="/?sort=description"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=description"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>-->
+            <!--</tr>-->
+            <!--{% for assignment in assignments %}-->
+
+                <!--<tr>-->
+                    <!--<td>{{ assignment.title }}</td>-->
+                    <!--<td>{{ assignment.course }}</td>-->
+                    <!--<td>{{ assignment.category }}</td>-->
+                    <!--<td>{{ assignment.duedate }}</td>-->
+                    <!--<td>{{ assignment.description|safe }}</td>-->
+
+                <!--</tr>-->
+            <!--{% else %}-->
+                <!--<em>You don't have any assignments currently.</em>-->
+            <!--{% endfor %}-->
+
+        <!--</table>-->
+    <!--{% else %}-->
+        <!--<em>No assignment entries here so far</em>-->
+    <!--{% endif %}-->
+
+<!--</div>-->
 
 {% endblock %}
