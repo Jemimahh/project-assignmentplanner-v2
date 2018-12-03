@@ -54,16 +54,20 @@ class FlaskrTestCase(unittest.TestCase):
     # modified login() code from the following source
     # http://flask.pocoo.org/docs/0.12/testing/
     def add_entry(self, title, course, category, duedate, description):
-        self.create("user", "pw", "pw")
-        self.login("user", "pw")
         return self.app.post('/add',
             data=dict(title=title, course=course, category=category, duedate=duedate, description=description),
             follow_redirects=True)
 
     def test_add_entry(self):
         rv = self.add_entry('title1', 'CS253', 'None', '1111-11-11T11:11', 'D1')
+        assert b"Unauthorized" in rv.data
+
+        self.create("user", "pw", "pw")
+        self.login("user", "pw")
+        rv = self.add_entry('title1', 'CS253', 'None', '1111-11-11T11:11', 'D1')
         assert b"title1" in rv.data
         assert b"New assignment was successfully saved." in rv.data
+
 
     def delete_entry(self, delete):
         self.create("user", "pw", "pw")
@@ -71,6 +75,8 @@ class FlaskrTestCase(unittest.TestCase):
         return self.app.post('/delete', data=dict(id=delete), follow_redirects=True)
 
     def test_delete_entry(self):
+        self.create("user", "pw", "pw")
+        self.login("user", "pw")
 
         rv = self.add_entry('title1', 'CS253.1', 'None', '1111-11-11T11:11', 'D1')
         assert b"title1" in rv.data
@@ -103,6 +109,9 @@ class FlaskrTestCase(unittest.TestCase):
             follow_redirects=True)
 
     def test_edit_entry(self):
+        self.create("user", "pw", "pw")
+        self.login("user", "pw")
+        
         rv = self.add_entry('title1', 'CS253.1', 'None', '1111-11-11T11:11', 'D1')
         assert b"title1" in rv.data
 
@@ -113,6 +122,7 @@ class FlaskrTestCase(unittest.TestCase):
         assert b"None-edit" in rv.data
         assert b"2222-22-22T22:22" in rv.data
         assert b"D1-edit" in rv.data
+
 
 
 if __name__ == '__main__':
