@@ -111,7 +111,7 @@ class FlaskrTestCase(unittest.TestCase):
     def test_edit_entry(self):
         self.create("user", "pw", "pw")
         self.login("user", "pw")
-        
+
         rv = self.add_entry('title1', 'CS253.1', 'None', '1111-11-11T11:11', 'D1')
         assert b"title1" in rv.data
 
