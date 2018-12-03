@@ -7,7 +7,8 @@
     :license: BSD, see LICENSE for more details.
 """
 
-import os, calendar
+import os
+import calendar
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
@@ -110,13 +111,16 @@ def redirect_opening():
 
 @app.route('/login')
 def redirect_login():
-    return render_template('Login.html')
+    if logged_in_account == "":
+        return render_template('Login.html')
+    return redirect(url_for('display_homepage'))
 
 
 @app.route('/signup')
 def redirect_signup():
+    #if (logged_in_account == " "):
     return render_template('CreateAccount.html')
-
+    #return redirect(url_for('display_homepage'))
 
 @app.route('/add', methods=['POST'])
 def add_assignment():
@@ -169,7 +173,7 @@ def update_entry():
     return show_assignment()
 
 
-@app.route('/assignments', methods=['POST'])
+@app.route('/create_account', methods=['POST'])
 def create_account():
     db = get_db()
     validate = db.execute('select username from accounts where username=?', [request.form['username']])
@@ -177,8 +181,8 @@ def create_account():
 
     if validate.fetchall():
         flash('The username already exists. Try with another username')
-        for record in data:
-            print(dict(record))
+        #for record in data:
+        #    print(dict(record))
         return redirect(url_for('redirect_signup'))
     else:
         password = request.form['password']
@@ -186,8 +190,8 @@ def create_account():
 
         if password != re_password:
             flash('Passwords do not match. Try again.')
-            for record in data:
-                print(dict(record))
+            #for record in data:
+            #    print(dict(record))
             return redirect(url_for('redirect_signup'))
         else:
 
@@ -196,9 +200,11 @@ def create_account():
             db.commit()
         flash('Account creation successful.')
 
-    for record in data:
-        print(dict(record))
-    return redirect(url_for('redirect_login'))
+    #for record in data:
+    #    print(dict(record))
+    if logged_in_account == "":
+        return redirect(url_for('redirect_login'))
+    return redirect(url_for('display_homepage'))
 
 
 @app.route('/login_account', methods=['POST'])
