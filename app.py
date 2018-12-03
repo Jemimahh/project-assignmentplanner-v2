@@ -110,7 +110,9 @@ def redirect_opening():
 
 @app.route('/login')
 def redirect_login():
-    return render_template('Login.html')
+    if logged_in_account == "":
+        return render_template('Login.html')
+    return redirect(url_for('display_homepage'))
 
 
 @app.route('/signup')
