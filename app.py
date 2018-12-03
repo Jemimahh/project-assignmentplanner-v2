@@ -78,6 +78,7 @@ def show_assignment():
                          'select * from assignments order by {} ASC'.format(request.args["arrange"],
                                                                             [logged_in_account])
         )
+
         assignments = cur.fetchall()
 
     elif "sort" in request.args:
@@ -93,6 +94,7 @@ def show_assignment():
         cur = db.execute('select * from assignments where username = ? order by id desc', [logged_in_account])
         assignments = cur.fetchall()
     cur = db.execute('select distinct duedate from assignments order by duedate asc')
+
 
 
     duedates = cur.fetchall()
@@ -143,7 +145,7 @@ def del_assignment():
 @app.route('/edit', methods=['GET'])
 def edit_entry():
     db = get_db()
-    cur = db.execute('select * from assignments where id=?', request.args['editid'])
+    cur = db.execute('select * from assignments where id = ?', request.args['editid'])
     assignments = cur.fetchall()
     return render_template('edit_layout.html', assignments=assignments)
 
