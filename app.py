@@ -7,7 +7,7 @@
     :license: BSD, see LICENSE for more details.
 """
 
-import os
+import os, calendar
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
@@ -64,7 +64,7 @@ def close_db(error):
         g.sqlite_db.close()
 
 
-@app.route('/')
+@app.route('/assignments')
 def show_assignment():
     db = get_db()
 
@@ -75,13 +75,13 @@ def show_assignment():
 
     elif "arrange" in request.args:
         cur = db.execute(
-                         'select * from assignments order by {} ASC'.format(request.args["arrange"],
+                         'select * from assignments where username = ? order by {} ASC'.format(request.args["arrange"],
                                                                             [logged_in_account])
         )
         assignments = cur.fetchall()
 
     elif "sort" in request.args:
-        cur = db.execute('select * from assignments order by {} DESC'.format(request.args["sort"],
+        cur = db.execute('select * from assignments where username = ? order by {} DESC'.format(request.args["sort"],
                                                                             [logged_in_account])
 
         )
@@ -104,15 +104,22 @@ def redirect_add_assignment():
     return render_template('MainPageLayout.html')
 
 
+@app.route('/')
+def redirect_opening():
+    return render_template('OpeningPage.html')
+
 @app.route('/login')
 def redirect_login():
-    return render_template('Login.html')
+    if logged_in_account == "":
+        return render_template('Login.html')
+    return redirect(url_for('display_homepage'))
 
 
 @app.route('/signup')
 def redirect_signup():
+    #if (logged_in_account == " "):
     return render_template('CreateAccount.html')
-
+    #return redirect(url_for('display_homepage'))
 
 @app.route('/add', methods=['POST'])
 def add_assignment():
@@ -165,7 +172,7 @@ def update_entry():
     return show_assignment()
 
 
-@app.route('/', methods=['POST'])
+@app.route('/create_account', methods=['POST'])
 def create_account():
     db = get_db()
     validate = db.execute('select username from accounts where username=?', [request.form['username']])
@@ -173,8 +180,8 @@ def create_account():
 
     if validate.fetchall():
         flash('The username already exists. Try with another username')
-        for record in data:
-            print(dict(record))
+        #for record in data:
+        #    print(dict(record))
         return redirect(url_for('redirect_signup'))
     else:
         password = request.form['password']
@@ -182,8 +189,8 @@ def create_account():
 
         if password != re_password:
             flash('Passwords do not match. Try again.')
-            for record in data:
-                print(dict(record))
+            #for record in data:
+            #    print(dict(record))
             return redirect(url_for('redirect_signup'))
         else:
 
@@ -192,21 +199,23 @@ def create_account():
             db.commit()
         flash('Account creation successful.')
 
-    for record in data:
-        print(dict(record))
-    return redirect(url_for('redirect_login'))
+    #for record in data:
+    #    print(dict(record))
+    if logged_in_account == "":
+        return redirect(url_for('redirect_login'))
+    return redirect(url_for('display_homepage'))
 
 
-@app.route('/login_account', methods=['GET'])
+@app.route('/login_account', methods=['POST'])
 def login_account():
     db = get_db()
-    username = request.args['username']
+    username = request.form['username']
     validate_account = db.execute('select username, password from accounts where username=?', [username])
     data = validate_account
     data = dict(data)
 
     if db.execute('select username, password from accounts where username=?', [username]).fetchall():
-        password = request.args['password']
+        password = request.form['password']
 
         if data.get(username) == password:
             global logged_in_account
@@ -214,7 +223,7 @@ def login_account():
             session['logged_in'] = True
             logged_in_account = username
             flash('Logged into ' + username)
-            return render_template('show_assignments.html', username=logged_in_account)
+            return redirect(url_for('show_assignment'))
 
         else:
             flash('Wrong username and password. Try again')
@@ -222,6 +231,7 @@ def login_account():
     else:
         flash('Username does not exist')
     return redirect(url_for('redirect_login'))
+
 
 @app.route('/logout')
 def logout():
@@ -232,8 +242,59 @@ def logout():
     logged_in_account = ""
     return redirect(url_for('redirect_login'))
 
+
 @app.route('/homepage')
 def display_homepage():
-    return render_template('home.html')
+    return render_template('home.html', username = logged_in_account)
 
 
+# @app.route('/calendar')
+# def display_calendar():
+#     db = get_db()
+#
+#     if "duedate" in request.args:
+#         cur = db.execute('select * from assignments where username = ? and duedate = ? order by id desc',
+#                          [logged_in_account, request.args["duedate"]])
+#         assignments = cur.fetchall()
+#
+#     elif "arrange" in request.args:
+#         cur = db.execute(
+#                          'select * from assignments where username = ? order by {} ASC'.format(request.args["arrange"],
+#                                                                             [logged_in_account])
+#         )
+#         assignments = cur.fetchall()
+#
+#     elif "sort" in request.args:
+#         cur = db.execute('select * from assignments where username = ? order by {} DESC'.format(request.args["sort"],
+#                                                                             [logged_in_account])
+#         )
+#
+#         assignments = cur.fetchall()
+#
+#     else:
+#
+#         cur = db.execute('select * from assignments where username = ? order by id desc', [logged_in_account])
+#         assignments = cur.fetchall()
+#     cur = db.execute('select distinct duedate from assignments order by duedate asc')
+#
+#     duedates = cur.fetchall()
+#
+#     mo = 12 # mo = request.args[month]
+#     yr = 2018 # yr = request.args[year]
+#     print(calendar.month(yr,mo))
+#     print("display")
+#     return render_template('Calendar.html', username = logged_in_account, assignments=assignments, duedates=duedates)
+
+@app.route('/calendar')
+def display_calendar():
+    return render_template('Calendar.html')
+
+@app.route('/showcalendar', methods=['GET'])
+def input_calendar():
+    mo = int(request.args['month'])
+    yr = int(request.args['year'])
+    myCal = calendar.HTMLCalendar(calendar.SUNDAY)
+    newCal = myCal.formatmonth(yr, mo)
+    print (newCal)
+    print("hello")
+    return render_template('Calendar.html', calendar = newCal, username = logged_in_account)

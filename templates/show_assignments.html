@@ -1,23 +1,13 @@
 {% extends "layout_template.html" %}
 {% block body %}
 
-    {% if not session.get(username) %}
-        <a href="./login"><button type="button" class="btn btn-primary">Login</button></a>
-        <br><br>
-    {% else %}
-        <a href="{{ url_for('logout') }}"><button type="button" class="btn btn-primary">Logout</button></a>
-        <br><br>
-    {% endif %}
+<!--Show all assignments page-->
 
-    <a href="./signup"><button type="button" class="btn btn-primary">Create Account</button></a>
-    <br><br>
-
-
-    <ul class="duedates">
+    <ul class="duedates blacktext">
         <li><a href="?">[all]</a></li>
         {% for duedate in duedates %}
             {% if '' not in duedate %}
-                <li><a href="?duedate={{ duedate.duedate }}">{{ duedate.duedate}}</a></li>
+                <li><a href="?duedate={{ duedate.duedate }}">{{ duedate.duedate }}</a></li>
             {% endif %}
         {% endfor %}
     </ul>
