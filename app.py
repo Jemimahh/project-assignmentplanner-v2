@@ -172,7 +172,7 @@ def update_entry():
     return show_assignment()
 
 
-@app.route('/assignments', methods=['POST'])
+@app.route('/create_account', methods=['POST'])
 def create_account():
     db = get_db()
     validate = db.execute('select username from accounts where username=?', [request.form['username']])
