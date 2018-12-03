@@ -6,7 +6,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Assignment Planner</title>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -31,34 +30,6 @@
 </head>
 
 <body class="text-center">
-        <div class="sidenav">
-            <a href="./homepage" title="Home">
-                <span class="glyphicon glyphicon-home"></span>
-            </a>
-            <a href="./add" title=" Add Assignment">
-                <span class="glyphicon glyphicon-plus"></span>
-            </a>
-            <a href="./assignments" title="View Schedule">
-                <span class="glyphicon glyphicon-th-list"></span>
-            </a>
-            <a href="./calendar" title="View Calendar">
-                <span class="glyphicon glyphicon-calendar"></span>
-            </a>
-            {% if not session.get(username) %}
-            <a href="./login" title="Log In">
-                <span class="glyphicon glyphicon-log-in"></span>
-            </a>
-            <a href="./signup" title="Create Account">
-                <i class="fas fa-user-plus"></i>
-            </a>
-            {% else %}
-            <a href="{{ url_for('logout') }}" title="Log Out">
-                <span class="glyphicon glyphicon-log-out"></span>
-            </a>
-            {% endif %}
-
-
-        </div>
 
         <div class="container">
             <h1>Personal Assignment Planner</h1>
