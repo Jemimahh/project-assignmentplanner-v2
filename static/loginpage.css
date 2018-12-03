@@ -3,7 +3,6 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
 html,body{
-background-image: url('estee-janssens-396874-unsplash.jpg');
 background-size: cover;
 background-repeat: no-repeat;
 height: 100%;
@@ -16,19 +15,16 @@ align-content: center;
 }
 
 .card{
-height: 400px;
+height: auto;
 margin-top: auto;
 margin-bottom: auto;
 width: 400px;
 background-color: rgba(0,0,0,0.5) !important;
 }
 
-
-
 .card-header h3{
 color: white;
 }
-
 
 .input-group-prepend span{
 width: 50px;
@@ -74,3 +70,12 @@ margin-left: 4px;
 .card-header {
    color: white;
 }
+
+/*.signupImg{
+    background-image: url('signUpBackground.jpg');
+}*/
+
+/* the background for the login page*/
+/* body{
+    background-image: url('estee-janssens-396874-unsplash.jpg');
+} */
