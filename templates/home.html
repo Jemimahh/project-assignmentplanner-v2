@@ -7,17 +7,6 @@
       <header class="masthead mb-auto">
         <div class="inner">
           <h3 class="masthead-brand">Assignment Planner</h3>
-
-    {% if not session.get(username) %}
-        <a href="./login"><button type="button" class="btn btn-primary">Login</button></a>
-        <br><br>
-    {% else %}
-        <a href="{{ url_for('logout') }}"><button type="button" class="btn btn-primary">Logout</button></a>
-        <br><br>
-    {% endif %}
-
-    <a href="./signup"><button type="button" class="btn btn-primary">Create Account</button></a>
-    <br><br>
         </div>
       </header>
 

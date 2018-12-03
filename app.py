@@ -96,12 +96,12 @@ def show_assignment():
 
 
     duedates = cur.fetchall()
-    return render_template('show_assignments.html', assignments=assignments, duedates=duedates)
+    return render_template('show_assignments.html', assignments=assignments, duedates=duedates, username = logged_in_account)
 
 
 @app.route('/add')
 def redirect_add_assignment():
-    return render_template('MainPageLayout.html')
+    return render_template('MainPageLayout.html', username = logged_in_account)
 
 
 @app.route('/')
@@ -149,7 +149,7 @@ def edit_entry():
     db = get_db()
     cur = db.execute('select * from assignments where id=?', request.args['editid'])
     assignments = cur.fetchall()
-    return render_template('edit_layout.html', assignments=assignments)
+    return render_template('edit_layout.html', assignments=assignments, username = logged_in_account)
 
 
 @app.route('/edit_assignment', methods=['POST'])
@@ -282,7 +282,7 @@ def display_homepage():
 
 @app.route('/calendar')
 def display_calendar():
-    return render_template('Calendar.html')
+    return render_template('Calendar.html', username = logged_in_account)
 
 @app.route('/showcalendar', methods=['GET'])
 def input_calendar():
