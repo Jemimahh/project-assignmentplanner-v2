@@ -1,147 +1,24 @@
 {% extends "layout_template.html" %}
 {% block extracss %}
 
-<!--* {box-sizing: border-box;}-->
-<!--ul {list-style-type: none;}-->
-<!--body {font-family: Verdana, sans-serif;}-->
+.month {
+    padding: 40px 10px;
+    width: 100%;
+    background: rgb(255, 212, 72);
+    text-align: center;
+    font-size: 150%
+}
 
-<!--.month {-->
-    <!--padding: 70px 25px;-->
-    <!--width: 100%;-->
-    <!--background: rgb(255, 212, 72);-->
-    <!--text-align: center;-->
-<!--}-->
+.noday, .sun, .mon, .tue, .wed, .thu, .fri, .sat {
+    padding: 10px 0;
+    width: 100px;
+    background: #eee;
+    margin: 0;
+    text-align: center;
+}
+{% endblock %}
 
-<!--.month ul {-->
-    <!--margin: 0;-->
-    <!--padding: 0;-->
-<!--}-->
-
-<!--.month ul li {-->
-    <!--color: white;-->
-    <!--font-size: 20px;-->
-    <!--text-transform: uppercase;-->
-    <!--letter-spacing: 3px;-->
-<!--}-->
-
-<!--.month .prev {-->
-    <!--float: left;-->
-    <!--padding-top: 10px;-->
-<!--}-->
-
-<!--.month .next {-->
-    <!--float: right;-->
-    <!--padding-top: 10px;-->
-<!--}-->
-
-<!--.weekdays {-->
-    <!--margin: 0;-->
-    <!--padding: 10px 0;-->
-    <!--background-color: #ddd;-->
-<!--}-->
-
-<!--.weekdays li {-->
-    <!--display: inline-block;-->
-    <!--width: 13.6%;-->
-    <!--color: #666;-->
-    <!--text-align: center;-->
-<!--}-->
-
-<!--.days {-->
-    <!--padding: 10px 0;-->
-    <!--background: #eee;-->
-    <!--margin: 0;-->
-<!--}-->
-
-<!--.days li {-->
-    <!--list-style-type: none;-->
-    <!--display: inline-block;-->
-    <!--width: 13.6%;-->
-    <!--text-align: center;-->
-    <!--margin-bottom: 5px;-->
-    <!--font-size:12px;-->
-    <!--color: #777;-->
-<!--}-->
-
-<!--.days li .active {-->
-    <!--padding: 5px;-->
-    <!--background: rgb(255, 212, 72);-->
-    <!--color: white !important-->
-<!--}-->
-
-<!--/* Add media queries for smaller screens */-->
-<!--@media screen and (max-width:720px) {-->
-    <!--.weekdays li, .days li {width: 13.1%;}-->
-<!--}-->
-
-<!--@media screen and (max-width: 420px) {-->
-    <!--.weekdays li, .days li {width: 12.5%;}-->
-    <!--.days li .active {padding: 2px;}-->
-<!--}-->
-
-<!--@media screen and (max-width: 290px) {-->
-    <!--.weekdays li, .days li {width: 12.2%;}-->
-<!--}-->
-
-
-<!--{% endblock %}-->
 {% block body %}
-
-<!--<div class="month">-->
-  <!--<ul>-->
-    <!--<li class="prev">&#10094;</li>-->
-    <!--<li class="next">&#10095;</li>-->
-    <!--<li>-->
-      <!--August<br>-->
-      <!--<span style="font-size:18px">2017</span>-->
-    <!--</li>-->
-  <!--</ul>-->
-<!--</div>-->
-
-<!--<ul class="weekdays">-->
-  <!--<li>Mo</li>-->
-  <!--<li>Tu</li>-->
-  <!--<li>We</li>-->
-  <!--<li>Th</li>-->
-  <!--<li>Fr</li>-->
-  <!--<li>Sa</li>-->
-  <!--<li>Su</li>-->
-<!--</ul>-->
-
-<!--<ul class="days">-->
-  <!--<li>1</li>-->
-  <!--<li>2</li>-->
-  <!--<li>3</li>-->
-  <!--<li>4</li>-->
-  <!--<li>5</li>-->
-  <!--<li>6</li>-->
-  <!--<li>7</li>-->
-  <!--<li>8</li>-->
-  <!--<li>9</li>-->
-  <!--<li><span class="active">10</span></li>-->
-  <!--<li>11</li>-->
-  <!--<li>12</li>-->
-  <!--<li>13</li>-->
-  <!--<li>14</li>-->
-  <!--<li>15</li>-->
-  <!--<li>16</li>-->
-  <!--<li>17</li>-->
-  <!--<li>18</li>-->
-  <!--<li>19</li>-->
-  <!--<li>20</li>-->
-  <!--<li>21</li>-->
-  <!--<li>22</li>-->
-  <!--<li>23</li>-->
-  <!--<li>24</li>-->
-  <!--<li>25</li>-->
-  <!--<li>26</li>-->
-  <!--<li>27</li>-->
-  <!--<li>28</li>-->
-  <!--<li>29</li>-->
-  <!--<li>30</li>-->
-  <!--<li>31</li>-->
-<!--</ul>-->
-
 
 
 <form action="{{ url_for('input_calendar') }}" method="GET">
@@ -153,7 +30,7 @@
       <dd><input type="submit" value="Show Calendar">
     </dl>
 </form>
-<br><br><br>
+<br><br>
 
 {% if calendar != "" %}
 <div> {{ calendar|safe }} </div>
@@ -161,69 +38,15 @@
 {% else %}
 <p> error </p>
 {% endif %}
-
-
-<!--<div class="table-responsive-md">-->
-    <!--{% if assignments %}-->
-        <!--<table class="table">-->
-             <!--{% if arrange == "title" %}-->
-                <!--<a href="?arrange=title">-->
-             <!--{% endif %}-->
-             <!--{% if arrange == "course" %}-->
-                <!--<a href="?arrange=course">-->
-             <!--{% endif %}-->
-             <!--{% if arrange == "category" %}-->
-                <!--<a href="?arrange=category">-->
-             <!--{% endif %}-->
-             <!--{% if arrange == "duedate" %}-->
-                <!--<a href="?arrange=duedate">-->
-             <!--{% endif %}-->
-             <!--{% if arrange == "description" %}-->
-                <!--<a href="?arrange=description">-->
-                        <!--{% endif %}-->
-
-             <!--{% if sort == "title" %}-->
-                 <!--<a href="?sort=title">-->
-             <!--{% endif %}-->
-             <!--{% if sort == "course" %}-->
-                 <!--<a href="?sort=course">-->
-             <!--{% endif %}-->
-             <!--{% if sort == "category" %}-->
-                 <!--<a href="?sort=category">-->
-             <!--{% endif %}-->
-             <!--{% if sort == "duedate" %}-->
-                 <!--<a href="?sort=duedate">-->
-             <!--{% endif %}-->
-             <!--{% if sort == "description" %}-->
-                 <!--<a href="?sort=description">-->
-             <!--{% endif %}-->
-
-            <!--<tr>-->
-                <!--<th>Title <a href="/?sort=title"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=title"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>-->
-                <!--<th>Course <a href="/?sort=course"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=course"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>-->
-                <!--<th>Category <a href="/?sort=category"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=category"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>-->
-                <!--<th>Due Date <a href="/?sort=duedate"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=duedate"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>-->
-                <!--<th>Description <a href="/?sort=description"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=description"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>-->
-            <!--</tr>-->
-            <!--{% for assignment in assignments %}-->
-
-                <!--<tr>-->
-                    <!--<td>{{ assignment.title }}</td>-->
-                    <!--<td>{{ assignment.course }}</td>-->
-                    <!--<td>{{ assignment.category }}</td>-->
-                    <!--<td>{{ assignment.duedate }}</td>-->
-                    <!--<td>{{ assignment.description|safe }}</td>-->
-
-                <!--</tr>-->
-            <!--{% else %}-->
-                <!--<em>You don't have any assignments currently.</em>-->
-            <!--{% endfor %}-->
-
-        <!--</table>-->
-    <!--{% else %}-->
-        <!--<em>No assignment entries here so far</em>-->
-    <!--{% endif %}-->
-
-<!--</div>-->
-
 {% endblock %}
+
+<!--<table border="0" cellpadding="0" cellspacing="0" class="month">-->
+<!--<tr><th colspan="7" class="month">December 2018</th></tr>-->
+<!--<tr><th class="sun">Sun</th><th class="mon">Mon</th><th class="tue">Tue</th><th class="wed">Wed</th><th class="thu">Thu</th><th class="fri">Fri</th><th class="sat">Sat</th></tr>-->
+<!--<tr><td class="noday">&nbsp;</td><td class="noday">&nbsp;</td><td class="noday">&nbsp;</td><td class="noday">&nbsp;</td><td class="noday">&nbsp;</td><td class="noday">&nbsp;</td><td class="sat">1</td></tr>-->
+<!--<tr><td class="sun">2</td><td class="mon">3</td><td class="tue">4</td><td class="wed">5</td><td class="thu">6</td><td class="fri">7</td><td class="sat">8</td></tr>-->
+<!--<tr><td class="sun">9</td><td class="mon">10</td><td class="tue">11</td><td class="wed">12</td><td class="thu">13</td><td class="fri">14</td><td class="sat">15</td></tr>-->
+<!--<tr><td class="sun">16</td><td class="mon">17</td><td class="tue">18</td><td class="wed">19</td><td class="thu">20</td><td class="fri">21</td><td class="sat">22</td></tr>-->
+<!--<tr><td class="sun">23</td><td class="mon">24</td><td class="tue">25</td><td class="wed">26</td><td class="thu">27</td><td class="fri">28</td><td class="sat">29</td></tr>-->
+<!--<tr><td class="sun">30</td><td class="mon">31</td><td class="noday">&nbsp;</td><td class="noday">&nbsp;</td><td class="noday">&nbsp;</td><td class="noday">&nbsp;</td><td class="noday">&nbsp;</td></tr>-->
+<!--</table>-->
