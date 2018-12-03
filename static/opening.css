@@ -1,0 +1,6 @@
+body {
+    background-image: url("{{ url_for('static', filename='laptop.jpg') }}");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+}
