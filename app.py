@@ -11,11 +11,10 @@ import os
 import calendar
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
-     render_template, flash
+    render_template, flash
 
 # create our little application :)
 app = Flask(__name__)
-
 
 # Load default config and override config from an environment variable
 app.config.update(dict(
@@ -26,6 +25,7 @@ app.config.update(dict(
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
 logged_in_account = ""
+
 
 def connect_db():
     """Connects to the specific database."""
@@ -76,16 +76,16 @@ def show_assignment():
 
     elif "arrange" in request.args:
         cur = db.execute(
-                         'select * from assignments where username = ? order by {} ASC'.format(request.args["arrange"],
-                                                                            [logged_in_account])
+            'select * from assignments where username = ? order by {} ASC'.format(request.args["arrange"],
+                                                                                  [logged_in_account])
         )
         assignments = cur.fetchall()
 
     elif "sort" in request.args:
         cur = db.execute('select * from assignments where username = ? order by {} DESC'.format(request.args["sort"],
-                                                                            [logged_in_account])
+                                                                                                [logged_in_account])
 
-        )
+                         )
 
         assignments = cur.fetchall()
 
@@ -95,19 +95,20 @@ def show_assignment():
         assignments = cur.fetchall()
     cur = db.execute('select distinct duedate from assignments order by duedate asc')
 
-
     duedates = cur.fetchall()
-    return render_template('show_assignments.html', assignments=assignments, duedates=duedates, username = logged_in_account)
+    return render_template('show_assignments.html', assignments=assignments, duedates=duedates,
+                           username=logged_in_account)
 
 
 @app.route('/add')
 def redirect_add_assignment():
-    return render_template('MainPageLayout.html', username = logged_in_account)
+    return render_template('MainPageLayout.html', username=logged_in_account)
 
 
 @app.route('/')
 def redirect_opening():
     return render_template('OpeningPage.html')
+
 
 @app.route('/login')
 def redirect_login():
@@ -118,9 +119,10 @@ def redirect_login():
 
 @app.route('/signup')
 def redirect_signup():
-    #if (logged_in_account == " "):
+    # if (logged_in_account == " "):
     return render_template('CreateAccount.html')
-    #return redirect(url_for('display_homepage'))
+    # return redirect(url_for('display_homepage'))
+
 
 @app.route('/add', methods=['POST'])
 def add_assignment():
@@ -128,9 +130,10 @@ def add_assignment():
         abort(401)
 
     db = get_db()
-    db.execute('insert into assignments (username, title, course, category, duedate, description) values (?, ?, ?, ?, ?, ?)',
-               [logged_in_account, request.form['title'], request.form['course'], request.form['category'],
-                request.form['duedate'], request.form['description']])
+    db.execute(
+        'insert into assignments (username, title, course, category, duedate, description) values (?, ?, ?, ?, ?, ?)',
+        [logged_in_account, request.form['title'], request.form['course'], request.form['category'],
+         request.form['duedate'], request.form['description']])
     # request.form gets request in a post request
     # Puts the values from the show_entries.html form into the database as (title, category, text)
     db.commit()
@@ -153,7 +156,7 @@ def edit_entry():
     db = get_db()
     cur = db.execute('select * from assignments where id=?', request.args['editid'])
     assignments = cur.fetchall()
-    return render_template('edit_layout.html', assignments=assignments, username = logged_in_account)
+    return render_template('edit_layout.html', assignments=assignments, username=logged_in_account)
 
 
 @app.route('/edit_assignment', methods=['POST'])
@@ -181,7 +184,7 @@ def create_account():
 
     if validate.fetchall():
         flash('The username already exists. Try with another username')
-        #for record in data:
+        # for record in data:
         #    print(dict(record))
         return redirect(url_for('redirect_signup'))
     else:
@@ -246,39 +249,12 @@ def logout():
 
 @app.route('/homepage')
 def display_homepage():
-    return render_template('home.html', username = logged_in_account)
+    return render_template('home.html', username=logged_in_account)
 
 
 # @app.route('/calendar')
 # def display_calendar():
-#     db = get_db()
-#
-#     if "duedate" in request.args:
-#         cur = db.execute('select * from assignments where username = ? and duedate = ? order by id desc',
-#                          [logged_in_account, request.args["duedate"]])
-#         assignments = cur.fetchall()
-#
-#     elif "arrange" in request.args:
-#         cur = db.execute(
-#                          'select * from assignments where username = ? order by {} ASC'.format(request.args["arrange"],
-#                                                                             [logged_in_account])
-#         )
-#         assignments = cur.fetchall()
-#
-#     elif "sort" in request.args:
-#         cur = db.execute('select * from assignments where username = ? order by {} DESC'.format(request.args["sort"],
-#                                                                             [logged_in_account])
-#         )
-#
-#         assignments = cur.fetchall()
-#
-#     else:
-#
-#         cur = db.execute('select * from assignments where username = ? order by id desc', [logged_in_account])
-#         assignments = cur.fetchall()
-#     cur = db.execute('select distinct duedate from assignments order by duedate asc')
-#
-#     duedates = cur.fetchall()
+
 #
 #     mo = 12 # mo = request.args[month]
 #     yr = 2018 # yr = request.args[year]
@@ -288,14 +264,25 @@ def display_homepage():
 
 @app.route('/calendar')
 def display_calendar():
-    return render_template('Calendar.html', username = logged_in_account)
+    return render_template('Calendar.html', username=logged_in_account)
+
 
 @app.route('/showcalendar', methods=['GET'])
 def input_calendar():
+
+    db = get_db()
+
+    #
+    # cur = db.execute("select * from assignments where username = ? and duedate like %?% and %?% ",
+    #                  [logged_in_account, theyr, themo])
+    #
+
+    cur = db.execute("select * from assignments where username = ? order by id desc ", [logged_in_account])
+    assignments = cur.fetchall()
+
     mo = int(request.args['month'])
     yr = int(request.args['year'])
     myCal = calendar.HTMLCalendar(calendar.SUNDAY)
     newCal = myCal.formatmonth(yr, mo)
-    print (newCal)
-    print("hello")
-    return render_template('Calendar.html', calendar = newCal, username = logged_in_account)
+
+    return render_template('Calendar.html', calendar=newCal, username=logged_in_account, assignments=assignments)

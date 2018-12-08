@@ -1,6 +1,75 @@
-body {
-    background-image: url("{{ url_for('static', filename='laptop.jpg') }}");
+html, body {
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;
+    }
+
+.mastfoot {
+    clear: both;
+    border: 1px groove #A3A1A1;
+    background: #6F6B65;
+    color: #C5C5C5;
+    padding: 0;
+    text-align: center;
+    vertical-align: middle;
+    line-height: normal;
+    margin: 0;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.box {
+  float: left;
+  width: 50%;
+  height: 90vh;
+  padding: 150px;
+  text-align: center;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.sheader {
+    min-width: 180px;
+    padding: 35px 20px 20px 20px;
+    font-weight: 700;
+    font-family: 'Charmonman', cursive;
+    text-decoration: none;
+    text-align: left;
+    box-shadow: 0 1.5px 0 #CC9618;
+    transition: opacity .3s ease-in-out;
+    color: black;
+    background-color: #FFBC1E;
+    border: 0 none;
+}
+
+.sbutton {
+    min-width: 300px;
+    padding: 50px;
+    border-radius: 7.5px;
+    font-size: 34px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    box-shadow: 0 5px 0 #CC9618; /* #CCAF46; */
+    text-align: center;
+    display: inline-block;
+    transition: opacity .3s ease-in-out;
+    color: black;
+    background-color: #FFBC1E; /* #ffdb58 */
+    border: 0 none;
+}
+
+.sbutton:hover {
+    background-color: #CC9618;
+    box-shadow: 0 5px 0 #A37813; /* #A38C38; */
 }
