@@ -71,10 +71,16 @@ body {
  * Footer
  */
 .mastfoot {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
+    clear: both;
+    border: 1px groove #A3A1A1;
+    background: #6F6B65;
+    color: #C5C5C5;
+    padding: 0;
     text-align: center;
-  color: rgba(255, 255, 255, .5);
+    vertical-align: middle;
+    line-height: normal;
+    margin: 0;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
 }

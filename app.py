@@ -193,17 +193,17 @@ def create_account():
 
         if password != re_password:
             flash('Passwords do not match. Try again.')
-            # for record in data:
+            #for record in data:
             #    print(dict(record))
             return redirect(url_for('redirect_signup'))
         else:
 
             db.execute('insert into accounts (username, password) values (?, ?)',
-                       [request.form['username'], password])
+                    [request.form['username'], password])
             db.commit()
         flash('Account creation successful.')
 
-    # for record in data:
+    #for record in data:
     #    print(dict(record))
     if logged_in_account == "":
         return redirect(url_for('redirect_login'))
@@ -269,25 +269,15 @@ def display_calendar():
 
 @app.route('/showcalendar', methods=['GET'])
 def input_calendar():
-    themo = request.args['month']
-    theyr = request.args['year']
-
 
     db = get_db()
 
-    # new sql.Request().input('theMonth', sql.VarChar, themo)
-    # new sql.Request().input('theYear', sql.VarChar, theyr)
-
-    #     `SELECT * FROM[dbo].[Users] WHERE[Name] LIKE `)
     #
-    # request.query(query)
-    # .then(value= > console.log(value))
-    # .catch(error= > console.log(error))
+    # cur = db.execute("select * from assignments where username = ? and duedate like %?% and %?% ",
+    #                  [logged_in_account, theyr, themo])
+    #
 
-    cur = db.execute("select * from assignments where username = ? and duedate like %?% and %?% ",
-                     [logged_in_account, theyr, themo])
-
-    # cur = db.execute('select * from assignments where username = ? like '%' + @theMonth + '%' and '%' + @theYear + '%'', [logged_in_account])
+    cur = db.execute("select * from assignments where username = ? order by id desc ", [logged_in_account])
     assignments = cur.fetchall()
 
     mo = int(request.args['month'])
