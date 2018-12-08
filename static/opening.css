@@ -73,3 +73,22 @@ html, body {
     background-color: #CC9618;
     box-shadow: 0 5px 0 #A37813; /* #A38C38; */
 }
+
+.imgsize {
+    border: 1px solid #CC9618;
+    border-radius: 4px;
+    padding: 5px;
+    background: #FFBC1E;
+    height: 150px;
+    width: 20%;
+
+}
+
+.alignleft {
+    float: left;
+}
+
+.bordered {
+    border: 1px solid #CC9618;
+    border-radius: 4px;
+}

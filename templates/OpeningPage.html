@@ -23,13 +23,45 @@
     <h1 class="sheader"><a class="navbar-brand" href="#">
     <img src="{{ url_for('static', filename='mangologo.png') }}" width="40" height="40" class="d-inline-block align-top" alt="">
     </a>Personal Assignment Planner</h1>
-
     <div class="clearfix">
         <div class="box box1">
             <a href="./login"><button type="button" class="sbutton">Login</button></a>
         </div>
         <div class="box box2">
             <a href="./signup"><button type="button" class="sbutton">Create Account</button></a>
+        </div>
+    </div>
+    <div class="jumbotron jumbotron-fluid bordered">
+        <div class="container">
+            <div class="media">
+                <img class="align-self-start mr-3 imgsize" src="{{ url_for('static', filename='canvas-pencil.jpg') }}" alt="Generic placeholder image">
+                <div class="media-body">
+                    <h2 class="mt-0">Plan Ahead</h2>
+                    <p>Take control of your life by staying organized. This application allows you to add, edit and sort assignments
+                    to ensure that you stay on top of everything. Each assignment has features, such as assignment title, class,
+                    due date, and much more. </p>
+                </div>
+            </div>
+            <br><hr class="my-4"><br>
+            <div class="media">
+                <div class="media-body">
+                    <h2 class="mt-0 mb-1">Keep on Schedule</h2>
+                    <p>Put away your calendars because we took care of that. Take a look at our calendar feature,
+                        which allows you to look up any month or year. Your assignments are displayed below accordingly based on their
+                        individual due dates.</p>
+                </div>
+                <img class="ml-3 imgsize alignleft" src="{{ url_for('static', filename='calendar.jpg') }}" alt="Generic placeholder image">
+            </div>
+            <br><hr class="my-4"><br>
+            <div class="media">
+                <img class="align-self-start mr-3 imgsize" src="{{ url_for('static', filename='focus.jpg') }}" alt="Generic placeholder image">
+                <div class="media-body">
+                    <h2 class="mt-0">Stay Focused</h2>
+                    <p>Have a hard time figuring out what to work on? This application allows you to mark each assignment with different priority
+                    levels, and you are in control. What happens when you're finished with an assignment? Easy! Just delete it using a delete button
+                    next to each assignment.</p>
+                </div>
+            </div>
         </div>
     </div>
 
