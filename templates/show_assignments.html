@@ -3,7 +3,7 @@
 
 <!--Show all assignments page-->
 
-    <ul class="duedates blacktext">
+    <ul class="duedates">
         <li><a href="?">[all]</a></li>
         {% for duedate in duedates %}
             {% if '' not in duedate %}
@@ -12,10 +12,8 @@
         {% endfor %}
     </ul>
 
-
     <a href="./add"><button type="button" class="btn btn-primary">Add assignments</button></a>
     <br>
-
 
     <br>
 
