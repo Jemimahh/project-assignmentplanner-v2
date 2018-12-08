@@ -9,9 +9,12 @@ arrow {
 
 
 .flash { /* ref: http://flask.pocoo.org/docs/0.12/tutorial/ */
-    background: #CEE5F5;
+    background: #FFDA82;
     padding: 0.5em;
-    border: 1px solid #AACBE2;
+    border: 1px solid #CC9618;
+    font-size: 18px;
+    width: 70%;
+    margin: auto;
 }
 .accImg{
     background-image: url('signUpBackground.jpg');
