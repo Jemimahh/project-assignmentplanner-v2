@@ -265,16 +265,27 @@ def input_calendar():
     #                  [logged_in_account, theyr, themo])
     #
 
-    cur = db.execute("select * from assignments where username = ? order by id desc ", [logged_in_account])
-    assignments = cur.fetchall()
-
     month = request.args['month']
     year = request.args['year']
-    if month or year == "":
-        month = '1'
-        year = '2019'
-    mo = int(month)
-    yr = int(year)
+
+    like_str = "{}-{}-%".format(year, month)
+
+    # year and month will be inserted into the {} placeholders; change the string to put
+    # them in whatever order and format you need to match the values in your database
+    #"SELECT ... username = ? and duedate like ?"[logged_in_account, like_str]
+
+    cur = db.execute("select * from assignments where username = ? and duedate like ? order by id desc ",
+                     [logged_in_account, like_str])
+    assignments = cur.fetchall()
+
+    if month == "" or year == "":
+        mo = 1
+        yr = 2019
+    else:
+        mo = int(request.args['month'])
+        yr = int(request.args['year'])
+
+    print(mo, yr)
     myCal = calendar.HTMLCalendar(calendar.SUNDAY)
     newCal = myCal.formatmonth(yr, mo)
 
