@@ -19,3 +19,19 @@ arrow {
 .accImg{
     background-image: url('signUpBackground.jpg');
 }
+
+.month {
+    padding: 40px 10px;
+    width: 100%;
+    background: #FFBC1E; /* rgb(255, 212, 72); */
+    text-align: center;
+    font-size: 150%
+}
+
+.noday, .sun, .mon, .tue, .wed, .thu, .fri, .sat {
+    padding: 10px 0;
+    width: 100px;
+    background: #eee;
+    margin: 0;
+    text-align: center;
+}
