@@ -150,5 +150,60 @@ class FlaskrTestCase(unittest.TestCase):
         assert b"title2" not in rv.data
         assert b"title3" not in rv.data
 
+    def test_sort(self):
+        self.create("user", "pw", "pw")
+        self.login("user", "pw")
+
+        self.add_entry('title1', 'CS253', 'C1', 'Critical', '2018-01-30', 'D1')
+        self.add_entry('title2', 'CS254', 'C2', 'High', '2018-02-20', 'D2')
+        self.add_entry('title3', 'CS255', 'C3', 'Normal', '2019-03-20', 'D3')
+        self.add_entry('title4', 'CS256', 'C4', 'Low', '2018-04-30', 'D4')
+
+
+        rv = self.app.get('/assignments?arrange=title')
+        assert b"<tr class=critical>"
+        b"<td>title1</td><td>CS253</td><td>C1</td><td>Critical</td><td>2018-01-30</td><td>D1</td></tr>"
+        b"<tr class=high><td>title2</td><td>CS254</td><td>C2</td><td>High</td><td>2018-02-20</td><td>D2</td>"
+        b"</tr>"
+        b"<tr class=normal>"
+        b"<td>title3</td><td>CS255</td><td>C3</td><td>Normal</td><td>2018-03-20</td><td>D3</td>"
+        b"</tr>"
+        b"<tr class=low><td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
+        b"</tr>" in rv.data
+
+        rv = self.app.get('/assignments?arrange=course')
+        assert b"<tr class=critical>"
+        b"<td>title1</td><td>CS253</td><td>C1</td><td>Critical</td><td>2018-01-30</td><td>D1</td></tr>"
+        b"<tr class=high><td>title2</td><td>CS254</td><td>C2</td><td>High</td><td>2018-02-20</td><td>D2</td>"
+        b"</tr>"
+        b"<tr class=normal>"
+        b"<td>title3</td><td>CS255</td><td>C3</td><td>Normal</td><td>2018-03-20</td><td>D3</td>"
+        b"</tr>"
+        b"<tr class=low><td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
+        b"</tr>" in rv.data
+
+        rv = self.app.get('/assignments?arrange=category')
+        assert b"<tr class=critical>"
+        b"<td>title1</td><td>CS253</td><td>C1</td><td>Critical</td><td>2018-01-30</td><td>D1</td></tr>"
+        b"<tr class=high><td>title2</td><td>CS254</td><td>C2</td><td>High</td><td>2018-02-20</td><td>D2</td>"
+        b"</tr>"
+        b"<tr class=normal>"
+        b"<td>title3</td><td>CS255</td><td>C3</td><td>Normal</td><td>2018-03-20</td><td>D3</td>"
+        b"</tr>"
+        b"<tr class=low><td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
+        b"</tr>" in rv.data
+
+        rv = self.app.get('/assignments?sort=course')
+        assert b"<tr class=critical>"
+        b"<td>title1</td><td>CS253</td><td>C1</td><td>Critical</td><td>2018-01-30</td><td>D1</td></tr>"
+        b"<tr class=high><td>title2</td><td>CS254</td><td>C2</td><td>High</td><td>2018-02-20</td><td>D2</td>"
+        b"</tr>"
+        b"<tr class=normal>"
+        b"<td>title3</td><td>CS255</td><td>C3</td><td>Normal</td><td>2018-03-20</td><td>D3</td>"
+        b"</tr>"
+        b"<tr class=low><td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
+        b"</tr>" in rv.data
+
+
 if __name__ == '__main__':
     unittest.main()
