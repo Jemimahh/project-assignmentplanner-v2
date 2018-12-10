@@ -82,13 +82,13 @@ def show_assignment():
     elif "sort" in request.args:
         cur = db.execute('select * from assignments where username = ? order by {} DESC'.format(request.args["sort"],
                 [logged_in_account]))
-
         assignments = cur.fetchall()
 
     else:
 
         cur = db.execute('select * from assignments where username = ? order by id desc', [logged_in_account])
         assignments = cur.fetchall()
+
     cur = db.execute('select distinct duedate from assignments order by duedate asc')
 
     duedates = cur.fetchall()
@@ -134,10 +134,9 @@ def add_assignment():
         abort(401)
 
     db = get_db()
-    db.execute(
-        'insert into assignments (username, title, course, category, duedate, description) values (?, ?, ?, ?, ?, ?)',
-        [logged_in_account, request.form['title'], request.form['course'], request.form['category'],
-         request.form['duedate'], request.form['description']])
+    db.execute('insert into assignments (username, title, course, category, priority, duedate, description) '
+               'values (?, ?, ?, ?, ?, ?, ?)', [logged_in_account, request.form['title'], request.form['course'],
+                request.form['category'], request.form['priority'], request.form['duedate'], request.form['description']])
     # request.form gets request in a post request
     # Puts the values from the show_entries.html form into the database as (title, category, text)
     db.commit()
@@ -170,10 +169,11 @@ def update_entry():
     title = request.form['title']
     course = request.form['course']
     category = request.form['category']
+    priority = request.form['priority']
     duedate = request.form['duedate']
     description = request.form['description']
-    db.execute('update assignments set title = ?, course = ?, category = ?, duedate = ?, description = ? where id = ?',
-               (title, course, category, duedate, description, theid))
+    db.execute('update assignments set title = ?, course = ?, category = ?, priority = ?, duedate = ?, description = ? where id = ?',
+               (title, course, category, priority, duedate, description, theid))
     db.commit()
     # Commits it to the database
     flash('New entry was successfully edited')
@@ -265,11 +265,24 @@ def input_calendar():
 
     db = get_db()
 
-    cur = db.execute("select * from assignments where username = ? order by id desc ", [logged_in_account])
+    month = request.args['month']
+    year = request.args['year']
+
+    like_str = "{}-{}-%".format(year, month)
+
+    cur = db.execute("select * from assignments where username = ? and duedate like ? order by duedate ASC",
+                     [logged_in_account, like_str])
+
     assignments = cur.fetchall()
 
-    mo = int(request.args['month'])
-    yr = int(request.args['year'])
+    if month == "" or year == "":
+        mo = 1
+        yr = 2019
+    else:
+        mo = int(request.args['month'])
+        yr = int(request.args['year'])
+
+    print(mo, yr)
     myCal = calendar.HTMLCalendar(calendar.SUNDAY)
     newCal = myCal.formatmonth(yr, mo)
 

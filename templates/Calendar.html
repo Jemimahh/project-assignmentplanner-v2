@@ -1,21 +1,36 @@
 {% extends "layout_template.html" %}
 {% block extracss %}
+    .critical {
+        color: #BF0B0B;
+        font-size: 16px;
+        text-shadow:
+		-0.2px -0.2px 0 #890808,
+		0.2px -0.2px 0 #890808,
+		-0.2px 0.2px 0 #890808,
+		0.2px 0.2px 0 #890808;
 
-.month {
-    padding: 40px 10px;
-    width: 100%;
-    background: rgb(255, 212, 72);
-    text-align: center;
-    font-size: 150%
-}
+    }
 
-.noday, .sun, .mon, .tue, .wed, .thu, .fri, .sat {
-    padding: 10px 0;
-    width: 100px;
-    background: #eee;
-    margin: 0;
-    text-align: center;
-}
+    .high {
+        color: #CC9618;
+        font-size: 16px;
+        text-shadow:
+		-0.2px -0.2px 0 #A7790C,
+		0.2px -0.2px 0 #A7790C,
+		-0.2px 0.2px 0 #A7790C,
+		0.2px 0.2px 0 #A7790C;
+    }
+
+    .low {
+        color: #2C7C0C;
+        font-size: 16px;
+        text-shadow:
+		-0.2px -0.2px 0 #1A4D05,
+		0.2px -0.2px 0 #1A4D05,
+		-0.2px 0.2px 0 #1A4D05,
+		0.2px 0.2px 0 #1A4D05;
+
+    }
 {% endblock %}
 
 {% block body %}
@@ -38,90 +53,64 @@
 {% else %}
 <p> error </p>
 {% endif %}
-<br><br>
+<br>
+<div class="extrapadding2"><a href="./add"><button type="button" class="btn btn-primary">Add Assignments</button></a></div>
 
-
-{% if assignments %}
+    {% if assignments %}
         <table class="table">
-             {% if arrange == "title" %}
-                <a href="?arrange=title">
-             {% endif %}
-             {% if arrange == "course" %}
-                <a href="?arrange=course">
-             {% endif %}
-             {% if arrange == "category" %}
-                <a href="?arrange=category">
-             {% endif %}
-             {% if arrange == "duedate" %}
-                <a href="?arrange=duedate">
-             {% endif %}
-             {% if arrange == "description" %}
-                <a href="?arrange=description">
-                        {% endif %}
-
-             {% if sort == "title" %}
-                 <a href="?sort=title">
-             {% endif %}
-             {% if sort == "course" %}
-                 <a href="?sort=course">
-             {% endif %}
-             {% if sort == "category" %}
-                 <a href="?sort=category">
-             {% endif %}
-             {% if sort == "duedate" %}
-                 <a href="?sort=duedate">
-             {% endif %}
-             {% if sort == "description" %}
-                 <a href="?sort=description">
-             {% endif %}
-
             <tr>
-                <th>Edit/Delete </th>
-                <th>Title <a href="/?sort=title"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=title"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
-                <th>Course <a href="/?sort=course"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=course"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
-                <th>Category <a href="/?sort=category"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=category"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
-                <th>Due Date <a href="/?sort=duedate"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=duedate"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
-                <th>Description <a href="/?sort=description"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=description"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+                <th class="text-center">Edit/Delete </th>
+                <th class="text-center">Title </a></th>
+                <th class="text-center">Course </a></th>
+                <th class="text-center">Category </a></th>
+                <th class="text-center">Priority </a></th>
+                <th class="text-center">Due Date </a></th>
+                <th class="text-center">Description </a></th>
             </tr>
-            {% for assignment in assignments %}
 
-                <tr>
-                    <td>
-                        <form action="{{ url_for('edit_entry') }}" method="get" class="inline">
-                            <button type="submit" class="btn btn-primary glyphicon glyphicon-pencil"></button>
-                            <input type="hidden" value="{{ assignment.id }}" name="editid">
-                        </form>
-                        <form action="{{ url_for('del_assignment') }}" method="post" class="inline">
-                            <button type="submit" class="btn btn-primary glyphicon glyphicon-remove"></button>
-                            <input type="hidden" value="{{ assignment.id }}" name="id">
-                        </form>
-                    </td>
-                    <td>{{ assignment.title }}</td>
-                    <td>{{ assignment.course }}</td>
-                    <td>{{ assignment.category }}</td>
-                    <td>{{ assignment.duedate }}</td>
-                    <td>{{ assignment.description|safe }}</td>
-
-                </tr>
-            {% else %}
-                <em>You don't have any assignments currently.</em>
-            {% endfor %}
+        {% for assignment in assignments %}
+           {% if assignment.priority == "Critical": %}
+            <tr class="critical">
+           {% elif assignment.priority == "High": %}
+            <tr class="high">
+           {% elif assignment.priority == "Normal": %}
+            <tr class="normal">
+           {% elif assignment.priority == "Low": %}
+            <tr class="low">
+           {% else %}
+            <tr>
+            {% endif %}
+                <td>
+                    <form action="{{ url_for('edit_entry') }}" method="get" class="inline">
+                        <button type="submit" class="btn btn-primary glyphicon glyphicon-pencil"></button>
+                        <input type="hidden" value="{{ assignment.id }}" name="editid">
+                    </form>
+                    <form action="{{ url_for('del_assignment') }}" method="post" class="inline">
+                        <button type="submit" class="btn btn-primary glyphicon glyphicon-remove"></button>
+                        <input type="hidden" value="{{ assignment.id }}" name="id">
+                    </form>
+                  </td>
+                <td>{{ assignment.title }}</td>
+                <td>{{ assignment.course }}</td>
+                <td>{{ assignment.category }}</td>
+                <td>{{ assignment.priority }}</td>
+                <td>{{ assignment.duedate }}</td>
+                <td>{{ assignment.description|safe }}</td>
+            </tr>
+             <br><br>
+        {% else %}
+             <br><br>
+             <em>No assignment entries here so far.</em>
+             <br><br>
+        {% endfor %}
 
         </table>
     {% else %}
-        <em>No assignment entries here so far</em>
+        <br><br>
+        <em>You don't have any assignments currently.</em>
+        <br><br>
     {% endif %}
 
+    </div>
     <br><br>
 {% endblock %}
-
-<!--<table border="0" cellpadding="0" cellspacing="0" class="month">-->
-<!--<tr><th colspan="7" class="month">December 2018</th></tr>-->
-<!--<tr><th class="sun">Sun</th><th class="mon">Mon</th><th class="tue">Tue</th><th class="wed">Wed</th><th class="thu">Thu</th><th class="fri">Fri</th><th class="sat">Sat</th></tr>-->
-<!--<tr><td class="noday">&nbsp;</td><td class="noday">&nbsp;</td><td class="noday">&nbsp;</td><td class="noday">&nbsp;</td><td class="noday">&nbsp;</td><td class="noday">&nbsp;</td><td class="sat">1</td></tr>-->
-<!--<tr><td class="sun">2</td><td class="mon">3</td><td class="tue">4</td><td class="wed">5</td><td class="thu">6</td><td class="fri">7</td><td class="sat">8</td></tr>-->
-<!--<tr><td class="sun">9</td><td class="mon">10</td><td class="tue">11</td><td class="wed">12</td><td class="thu">13</td><td class="fri">14</td><td class="sat">15</td></tr>-->
-<!--<tr><td class="sun">16</td><td class="mon">17</td><td class="tue">18</td><td class="wed">19</td><td class="thu">20</td><td class="fri">21</td><td class="sat">22</td></tr>-->
-<!--<tr><td class="sun">23</td><td class="mon">24</td><td class="tue">25</td><td class="wed">26</td><td class="thu">27</td><td class="fri">28</td><td class="sat">29</td></tr>-->
-<!--<tr><td class="sun">30</td><td class="mon">31</td><td class="noday">&nbsp;</td><td class="noday">&nbsp;</td><td class="noday">&nbsp;</td><td class="noday">&nbsp;</td><td class="noday">&nbsp;</td></tr>-->
-<!--</table>-->

@@ -12,6 +12,7 @@ create table assignments (
   title text not null,
   course text not null,
   category text not null,
+  priority text not null,
   duedate text not null,
   description text not null
 );

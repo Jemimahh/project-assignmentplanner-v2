@@ -14,6 +14,7 @@
 
     <!-- Custom styles for this template -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='loginpage.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Charmonman" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -29,14 +30,14 @@
 
 </head>
 
-<body class="text-center">
+<body>
     <h1 class="mainHead">Personal Assignment Planner</h1>
-        <div class="container">
+        <div class="container text-center">
             <br><br>
           {% for message in get_flashed_messages() %}
             <div class="flash">{{ message }}</div>
           {% endfor %}
-            <br>
+            <br><br>
             <!--Body Insert-->
           {% block body %}{% endblock %}
 
