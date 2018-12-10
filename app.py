@@ -76,16 +76,12 @@ def show_assignment():
 
     elif "arrange" in request.args:
         cur = db.execute(
-                         'select * from assignments where username = ? order by {} ASC'.format(request.args["arrange"],
-                                                                            [logged_in_account])
-        )
+                         'select * from assignments where username={} order by {} ASC'.format(logged_in_account, request.args["arrange"]))
+
         assignments = cur.fetchall()
 
     elif "sort" in request.args:
-        cur = db.execute('select * from assignments where username = ? order by {} DESC'.format(request.args["sort"],
-                                                                            [logged_in_account])
-
-        )
+        cur = db.execute('select * from assignments where username={} order by {} DESC'.format(logged_in_account, request.args["sort"]))
 
         assignments = cur.fetchall()
 
@@ -102,12 +98,16 @@ def show_assignment():
 
 @app.route('/add')
 def redirect_add_assignment():
+    if logged_in_account == "":
+        return redirect(url_for('redirect_login'))
     return render_template('MainPageLayout.html', username = logged_in_account)
 
 
 @app.route('/')
 def redirect_opening():
-    return render_template('OpeningPage.html')
+    if logged_in_account == "":
+        return render_template('OpeningPage.html')
+    return redirect(url_for('display_homepage'))
 
 @app.route('/login')
 def redirect_login():
@@ -118,9 +118,9 @@ def redirect_login():
 
 @app.route('/signup')
 def redirect_signup():
-    #if (logged_in_account == " "):
-    return render_template('CreateAccount.html')
-    #return redirect(url_for('display_homepage'))
+    if (logged_in_account == ""):
+        return render_template('CreateAccount.html')
+    return redirect(url_for('display_homepage'))
 
 @app.route('/add', methods=['POST'])
 def add_assignment():
@@ -202,8 +202,8 @@ def create_account():
 
     #for record in data:
     #    print(dict(record))
-    if logged_in_account == "":
-        return redirect(url_for('redirect_login'))
+    #if logged_in_account == "":
+        #return redirect(url_for('redirect_login'))
     return redirect(url_for('display_homepage'))
 
 
@@ -247,44 +247,6 @@ def logout():
 @app.route('/homepage')
 def display_homepage():
     return render_template('home.html', username = logged_in_account)
-
-
-# @app.route('/calendar')
-# def display_calendar():
-#     db = get_db()
-#
-#     if "duedate" in request.args:
-#         cur = db.execute('select * from assignments where username = ? and duedate = ? order by id desc',
-#                          [logged_in_account, request.args["duedate"]])
-#         assignments = cur.fetchall()
-#
-#     elif "arrange" in request.args:
-#         cur = db.execute(
-#                          'select * from assignments where username = ? order by {} ASC'.format(request.args["arrange"],
-#                                                                             [logged_in_account])
-#         )
-#         assignments = cur.fetchall()
-#
-#     elif "sort" in request.args:
-#         cur = db.execute('select * from assignments where username = ? order by {} DESC'.format(request.args["sort"],
-#                                                                             [logged_in_account])
-#         )
-#
-#         assignments = cur.fetchall()
-#
-#     else:
-#
-#         cur = db.execute('select * from assignments where username = ? order by id desc', [logged_in_account])
-#         assignments = cur.fetchall()
-#     cur = db.execute('select distinct duedate from assignments order by duedate asc')
-#
-#     duedates = cur.fetchall()
-#
-#     mo = 12 # mo = request.args[month]
-#     yr = 2018 # yr = request.args[year]
-#     print(calendar.month(yr,mo))
-#     print("display")
-#     return render_template('Calendar.html', username = logged_in_account, assignments=assignments, duedates=duedates)
 
 @app.route('/calendar')
 def display_calendar():

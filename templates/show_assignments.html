@@ -1,9 +1,9 @@
 {% extends "layout_template.html" %}
 {% block body %}
 
-<!--Show all assignments page-->
+    <!--Show all assignments page-->
 
-    <ul class="duedates blacktext">
+    <ul>
         <li><a href="?">[all]</a></li>
         {% for duedate in duedates %}
             {% if '' not in duedate %}
@@ -21,42 +21,42 @@
 
     {% if assignments %}
         <table class="table">
-             {% if arrange == "title" %}
+            {% if arrange == "title" %}
                 <a href="?arrange=title">
-             {% endif %}
-             {% if arrange == "course" %}
+            {% endif %}
+            {% if arrange == "course" %}
                 <a href="?arrange=course">
-             {% endif %}
-             {% if arrange == "category" %}
+            {% endif %}
+            {% if arrange == "category" %}
                 <a href="?arrange=category">
-             {% endif %}
-             {% if arrange == "duedate" %}
+            {% endif %}
+            {% if arrange == "duedate" %}
                 <a href="?arrange=duedate">
-             {% endif %}
-             {% if arrange == "description" %}
+            {% endif %}
+            {% if arrange == "description" %}
                 <a href="?arrange=description">
-                        {% endif %}
+            {% endif %}
 
-             {% if sort == "title" %}
-                 <a href="?sort=title">
-             {% endif %}
-             {% if sort == "course" %}
-                 <a href="?sort=course">
-             {% endif %}
-             {% if sort == "category" %}
-                 <a href="?sort=category">
-             {% endif %}
-             {% if sort == "duedate" %}
-                 <a href="?sort=duedate">
-             {% endif %}
-             {% if sort == "description" %}
-                 <a href="?sort=description">
-             {% endif %}
+            {% if sort == "title" %}
+                <a href="?sort=title">
+            {% endif %}
+            {% if sort == "course" %}
+                <a href="?sort=course">
+            {% endif %}
+            {% if sort == "category" %}
+                <a href="?sort=category">
+            {% endif %}
+            {% if sort == "duedate" %}
+                <a href="?sort=duedate">
+            {% endif %}
+            {% if sort == "description" %}
+                <a href="?sort=description">
+            {% endif %}
 
             <tr>
                 <th>Edit/Delete </th>
-                <th>Title <a href="/?sort=title"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=title"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
-                <th>Course <a href="/?sort=course"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=course"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+                <th>Title <a href="/assignments?sort=title"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/assignments?arrange=title"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+                <th>Course <a href="/assignments?sort=course"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=course"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
                 <th>Category <a href="/?sort=category"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=category"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
                 <th>Due Date <a href="/?sort=duedate"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=duedate"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
                 <th>Description <a href="/?sort=description"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=description"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
@@ -91,4 +91,8 @@
     {% endif %}
 
     </div>
+
+    <script>
+
+    </script>
 {% endblock %}
