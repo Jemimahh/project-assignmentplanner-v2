@@ -171,6 +171,21 @@ class FlaskrTestCase(unittest.TestCase):
         b"<tr class=low><td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
         b"</tr>" in rv.data
 
+        rv = self.app.get('/assignments?sort=title')
+        assert b"<tr class=low>"
+        b"<td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
+        b"</tr>"
+        b"<tr class=low><td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
+        b"</tr>"
+        b"<tr class=normal>"
+        b"<td>title3</td><td>CS255</td><td>C3</td><td>Normal</td><td>2018-03-20</td><td>D3</td>"
+        b"</tr>"
+        b"<tr class=high><td>title2</td><td>CS254</td><td>C2</td><td>High</td><td>2018-02-20</td><td>D2</td>"
+        b"</tr>"
+        b"<tr class=critical>"
+        b"<td>title1</td><td>CS253</td><td>C1</td><td>Critical</td><td>2018-01-30</td><td>D1</td></tr>" in rv.data
+
+
         rv = self.app.get('/assignments?arrange=course')
         assert b"<tr class=critical>"
         b"<td>title1</td><td>CS253</td><td>C1</td><td>Critical</td><td>2018-01-30</td><td>D1</td></tr>"
@@ -181,6 +196,20 @@ class FlaskrTestCase(unittest.TestCase):
         b"</tr>"
         b"<tr class=low><td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
         b"</tr>" in rv.data
+
+        rv = self.app.get('/assignments?sort=course')
+        assert b"<tr class=low>"
+        b"<td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
+        b"</tr>"
+        b"<tr class=low><td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
+        b"</tr>"
+        b"<tr class=normal>"
+        b"<td>title3</td><td>CS255</td><td>C3</td><td>Normal</td><td>2018-03-20</td><td>D3</td>"
+        b"</tr>"
+        b"<tr class=high><td>title2</td><td>CS254</td><td>C2</td><td>High</td><td>2018-02-20</td><td>D2</td>"
+        b"</tr>"
+        b"<tr class=critical>"
+        b"<td>title1</td><td>CS253</td><td>C1</td><td>Critical</td><td>2018-01-30</td><td>D1</td></tr>" in rv.data
 
         rv = self.app.get('/assignments?arrange=category')
         assert b"<tr class=critical>"
@@ -193,7 +222,21 @@ class FlaskrTestCase(unittest.TestCase):
         b"<tr class=low><td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
         b"</tr>" in rv.data
 
-        rv = self.app.get('/assignments?sort=course')
+        rv = self.app.get('/assignments?sort=category')
+        assert b"<tr class=low>"
+        b"<td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
+        b"</tr>"
+        b"<tr class=low><td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
+        b"</tr>"
+        b"<tr class=normal>"
+        b"<td>title3</td><td>CS255</td><td>C3</td><td>Normal</td><td>2018-03-20</td><td>D3</td>"
+        b"</tr>"
+        b"<tr class=high><td>title2</td><td>CS254</td><td>C2</td><td>High</td><td>2018-02-20</td><td>D2</td>"
+        b"</tr>"
+        b"<tr class=critical>"
+        b"<td>title1</td><td>CS253</td><td>C1</td><td>Critical</td><td>2018-01-30</td><td>D1</td></tr>" in rv.data
+
+        rv = self.app.get('/assignments?arrange=priority')
         assert b"<tr class=critical>"
         b"<td>title1</td><td>CS253</td><td>C1</td><td>Critical</td><td>2018-01-30</td><td>D1</td></tr>"
         b"<tr class=high><td>title2</td><td>CS254</td><td>C2</td><td>High</td><td>2018-02-20</td><td>D2</td>"
@@ -203,6 +246,70 @@ class FlaskrTestCase(unittest.TestCase):
         b"</tr>"
         b"<tr class=low><td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
         b"</tr>" in rv.data
+
+        rv = self.app.get('/assignments?sort=priority')
+        assert b"<tr class=low>"
+        b"<td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
+        b"</tr>"
+        b"<tr class=low><td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
+        b"</tr>"
+        b"<tr class=normal>"
+        b"<td>title3</td><td>CS255</td><td>C3</td><td>Normal</td><td>2018-03-20</td><td>D3</td>"
+        b"</tr>"
+        b"<tr class=high><td>title2</td><td>CS254</td><td>C2</td><td>High</td><td>2018-02-20</td><td>D2</td>"
+        b"</tr>"
+        b"<tr class=critical>"
+        b"<td>title1</td><td>CS253</td><td>C1</td><td>Critical</td><td>2018-01-30</td><td>D1</td></tr>" in rv.data
+
+        rv = self.app.get('/assignments?arrange=duedate')
+        assert b"<tr class=critical>"
+        b"<td>title1</td><td>CS253</td><td>C1</td><td>Critical</td><td>2018-01-30</td><td>D1</td></tr>"
+        b"<tr class=high><td>title2</td><td>CS254</td><td>C2</td><td>High</td><td>2018-02-20</td><td>D2</td>"
+        b"</tr>"
+        b"<tr class=normal>"
+        b"<td>title3</td><td>CS255</td><td>C3</td><td>Normal</td><td>2018-03-20</td><td>D3</td>"
+        b"</tr>"
+        b"<tr class=low><td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
+        b"</tr>" in rv.data
+
+        rv = self.app.get('/assignments?sort=duedate')
+        assert b"<tr class=low>"
+        b"<td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
+        b"</tr>"
+        b"<tr class=low><td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
+        b"</tr>"
+        b"<tr class=normal>"
+        b"<td>title3</td><td>CS255</td><td>C3</td><td>Normal</td><td>2018-03-20</td><td>D3</td>"
+        b"</tr>"
+        b"<tr class=high><td>title2</td><td>CS254</td><td>C2</td><td>High</td><td>2018-02-20</td><td>D2</td>"
+        b"</tr>"
+        b"<tr class=critical>"
+        b"<td>title1</td><td>CS253</td><td>C1</td><td>Critical</td><td>2018-01-30</td><td>D1</td></tr>" in rv.data
+
+        rv = self.app.get('/assignments?arrange=description')
+        assert b"<tr class=critical>"
+        b"<td>title1</td><td>CS253</td><td>C1</td><td>Critical</td><td>2018-01-30</td><td>D1</td></tr>"
+        b"<tr class=high><td>title2</td><td>CS254</td><td>C2</td><td>High</td><td>2018-02-20</td><td>D2</td>"
+        b"</tr>"
+        b"<tr class=normal>"
+        b"<td>title3</td><td>CS255</td><td>C3</td><td>Normal</td><td>2018-03-20</td><td>D3</td>"
+        b"</tr>"
+        b"<tr class=low><td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
+        b"</tr>" in rv.data
+
+        rv = self.app.get('/assignments?sort=description')
+        assert b"<tr class=low>"
+        b"<td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
+        b"</tr>"
+        b"<tr class=low><td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
+        b"</tr>"
+        b"<tr class=normal>"
+        b"<td>title3</td><td>CS255</td><td>C3</td><td>Normal</td><td>2018-03-20</td><td>D3</td>"
+        b"</tr>"
+        b"<tr class=high><td>title2</td><td>CS254</td><td>C2</td><td>High</td><td>2018-02-20</td><td>D2</td>"
+        b"</tr>"
+        b"<tr class=critical>"
+        b"<td>title1</td><td>CS253</td><td>C1</td><td>Critical</td><td>2018-01-30</td><td>D1</td></tr>" in rv.data
 
 
 if __name__ == '__main__':
