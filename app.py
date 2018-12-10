@@ -9,6 +9,7 @@
 
 import os
 import calendar
+import datetime
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
     render_template, flash
@@ -77,12 +78,12 @@ def show_assignment():
     elif "arrange" in request.args:
         cur = db.execute(
             'select * from assignments where username = ? order by {} ASC'.format(request.args["arrange"],
-                                                                                  [logged_in_account]))
+                         [logged_in_account]))
         assignments = cur.fetchall()
 
     elif "sort" in request.args:
         cur = db.execute('select * from assignments where username = ? order by {} DESC'.format(request.args["sort"],
-                                                                                                [logged_in_account]))
+                         [logged_in_account]))
 
         assignments = cur.fetchall()
 
@@ -247,7 +248,30 @@ def logout():
 
 @app.route('/homepage')
 def display_homepage():
-    return render_template('home.html', username=logged_in_account)
+    now = datetime.datetime.now()
+    today = now.strftime("%Y-%m-%d %I:%M")
+
+    db = get_db()
+
+    critical = db.execute("select count(*) from assignments where username = ? and priority = 'Critical'",
+                     [logged_in_account])
+    high = db.execute("select count(*) from assignments where username = ? and priority = 'High'",
+                     [logged_in_account])
+    normal = db.execute("select count(*) from assignments where username = ? and priority = 'Normal'",
+                     [logged_in_account])
+    low = db.execute("select count(*) from assignments where username = ? and priority = 'Low'",
+                     [logged_in_account])
+
+    priority1 = critical.fetchone()
+    number_of_critical = priority1[0]
+    priority2 = high.fetchone()
+    number_of_high = priority2[0]
+    priority3 = normal.fetchone()
+    number_of_normal = priority3[0]
+    priority4 = low.fetchone()
+    number_of_low = priority4[0]
+
+    return render_template('home.html', username=logged_in_account, critical=number_of_critical, high=number_of_high, normal=number_of_normal, low=number_of_low, today=today)
 
 
 @app.route('/calendar')
@@ -270,10 +294,6 @@ def input_calendar():
 
     like_str = "{}-{}-%".format(year, month)
 
-    # year and month will be inserted into the {} placeholders; change the string to put
-    # them in whatever order and format you need to match the values in your database
-    #"SELECT ... username = ? and duedate like ?"[logged_in_account, like_str]
-
     cur = db.execute("select * from assignments where username = ? and duedate like ? order by duedate ASC",
                      [logged_in_account, like_str])
     assignments = cur.fetchall()
@@ -285,7 +305,6 @@ def input_calendar():
         mo = int(request.args['month'])
         yr = int(request.args['year'])
 
-    print(mo, yr)
     myCal = calendar.HTMLCalendar(calendar.SUNDAY)
     newCal = myCal.formatmonth(yr, mo)
 
