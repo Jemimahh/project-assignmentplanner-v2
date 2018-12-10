@@ -18,10 +18,6 @@ class FlaskrTestCase(unittest.TestCase):
         os.close(self.db_fd)
         os.unlink(planner.app.config['DATABASE'])
 
-    def test_empty_db(self):
-        rv = self.app.get('/assignments')
-        assert b'No assignment entries here so far' in rv.data
-
     def create(self, username, password1, password2):
         return self.app.post('/create_account', data=dict(username=username, password=password1, password2=password2)
             ,follow_redirects=True)
@@ -50,21 +46,26 @@ class FlaskrTestCase(unittest.TestCase):
         rv = self.login("user", "wrong_pw")
         assert b"Wrong username and password. Try again" in rv.data
 
+    def test_empty_db(self):
+        self.login("user", "pw")
+        rv = self.app.get('/assignments')
+        assert b"You don't have any assignments currently." in rv.data
+
 
     # modified login() code from the following source
     # http://flask.pocoo.org/docs/0.12/testing/
-    def add_entry(self, title, course, category, duedate, description):
+    def add_entry(self, title, course, category, priority, duedate, description):
         return self.app.post('/add',
-            data=dict(title=title, course=course, category=category, duedate=duedate, description=description),
-            follow_redirects=True)
+            data=dict(title=title, course=course, category=category, priority=priority,
+                      duedate=duedate, description=description), follow_redirects=True)
 
     def test_add_entry(self):
-        rv = self.add_entry('title1', 'CS253', 'None', '1111-11-11T11:11', 'D1')
+        rv = self.add_entry('title1', 'CS253', 'None', 'High', '1111-11-11T11:11', 'D1')
         assert b"Unauthorized" in rv.data
 
         self.create("user", "pw", "pw")
         self.login("user", "pw")
-        rv = self.add_entry('title1', 'CS253', 'None', '1111-11-11T11:11', 'D1')
+        rv = self.add_entry('title1', 'CS253', 'None', 'High', '1111-11-11T11:11', 'D1')
         assert b"title1" in rv.data
         assert b"New assignment was successfully saved." in rv.data
 
@@ -78,13 +79,13 @@ class FlaskrTestCase(unittest.TestCase):
         self.create("user", "pw", "pw")
         self.login("user", "pw")
 
-        rv = self.add_entry('title1', 'CS253.1', 'None', '1111-11-11T11:11', 'D1')
+        rv = self.add_entry('title1', 'CS253', 'None', 'High', '1111-11-11T11:11', 'D1')
         assert b"title1" in rv.data
 
-        rv = self.add_entry('title2', 'CS253.2', 'None', '1111-11-11T11:11', 'D2')
+        rv = self.add_entry('title2', 'CS253', 'None', 'High', '1111-11-11T11:11', 'D2')
         assert b"title2" in rv.data
 
-        rv = self.add_entry('title3', 'CS253.3', 'None', '1111-11-11T11:11', 'D3')
+        rv = self.add_entry('title3', 'CS253.3', 'None', 'High','1111-11-11T11:11', 'D3')
         assert b"title3" in rv.data
 
         # delete second post
@@ -101,28 +102,107 @@ class FlaskrTestCase(unittest.TestCase):
         rv = self.delete_entry(1)
         assert b"title1" not in rv.data
 
-    def edit_entry(self, title, course, category, duedate, description, id):
+    def edit_entry(self, title, course, category, priority, duedate, description, id):
         self.create("user", "pw", "pw")
         self.login("user", "pw")
         return self.app.post('/edit_assignment',
-            data=dict(title=title, course=course, category=category, duedate=duedate, description=description, id=id),
-            follow_redirects=True)
+            data=dict(title=title, course=course, category=category, priority=priority,
+                      duedate=duedate, description=description, id=id), follow_redirects=True)
 
     def test_edit_entry(self):
         self.create("user", "pw", "pw")
         self.login("user", "pw")
 
-        rv = self.add_entry('title1', 'CS253.1', 'None', '1111-11-11T11:11', 'D1')
+        rv = self.add_entry('title1', 'CS253.1', 'None', 'High', '1111-11-11T11:11', 'D1')
         assert b"title1" in rv.data
 
         # test case for when title is edited as empty
-        rv = self.edit_entry('title1-edit', 'CS253.1-edit', 'None-edit', '2222-22-22T22:22', 'D1-edit', 1)
+        rv = self.edit_entry('title1-edit', 'CS253.1-edit', 'None-edit', 'Low', '2222-22-22T22:22', 'D1-edit', 1)
         assert b"title1-edit" in rv.data
         assert b"CS253.1-edit" in rv.data
         assert b"None-edit" in rv.data
+        assert b"Low" in rv.data
         assert b"2222-22-22T22:22" in rv.data
         assert b"D1-edit" in rv.data
 
+    def test_calendar(self):
+        self.create("user", "pw", "pw")
+        self.login("user", "pw")
+
+        self.add_entry('title1', 'CS253', 'None', 'High', '2018-01-30', 'D1')
+        self.add_entry('title2', 'CS253', 'None', 'High', '2018-02-20', 'D1')
+        self.add_entry('title3', 'CS253', 'None', 'High', '2019-04-20', 'D1')
+
+        rv = self.app.get('/showcalendar?month=1&year=2018')
+        assert b"January 2018" in rv.data
+        assert b"title1" in rv.data
+        assert b"title2" not in rv.data
+        assert b"title3" not in rv.data
+
+        rv = self.app.get('/showcalendar?month=2&year=2018')
+        assert b"February 2018" in rv.data
+        assert b"title1" not in rv.data
+        assert b"title2" in rv.data
+        assert b"title3" not in rv.data
+
+        rv = self.app.get('/showcalendar?month=3&year=2018')
+        assert b"title1" not in rv.data
+        assert b"title2" not in rv.data
+        assert b"title3" not in rv.data
+
+    def test_sort(self):
+        self.create("user", "pw", "pw")
+        self.login("user", "pw")
+
+        self.add_entry('title1', 'CS253', 'C1', 'Critical', '2018-01-30', 'D1')
+        self.add_entry('title2', 'CS254', 'C2', 'High', '2018-02-20', 'D2')
+        self.add_entry('title3', 'CS255', 'C3', 'Normal', '2019-03-20', 'D3')
+        self.add_entry('title4', 'CS256', 'C4', 'Low', '2018-04-30', 'D4')
+
+
+        rv = self.app.get('/assignments?arrange=title')
+        assert b"<tr class=critical>"
+        b"<td>title1</td><td>CS253</td><td>C1</td><td>Critical</td><td>2018-01-30</td><td>D1</td></tr>"
+        b"<tr class=high><td>title2</td><td>CS254</td><td>C2</td><td>High</td><td>2018-02-20</td><td>D2</td>"
+        b"</tr>"
+        b"<tr class=normal>"
+        b"<td>title3</td><td>CS255</td><td>C3</td><td>Normal</td><td>2018-03-20</td><td>D3</td>"
+        b"</tr>"
+        b"<tr class=low><td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
+        b"</tr>" in rv.data
+
+        rv = self.app.get('/assignments?arrange=course')
+        assert b"<tr class=critical>"
+        b"<td>title1</td><td>CS253</td><td>C1</td><td>Critical</td><td>2018-01-30</td><td>D1</td></tr>"
+        b"<tr class=high><td>title2</td><td>CS254</td><td>C2</td><td>High</td><td>2018-02-20</td><td>D2</td>"
+        b"</tr>"
+        b"<tr class=normal>"
+        b"<td>title3</td><td>CS255</td><td>C3</td><td>Normal</td><td>2018-03-20</td><td>D3</td>"
+        b"</tr>"
+        b"<tr class=low><td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
+        b"</tr>" in rv.data
+
+        rv = self.app.get('/assignments?arrange=category')
+        assert b"<tr class=critical>"
+        b"<td>title1</td><td>CS253</td><td>C1</td><td>Critical</td><td>2018-01-30</td><td>D1</td></tr>"
+        b"<tr class=high><td>title2</td><td>CS254</td><td>C2</td><td>High</td><td>2018-02-20</td><td>D2</td>"
+        b"</tr>"
+        b"<tr class=normal>"
+        b"<td>title3</td><td>CS255</td><td>C3</td><td>Normal</td><td>2018-03-20</td><td>D3</td>"
+        b"</tr>"
+        b"<tr class=low><td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
+        b"</tr>" in rv.data
+
+        rv = self.app.get('/assignments?sort=course')
+        assert b"<tr class=critical>"
+        b"<td>title1</td><td>CS253</td><td>C1</td><td>Critical</td><td>2018-01-30</td><td>D1</td></tr>"
+        b"<tr class=high><td>title2</td><td>CS254</td><td>C2</td><td>High</td><td>2018-02-20</td><td>D2</td>"
+        b"</tr>"
+        b"<tr class=normal>"
+        b"<td>title3</td><td>CS255</td><td>C3</td><td>Normal</td><td>2018-03-20</td><td>D3</td>"
+        b"</tr>"
+        b"<tr class=low><td>title4</td><td>CS256</td><td>C4</td><td>Low</td><td>2018-04-20</td><td>D4</td>"
+        b"</tr>" in rv.data
 
 
 if __name__ == '__main__':
