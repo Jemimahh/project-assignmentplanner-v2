@@ -44,6 +44,7 @@ arrow {
     padding-right: 20px;
 }
 
+
 .mastfoot {
     clear: both;
     border: 1px groove #A3A1A1;
@@ -58,4 +59,8 @@ arrow {
     bottom: 0px;
     width: 100%;
     height: 60px;
+}
+.selected {
+    font-weight: bold;
+    background: #D3D3D3;
 }

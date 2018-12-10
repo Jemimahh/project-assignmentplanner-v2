@@ -76,14 +76,13 @@ def show_assignment():
         assignments = cur.fetchall()
 
     elif "arrange" in request.args:
-        cur = db.execute(
-            'select * from assignments where username = ? order by {} ASC'.format(request.args["arrange"],
-                         [logged_in_account]))
+        cur = db.execute('select * from assignments where username = ? order by {} ASC'.format(request.args["arrange"]),
+                        [logged_in_account])
         assignments = cur.fetchall()
 
     elif "sort" in request.args:
-        cur = db.execute('select * from assignments where username = ? order by {} DESC'.format(request.args["sort"],
-                         [logged_in_account]))
+        cur = db.execute('select * from assignments where username = ? order by {} DESC'.format(request.args["sort"]),
+                        [logged_in_account])
 
         assignments = cur.fetchall()
 
@@ -96,17 +95,21 @@ def show_assignment():
 
     duedates = cur.fetchall()
     return render_template('show_assignments.html', assignments=assignments, duedates=duedates,
-                           username=logged_in_account)
+                        username=logged_in_account)
 
 
 @app.route('/add')
 def redirect_add_assignment():
-    return render_template('MainPageLayout.html', username=logged_in_account)
+    if logged_in_account == "":
+        return redirect(url_for('redirect_login'))
+    return render_template('MainPageLayout.html', username = logged_in_account)
 
 
 @app.route('/')
 def redirect_opening():
-    return render_template('OpeningPage.html')
+    if logged_in_account == "":
+        return render_template('OpeningPage.html')
+    return redirect(url_for('display_homepage'))
 
 
 @app.route('/login')
@@ -118,6 +121,9 @@ def redirect_login():
 
 @app.route('/signup')
 def redirect_signup():
+    if (logged_in_account == ""):
+        return render_template('CreateAccount.html')
+    return redirect(url_for('display_homepage'))
     # if (logged_in_account == " "):
     return render_template('CreateAccount.html')
     # return redirect(url_for('display_homepage'))
@@ -138,7 +144,6 @@ def add_assignment():
     # Commits it to the database
     flash('New assignment was successfully saved.')
     return redirect(url_for('show_assignment'))
-
 
 @app.route('/delete', methods=['POST'])
 def del_assignment():
@@ -167,12 +172,12 @@ def update_entry():
     priority = request.form['priority']
     duedate = request.form['duedate']
     description = request.form['description']
-    db.execute('update assignments set title = ?, course = ?, category = ?, priority = ?, duedate = ?, description = ? where id = ?',
-               (title, course, category, priority, duedate, description, theid))
+    db.execute('update assignments set title = ?, course = ?, category = ?, priority = ?, duedate = ?, description = ?'
+        'where id = ?', [title, course, category, priority, duedate, description, theid])
     db.commit()
     # Commits it to the database
     flash('New entry was successfully edited')
-    return show_assignment()
+    return redirect(url_for('show_assignment'))
 
 
 @app.route('/create_account', methods=['POST'])
@@ -204,9 +209,9 @@ def create_account():
 
     #for record in data:
     #    print(dict(record))
-    if logged_in_account == "":
-        return redirect(url_for('redirect_login'))
-    return redirect(url_for('display_homepage'))
+    #if logged_in_account == "":
+        #return redirect(url_for('redirect_login'))
+    return redirect(url_for('redirect_login'))
 
 
 @app.route('/login_account', methods=['POST'])
@@ -273,7 +278,6 @@ def display_homepage():
 
     return render_template('home.html', username=logged_in_account, critical=number_of_critical, high=number_of_high, normal=number_of_normal, low=number_of_low, today=today)
 
-
 @app.route('/calendar')
 def display_calendar():
     return render_template('Calendar.html', username=logged_in_account)
@@ -284,28 +288,37 @@ def input_calendar():
 
     db = get_db()
 
-    #
-    # cur = db.execute("select * from assignments where username = ? and duedate like %?% and %?% ",
-    #                  [logged_in_account, theyr, themo])
-    #
-
     month = request.args['month']
     year = request.args['year']
+
+    if len(month) == 1:
+        # for cases like when user enters "1" for January, instead of "01"
+        month = "0" + month
 
     like_str = "{}-{}-%".format(year, month)
 
     cur = db.execute("select * from assignments where username = ? and duedate like ? order by duedate ASC",
                      [logged_in_account, like_str])
+
     assignments = cur.fetchall()
 
-    if month == "" or year == "":
-        mo = 1
-        yr = 2019
+    if month == "":
+        flash("Month cannot be empty.")
+
     else:
+        if (int(month) < 1) or (int(month) > 12):
+            flash("Month should be between 1 and 12 inclusively.")
+
+    if year == "":
+        flash("Year cannot be empty.")
+
+    if month != "" and year != "":
         mo = int(request.args['month'])
         yr = int(request.args['year'])
+        #print(mo, yr)
+        myCal = calendar.HTMLCalendar(calendar.SUNDAY)
+        newCal = myCal.formatmonth(yr, mo)
 
-    myCal = calendar.HTMLCalendar(calendar.SUNDAY)
-    newCal = myCal.formatmonth(yr, mo)
+        return render_template('Calendar.html', calendar=newCal, username=logged_in_account, assignments=assignments)
 
-    return render_template('Calendar.html', calendar=newCal, username=logged_in_account, assignments=assignments)
+    return redirect(url_for('display_calendar'))
