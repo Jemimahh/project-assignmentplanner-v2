@@ -77,8 +77,7 @@ def show_assignment():
     elif "arrange" in request.args:
         cur = db.execute(
                          'select * from assignments where username = ? order by {} ASC'.format(request.args["arrange"],
-                                                                            [logged_in_account])
-        )
+                                                                                                [logged_in_account]))
 
         assignments = cur.fetchall()
 
@@ -295,10 +294,10 @@ def input_calendar():
     print("hello")
     return render_template('Calendar.html', calendar=newCal, username=logged_in_account, assignments=assignments)
 
-@app.route('/full_view', methods=['GET'])
-def full_view():
-    db = get_db()
-    cur = db.execute('select * from assignments WHERE id = ?', [request.args['id']])
-    assignments = cur.fetchone()
-    return redirect(url_for('full_view', assignments=assignments, username=logged_in_account))
+#@app.route('/full_view', methods=['GET'])
+#def full_view():
+#    db = get_db()
+ #   cur = db.execute('select * from assignments WHERE id = ?', [request.args['id']])
+  #  assignments = cur.fetchone()
+   # return redirect(url_for('full_view', assignments=assignments, username=logged_in_account))
 
