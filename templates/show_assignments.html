@@ -1,5 +1,4 @@
 {% extends "layout_template.html" %}
-<<<<<<< HEAD
 
 {% block body %}
 
@@ -36,6 +35,8 @@
 
     }
 {% endblock %}
+
+
 {% block body %}
 
 <!--Show all assignments page-->
@@ -58,7 +59,7 @@
 
     <div class="extrapadding2"><a href="./add"><button type="button" class="btn btn-primary">Add Assignments</button></a></div>
     <br><br>
-        {% if assignments %}
+        {% if assignments in assignments %}
         <table class="table">
              {% if arrange == "title" %}
                 <a href="./?arrange=title">
@@ -127,7 +128,7 @@
                 <tr class="low">
                 {% else %}
                 <tr>
-<<
+
                     <td>
                         <form action="{{ url_for('edit_entry') }}" method="get" class="inline">
                             <button type="submit" class="btn btn-primary glyphicon glyphicon-pencil"></button>
@@ -147,7 +148,7 @@
                     <td>{{ assignment.course }}</td>
                     <td>{{ assignment.category }}</td>
                     <td>{{ assignment.duedate }}</td>
-                    <td>{{ assignment.description | truncate(40) }}</td>
+                    <td>{{ assignment.description | truncate(40) | safe }}</td>
 
 
                 </tr>
