@@ -75,13 +75,15 @@ def show_assignment():
         assignments = cur.fetchall()
 
     elif "arrange" in request.args:
-        cur = db.execute('select * from assignments where username={} order by {} ASC'.format(logged_in_account, request.args["arrange"]))
-
+        cur = db.execute(
+            'select * from assignments where username = ? order by {} ASC'.format(request.args["arrange"],
+                        [logged_in_account]))
         assignments = cur.fetchall()
 
     elif "sort" in request.args:
         cur = db.execute('select * from assignments where username = ? order by {} DESC'.format(request.args["sort"],
-                [logged_in_account]))
+                        [logged_in_account]))
+
         assignments = cur.fetchall()
 
     else:
@@ -93,7 +95,7 @@ def show_assignment():
 
     duedates = cur.fetchall()
     return render_template('show_assignments.html', assignments=assignments, duedates=duedates,
-                           username=logged_in_account)
+                        username=logged_in_account)
 
 
 @app.route('/add')
@@ -143,7 +145,6 @@ def add_assignment():
     # Commits it to the database
     flash('New assignment was successfully saved.')
     return redirect(url_for('show_assignment'))
-
 
 @app.route('/delete', methods=['POST'])
 def del_assignment():

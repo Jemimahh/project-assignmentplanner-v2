@@ -15,15 +15,20 @@
         <dl>
           <dd><input type="hidden" value="{{ assignment.id }}" name="id"></dd>
           <dt>Title:
-          <dd><input type="text" size="30" name="title" value="{{ assignment.title }}">
+          <dd><input type="text" size="30" name="title" placeholder="{{ assignment.title }}"
+                     value="{{ assignment.title }}">
           <dt>Course:
-          <dd><input type="text" size="30" name="course" value="{{ assignment.course }}">
+          <dd><input type="text" size="30" name="course" placeholder="{{ assignment.title }}"
+                     value="{{ assignment.course }}">
           <dt>Category:
-          <dd><input type="text" size="30" name="category" value="{{ assignment.category }}">
+          <dd><input type="text" size="30" name="category" placeholder="{{ assignment.title }}"
+                     value="{{ assignment.category }}">
           <dt>Due Date:
-          <dd><input type="date" size="30" name="duedate" value="{{ assignment.duedate }}">
+          <dd><input type="date" size="30" name="duedate" placeholder="{{ assignment.title }}"
+                     value="{{ assignment.duedate }}">
           <dt>Description:
-          <dd><textarea name="description" rows="5" cols="40" placeholder="{{ assignment.text|safe }}"></textarea>
+          <dd><textarea name="text" rows="5" cols="40"
+                        placeholder="{{ assignment.description }}">{{ assignment.description }}</textarea>
           <dd><input type="submit" value="Confirm Changes">
         </dl>
       </form>
