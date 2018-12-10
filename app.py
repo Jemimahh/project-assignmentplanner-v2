@@ -173,12 +173,12 @@ def update_entry():
     priority = request.form['priority']
     duedate = request.form['duedate']
     description = request.form['description']
-    db.execute('update assignments set title = ?, course = ?, category = ?, priority = ?, duedate = ?, description = ? where id = ?',
-               (title, course, category, priority, duedate, description, theid))
+    db.execute('update assignments set title = ?, course = ?, category = ?, priority = ?, duedate = ?, description = ?'
+        'where id = ?', [title, course, category, priority, duedate, description, theid])
     db.commit()
     # Commits it to the database
     flash('New entry was successfully edited')
-    return show_assignment()
+    return redirect(url_for('show_assignment'))
 
 
 @app.route('/create_account', methods=['POST'])
