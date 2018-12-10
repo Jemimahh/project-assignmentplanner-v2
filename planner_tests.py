@@ -263,7 +263,7 @@ class FlaskrTestCase(unittest.TestCase):
 
         rv = self.app.get('/assignments?arrange=duedate')
         assert b"<tr class=critical>"
-        b"<td>title1</td><td>CS253</td><td>C1</td><td>Critical</td><td>2018-01-30</td><td>D1</td></tr>"
+        b"<td>title1</td><td>CS253</td><td>C1</td><td>Critial</td><td>2018-01-30</td><td>D1</td></tr>"
         b"<tr class=high><td>title2</td><td>CS254</td><td>C2</td><td>High</td><td>2018-02-20</td><td>D2</td>"
         b"</tr>"
         b"<tr class=normal>"
