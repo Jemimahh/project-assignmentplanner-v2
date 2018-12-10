@@ -76,13 +76,13 @@ def show_assignment():
 
     elif "arrange" in request.args:
         cur = db.execute(
-            'select * from assignments where username = ? order by {} ASC'.format(request.args["arrange"],
-                        [logged_in_account]))
+            'select * from assignments where username = ? order by {} ASC'.format(request.args["arrange"]),
+                        [logged_in_account])
         assignments = cur.fetchall()
 
     elif "sort" in request.args:
-        cur = db.execute('select * from assignments where username = ? order by {} DESC'.format(request.args["sort"],
-                        [logged_in_account]))
+        cur = db.execute('select * from assignments where username = ? order by {} DESC'.format(request.args["sort"]),
+                        [logged_in_account])
 
         assignments = cur.fetchall()
 

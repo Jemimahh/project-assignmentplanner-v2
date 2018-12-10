@@ -21,7 +21,7 @@ class FlaskrTestCase(unittest.TestCase):
     def test_empty_db(self):
         rv = self.app.get('/assignments')
         assert b'No assignment entries here so far' in rv.data
-
+    
     def create(self, username, password1, password2):
         return self.app.post('/create_account', data=dict(username=username, password=password1, password2=password2)
             ,follow_redirects=True)
