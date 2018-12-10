@@ -125,6 +125,30 @@ class FlaskrTestCase(unittest.TestCase):
         assert b"2222-22-22T22:22" in rv.data
         assert b"D1-edit" in rv.data
 
+    def test_calendar(self):
+        self.create("user", "pw", "pw")
+        self.login("user", "pw")
+
+        self.add_entry('title1', 'CS253', 'None', 'High', '2018-01-30', 'D1')
+        self.add_entry('title2', 'CS253', 'None', 'High', '2018-02-20', 'D1')
+        self.add_entry('title3', 'CS253', 'None', 'High', '2019-04-20', 'D1')
+
+        rv = self.app.get('/showcalendar?month=1&year=2018')
+        assert b"January 2018" in rv.data
+        assert b"title1" in rv.data
+        assert b"title2" not in rv.data
+        assert b"title3" not in rv.data
+
+        rv = self.app.get('/showcalendar?month=2&year=2018')
+        assert b"February 2018" in rv.data
+        assert b"title1" not in rv.data
+        assert b"title2" in rv.data
+        assert b"title3" not in rv.data
+
+        rv = self.app.get('/showcalendar?month=3&year=2018')
+        assert b"title1" not in rv.data
+        assert b"title2" not in rv.data
+        assert b"title3" not in rv.data
 
 if __name__ == '__main__':
     unittest.main()

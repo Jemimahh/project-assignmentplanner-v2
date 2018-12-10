@@ -269,6 +269,10 @@ def input_calendar():
     month = request.args['month']
     year = request.args['year']
 
+    if len(month) == 1:
+        # for cases like when user enters "1" for January, instead of "01"
+        month = "0" + month
+
     like_str = "{}-{}-%".format(year, month)
 
     cur = db.execute("select * from assignments where username = ? and duedate like ? order by duedate ASC",
@@ -276,15 +280,24 @@ def input_calendar():
 
     assignments = cur.fetchall()
 
-    if month == "" or year == "":
-        mo = 1
-        yr = 2019
+    if month == "":
+        flash("Month cannot be empty.")
+
     else:
+        if (int(month) < 1) or (int(month) > 12):
+            flash("Month should be between 1 and 12 inclusively.")
+
+    if year == "":
+        flash("Year cannot be empty.")
+
+    if month != "" and year != "":
         mo = int(request.args['month'])
         yr = int(request.args['year'])
 
-    print(mo, yr)
-    myCal = calendar.HTMLCalendar(calendar.SUNDAY)
-    newCal = myCal.formatmonth(yr, mo)
+        #print(mo, yr)
+        myCal = calendar.HTMLCalendar(calendar.SUNDAY)
+        newCal = myCal.formatmonth(yr, mo)
 
-    return render_template('Calendar.html', calendar=newCal, username=logged_in_account, assignments=assignments)
+        return render_template('Calendar.html', calendar=newCal, username=logged_in_account, assignments=assignments)
+
+    return redirect(url_for('display_calendar'))
