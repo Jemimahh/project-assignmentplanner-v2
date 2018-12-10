@@ -4,18 +4,28 @@
 <!--Home page once logged in-->
 
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-      <header class="masthead mb-auto">
-        <div class="inner">
-          <h3 class="masthead-brand">Logged in as: {{ username }} </h3>
+      <h2 class="masthead-brand">Welcome, <span class="username">{{ username }}</span>! </h2>
+      <br>
+      <div class="row">
+        <div class="column left">
+          <h3>Number of Assignments Per Priority:</h3>
+            <br>
+            <p class="dashboard">Critical: {{ critical }}</p>
+            <br>
+            <p class="dashboard">High: {{ high }}</p>
+            <br>
+            <p class="dashboard">Moderate: {{ normal }}</p>
+            <br>
+            <p class="dashboard">Low: {{ low }}</p>
         </div>
-      </header>
-      <div class="container">
-        <img src="{{ url_for('static', filename='home.jpeg') }}" alt="Avatar" class="image">
-        <div class="overlay">
-          <div class="text">Welcome, {{ username }}</div>
+        <div class="column right">
+          <br><br><br>
+          <h3>Today is:</h3>
+          <br>
+          <p class="username">{{ today }}</p>
         </div>
       </div>
-
+      <br>
       <main role="main" class="inner cover">
         <h1 class="cover-heading">This is the main page/ user dashboard.</h1>
         <p class="lead">This is the main page where users can view their assignment and order tasks scheduled</p>
@@ -23,6 +33,6 @@
           <!-- <a href="#" class="btn btn-lg btn-secondary">Learn more</a> -->
         </p>
       </main>
-      <br><br>
+      <br>
     </div>
 {% endblock %}
