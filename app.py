@@ -253,30 +253,31 @@ def logout():
 
 @app.route('/homepage')
 def display_homepage():
-    now = datetime.datetime.now()
-    today = now.strftime("%Y-%m-%d %I:%M")
+#    now = datetime.datetime.now()
+#     today = now.strftime("%Y-%m-%d %I:%M")
+#
+#     db = get_db()
+#
+#     critical = db.execute("select count(*) from assignments where username = ? and priority = 'Critical'",
+#                      [logged_in_account])
+#     high = db.execute("select count(*) from assignments where username = ? and priority = 'High'",
+#                      [logged_in_account])
+#     normal = db.execute("select count(*) from assignments where username = ? and priority = 'Normal'",
+#                      [logged_in_account])
+#     low = db.execute("select count(*) from assignments where username = ? and priority = 'Low'",
+#                      [logged_in_account])
+#
+#     priority1 = critical.fetchone()
+#     number_of_critical = priority1[0]
+#     priority2 = high.fetchone()
+#     number_of_high = priority2[0]
+#     priority3 = normal.fetchone()
+#     number_of_normal = priority3[0]
+#     priority4 = low.fetchone()
+#     number_of_low = priority4[0]
+#
+     return render_template('home.html')
 
-    db = get_db()
-
-    critical = db.execute("select count(*) from assignments where username = ? and priority = 'Critical'",
-                     [logged_in_account])
-    high = db.execute("select count(*) from assignments where username = ? and priority = 'High'",
-                     [logged_in_account])
-    normal = db.execute("select count(*) from assignments where username = ? and priority = 'Normal'",
-                     [logged_in_account])
-    low = db.execute("select count(*) from assignments where username = ? and priority = 'Low'",
-                     [logged_in_account])
-
-    priority1 = critical.fetchone()
-    number_of_critical = priority1[0]
-    priority2 = high.fetchone()
-    number_of_high = priority2[0]
-    priority3 = normal.fetchone()
-    number_of_normal = priority3[0]
-    priority4 = low.fetchone()
-    number_of_low = priority4[0]
-
-    return render_template('home.html', username=logged_in_account, critical=number_of_critical, high=number_of_high, normal=number_of_normal, low=number_of_low, today=today)
 
 @app.route('/calendar')
 def display_calendar():
