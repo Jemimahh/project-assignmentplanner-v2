@@ -175,6 +175,13 @@ def update_entry():
     flash('New entry was successfully edited')
     return show_assignment()
 
+@app.route('/full_view', methods=['GET'])
+def full_view():
+    db = get_db()
+    cur = db.execute('select * from assignments where id = ?', [request.args['id']])
+    assignments = cur.fetchall()
+    return render_template('full_view.html', assignments=assignments, username=logged_in_account)
+
 
 @app.route('/create_account', methods=['POST'])
 def create_account():
@@ -294,10 +301,5 @@ def input_calendar():
     print("hello")
     return render_template('Calendar.html', calendar=newCal, username=logged_in_account, assignments=assignments)
 
-#@app.route('/full_view', methods=['GET'])
-#def full_view():
-#    db = get_db()
- #   cur = db.execute('select * from assignments WHERE id = ?', [request.args['id']])
-  #  assignments = cur.fetchone()
-   # return redirect(url_for('full_view', assignments=assignments, username=logged_in_account))
+
 
