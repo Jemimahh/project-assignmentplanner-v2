@@ -137,3 +137,33 @@ html,
 .dropdown-item:hover {
     padding: .25rem 1.5rem;
 }
+
+.left-col {
+    height: 100%;
+    width: auto;
+    min-width: 320px;
+    position: relative;
+}
+.right-col {
+    height: 100%;
+    width: auto;
+    min-width: 320px;
+    position: relative;
+}
+.wrap {
+    width: 100%;
+    overflow:auto;
+}
+ .box {
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 45px;
+    background-color: #f7f7f7;
+}
+ .box .box-title{
+     display:block;
+     height:46px;
+     padding:4px 10px;
+     border-bottom:1px solid #e3e3e3
+ }
