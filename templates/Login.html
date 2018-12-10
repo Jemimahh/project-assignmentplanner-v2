@@ -1,4 +1,4 @@
-{% extends "layout_template.html" %}
+{% extends "session_layout_template.html" %}
 
 <!--Log-in page-->
 
@@ -7,14 +7,14 @@ body {
     background-image: url("{{ url_for('static', filename='estee-janssens-396874-unsplash.jpg') }}");
     }
 {% endblock %}
+
 {% block body %}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='loginpage.css') }}">
     <div class="container loginImg">
         <div class="d-flex justify-content-center h-100">
             <div class="card">
                 <div class="card-header">
                     <h1>Login</h1>
-                    <a href="./homepage"><button type="button" class="btn btn-primary">Home</button></a>
+                    <a href="./"><button type="button" class="btn btn-primary">Home</button></a>
                     <br><br>
 
                     <div class="card-body">
@@ -24,8 +24,7 @@ body {
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                                 </div>
                                 <label for="Username1">Username</label>
-                                <input type="text" name="username" class="form-control" id="Username1" aria-describedby="usernameHelp" placeholder="Enter username">
-                                <small id="usernameHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                <input type="text" name="username" class="form-control" id="Username1" placeholder="Enter username">
                             </div>
 
                             <div class="input-group form-group">
@@ -33,7 +32,7 @@ body {
                                     <span class="input-group-text"><i class="fas fa-key"></i></span>
                                 </div>
                                 <label for="Password1">Password</label>
-                                <input type="text" name="password" class="form-control" id="Password1" placeholder="Enter password">
+                                <input type="password" name="password" class="form-control" id="Password1" placeholder="Enter password">
 
                             </div>
 

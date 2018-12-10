@@ -6,20 +6,15 @@
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
       <header class="masthead mb-auto">
         <div class="inner">
-          <h3 class="masthead-brand">Assignment Planner</h3>
-
-    {% if not session.get(username) %}
-        <a href="./login"><button type="button" class="btn btn-primary">Login</button></a>
-        <br><br>
-    {% else %}
-        <a href="{{ url_for('logout') }}"><button type="button" class="btn btn-primary">Logout</button></a>
-        <br><br>
-    {% endif %}
-
-    <a href="./signup"><button type="button" class="btn btn-primary">Create Account</button></a>
-    <br><br>
+          <h3 class="masthead-brand">Logged in as: {{ username }} </h3>
         </div>
       </header>
+      <div class="container">
+        <img src="{{ url_for('static', filename='home.jpeg') }}" alt="Avatar" class="image">
+        <div class="overlay">
+          <div class="text">Welcome, {{ username }}</div>
+        </div>
+      </div>
 
       <main role="main" class="inner cover">
         <h1 class="cover-heading">This is the main page/ user dashboard.</h1>
@@ -28,4 +23,6 @@
           <!-- <a href="#" class="btn btn-lg btn-secondary">Learn more</a> -->
         </p>
       </main>
+      <br><br>
+    </div>
 {% endblock %}

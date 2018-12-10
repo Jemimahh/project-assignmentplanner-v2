@@ -6,7 +6,6 @@
 a,
 a:focus,
 a:hover {
-  color: #fff;
   padding: .25rem 0
 }
 
@@ -18,12 +17,6 @@ html,
  body {
     height: 100%;
     background-color: #fff;
-}
-
-body {
-  display: -ms-flexbox;
-  display: flex;
-  color: black;
 }
 
 .cover-container {
@@ -71,10 +64,76 @@ body {
  * Footer
  */
 .mastfoot {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
+    clear: both;
+    border: 1px groove #A3A1A1;
+    background: #6F6B65;
+    color: #C5C5C5;
+    padding: 0;
     text-align: center;
-  color: rgba(255, 255, 255, .5);
+    vertical-align: middle;
+    line-height: normal;
+    margin: 0;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+}
+
+.container {
+  position: relative;
+  width: 80%;
+  padding-left: 40px;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  background-color: #FFBC1E;
+  overflow: hidden;
+  width: 100%;
+  height:0;
+  transition: .5s ease;
+}
+
+.container:hover .overlay {
+  bottom: 0;
+  height: 100%;
+}
+
+.text {
+  white-space: nowrap;
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+.mainHead {
+    margin: 0;
+    min-width: 180px;
+    padding: 35px 20px 20px 20px;
+    font-weight: 700;
+    font-family: 'Charmonman', cursive;
+    text-decoration: none;
+    text-align: center;
+    box-shadow: 0 1.5px 0 #CC9618;
+    transition: opacity .3s ease-in-out;
+    color: black;
+    background-color: #FFBC1E;
+    border: 0 none;
+}
+
+.dropdown-item:hover {
+    padding: .25rem 1.5rem;
 }

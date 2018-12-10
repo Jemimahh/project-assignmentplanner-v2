@@ -3,79 +3,115 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
 html,body{
-background-size: cover;
-background-repeat: no-repeat;
-height: 100%;
-font-family: 'Numans', sans-serif;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    font-family: 'Numans', sans-serif;
 }
 
 .container{
-height: 100%;
-align-content: center;
+    align-content: center;
+    padding-bottom: 2.5rem;
+    width: 970px;
 }
 
 .card{
-height: auto;
-margin-top: auto;
-margin-bottom: auto;
-width: 400px;
-background-color: rgba(0,0,0,0.5) !important;
+    height: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 400px;
+    background-color: rgba(0,0,0,0.5) !important;
 }
 
 .card-header h3{
-color: white;
+    color: white;
 }
 
 .input-group-prepend span{
-width: 50px;
-background-color: #FFC312;
-color: black;
-border:0 !important;
+    width: 50px;
+    background-color: #FFC312;
+    color: black;
+    border:0 !important;
 }
 
 .remember{
-color: white;
+    color: white;
 }
 
 .remember input
 {
-width: 20px;
-height: 20px;
-margin-left: 15px;
-margin-right: 5px;
+    width: 20px;
+    height: 20px;
+    margin-left: 15px;
+    margin-right: 5px;
 }
 
 .login_btn{
-color: black;
-background-color: #FFC312;
-width: 100px;
+    color: black;
+    background-color: #FFC312;
+    width: 100px;
 }
 .btn btn-primary{
    background-color: #FFC312;
 }
 
 .login_btn:hover{
-color: black;
-background-color: darkred;
+    color: black;
+    background-color: darkred;
 }
 
 .links{
-color: white;
+    color: white;
 }
 
 .links a{
-margin-left: 4px;
+    margin-left: 4px;
 }
 
 .card-header {
    color: white;
 }
 
-/*.signupImg{
-    background-image: url('signUpBackground.jpg');
-}*/
+.mastfoot {
+    clear: both;
+    border: 1px groove #A3A1A1;
+    background: #6F6B65;
+    color: #C5C5C5;
+    padding: 0;
+    text-align: center;
+    vertical-align: middle;
+    line-height: normal;
+    margin: 0;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+}
 
-/* the background for the login page*/
-/* body{
-    background-image: url('estee-janssens-396874-unsplash.jpg');
-} */
+.mainHead {
+    margin: 0;
+    min-width: 180px;
+    padding: 35px 20px 20px 20px;
+    font-weight: 700;
+    font-family: 'Charmonman', cursive;
+    text-decoration: none;
+    text-align: center;
+    box-shadow: 0 1.5px 0 #CC9618;
+    transition: opacity .3s ease-in-out;
+    color: black;
+    background-color: #FFBC1E;
+    border: 0 none;
+}
+
+.sheader {
+    min-width: 180px;
+    padding: 35px 20px 20px 20px;
+    font-weight: 700;
+    font-family: 'Charmonman', cursive;
+    text-decoration: none;
+    text-align: left;
+    box-shadow: 0 1.5px 0 #CC9618;
+    transition: opacity .3s ease-in-out;
+    color: black;
+    background-color: #FFBC1E;
+    border: 0 none;
+}

@@ -1,147 +1,39 @@
 {% extends "layout_template.html" %}
 {% block extracss %}
+    .critical {
+        color: #BF0B0B;
+        font-size: 16px;
+        text-shadow:
+		-0.2px -0.2px 0 #890808,
+		0.2px -0.2px 0 #890808,
+		-0.2px 0.2px 0 #890808,
+		0.2px 0.2px 0 #890808;
 
-<!--* {box-sizing: border-box;}-->
-<!--ul {list-style-type: none;}-->
-<!--body {font-family: Verdana, sans-serif;}-->
+    }
 
-<!--.month {-->
-    <!--padding: 70px 25px;-->
-    <!--width: 100%;-->
-    <!--background: rgb(255, 212, 72);-->
-    <!--text-align: center;-->
-<!--}-->
+    .high {
+        color: #CC9618;
+        font-size: 16px;
+        text-shadow:
+		-0.2px -0.2px 0 #A7790C,
+		0.2px -0.2px 0 #A7790C,
+		-0.2px 0.2px 0 #A7790C,
+		0.2px 0.2px 0 #A7790C;
+    }
 
-<!--.month ul {-->
-    <!--margin: 0;-->
-    <!--padding: 0;-->
-<!--}-->
+    .low {
+        color: #2C7C0C;
+        font-size: 16px;
+        text-shadow:
+		-0.2px -0.2px 0 #1A4D05,
+		0.2px -0.2px 0 #1A4D05,
+		-0.2px 0.2px 0 #1A4D05,
+		0.2px 0.2px 0 #1A4D05;
 
-<!--.month ul li {-->
-    <!--color: white;-->
-    <!--font-size: 20px;-->
-    <!--text-transform: uppercase;-->
-    <!--letter-spacing: 3px;-->
-<!--}-->
+    }
+{% endblock %}
 
-<!--.month .prev {-->
-    <!--float: left;-->
-    <!--padding-top: 10px;-->
-<!--}-->
-
-<!--.month .next {-->
-    <!--float: right;-->
-    <!--padding-top: 10px;-->
-<!--}-->
-
-<!--.weekdays {-->
-    <!--margin: 0;-->
-    <!--padding: 10px 0;-->
-    <!--background-color: #ddd;-->
-<!--}-->
-
-<!--.weekdays li {-->
-    <!--display: inline-block;-->
-    <!--width: 13.6%;-->
-    <!--color: #666;-->
-    <!--text-align: center;-->
-<!--}-->
-
-<!--.days {-->
-    <!--padding: 10px 0;-->
-    <!--background: #eee;-->
-    <!--margin: 0;-->
-<!--}-->
-
-<!--.days li {-->
-    <!--list-style-type: none;-->
-    <!--display: inline-block;-->
-    <!--width: 13.6%;-->
-    <!--text-align: center;-->
-    <!--margin-bottom: 5px;-->
-    <!--font-size:12px;-->
-    <!--color: #777;-->
-<!--}-->
-
-<!--.days li .active {-->
-    <!--padding: 5px;-->
-    <!--background: rgb(255, 212, 72);-->
-    <!--color: white !important-->
-<!--}-->
-
-<!--/* Add media queries for smaller screens */-->
-<!--@media screen and (max-width:720px) {-->
-    <!--.weekdays li, .days li {width: 13.1%;}-->
-<!--}-->
-
-<!--@media screen and (max-width: 420px) {-->
-    <!--.weekdays li, .days li {width: 12.5%;}-->
-    <!--.days li .active {padding: 2px;}-->
-<!--}-->
-
-<!--@media screen and (max-width: 290px) {-->
-    <!--.weekdays li, .days li {width: 12.2%;}-->
-<!--}-->
-
-
-<!--{% endblock %}-->
 {% block body %}
-
-<!--<div class="month">-->
-  <!--<ul>-->
-    <!--<li class="prev">&#10094;</li>-->
-    <!--<li class="next">&#10095;</li>-->
-    <!--<li>-->
-      <!--August<br>-->
-      <!--<span style="font-size:18px">2017</span>-->
-    <!--</li>-->
-  <!--</ul>-->
-<!--</div>-->
-
-<!--<ul class="weekdays">-->
-  <!--<li>Mo</li>-->
-  <!--<li>Tu</li>-->
-  <!--<li>We</li>-->
-  <!--<li>Th</li>-->
-  <!--<li>Fr</li>-->
-  <!--<li>Sa</li>-->
-  <!--<li>Su</li>-->
-<!--</ul>-->
-
-<!--<ul class="days">-->
-  <!--<li>1</li>-->
-  <!--<li>2</li>-->
-  <!--<li>3</li>-->
-  <!--<li>4</li>-->
-  <!--<li>5</li>-->
-  <!--<li>6</li>-->
-  <!--<li>7</li>-->
-  <!--<li>8</li>-->
-  <!--<li>9</li>-->
-  <!--<li><span class="active">10</span></li>-->
-  <!--<li>11</li>-->
-  <!--<li>12</li>-->
-  <!--<li>13</li>-->
-  <!--<li>14</li>-->
-  <!--<li>15</li>-->
-  <!--<li>16</li>-->
-  <!--<li>17</li>-->
-  <!--<li>18</li>-->
-  <!--<li>19</li>-->
-  <!--<li>20</li>-->
-  <!--<li>21</li>-->
-  <!--<li>22</li>-->
-  <!--<li>23</li>-->
-  <!--<li>24</li>-->
-  <!--<li>25</li>-->
-  <!--<li>26</li>-->
-  <!--<li>27</li>-->
-  <!--<li>28</li>-->
-  <!--<li>29</li>-->
-  <!--<li>30</li>-->
-  <!--<li>31</li>-->
-<!--</ul>-->
-
 
 
 <form action="{{ url_for('input_calendar') }}" method="GET">
@@ -153,77 +45,72 @@
       <dd><input type="submit" value="Show Calendar">
     </dl>
 </form>
-<br><br><br>
-
+<br>
+<center>
 {% if calendar != "" %}
 <div> {{ calendar|safe }} </div>
-
+</center>
 {% else %}
 <p> error </p>
 {% endif %}
+<br>
+<div class="extrapadding2"><a href="./add"><button type="button" class="btn btn-primary">Add Assignments</button></a></div>
 
+    {% if assignments %}
+        <table class="table">
+            <tr>
+                <th class="text-center">Edit/Delete </th>
+                <th class="text-center">Title </a></th>
+                <th class="text-center">Course </a></th>
+                <th class="text-center">Category </a></th>
+                <th class="text-center">Priority </a></th>
+                <th class="text-center">Due Date </a></th>
+                <th class="text-center">Description </a></th>
+            </tr>
 
-<!--<div class="table-responsive-md">-->
-    <!--{% if assignments %}-->
-        <!--<table class="table">-->
-             <!--{% if arrange == "title" %}-->
-                <!--<a href="?arrange=title">-->
-             <!--{% endif %}-->
-             <!--{% if arrange == "course" %}-->
-                <!--<a href="?arrange=course">-->
-             <!--{% endif %}-->
-             <!--{% if arrange == "category" %}-->
-                <!--<a href="?arrange=category">-->
-             <!--{% endif %}-->
-             <!--{% if arrange == "duedate" %}-->
-                <!--<a href="?arrange=duedate">-->
-             <!--{% endif %}-->
-             <!--{% if arrange == "description" %}-->
-                <!--<a href="?arrange=description">-->
-                        <!--{% endif %}-->
+        {% for assignment in assignments %}
+           {% if assignment.priority == "Critical": %}
+            <tr class="critical">
+           {% elif assignment.priority == "High": %}
+            <tr class="high">
+           {% elif assignment.priority == "Normal": %}
+            <tr class="normal">
+           {% elif assignment.priority == "Low": %}
+            <tr class="low">
+           {% else %}
+            <tr>
+            {% endif %}
+                <td>
+                    <form action="{{ url_for('edit_entry') }}" method="get" class="inline">
+                        <button type="submit" class="btn btn-primary glyphicon glyphicon-pencil"></button>
+                        <input type="hidden" value="{{ assignment.id }}" name="editid">
+                    </form>
+                    <form action="{{ url_for('del_assignment') }}" method="post" class="inline">
+                        <button type="submit" class="btn btn-primary glyphicon glyphicon-remove"></button>
+                        <input type="hidden" value="{{ assignment.id }}" name="id">
+                    </form>
+                  </td>
+                <td>{{ assignment.title }}</td>
+                <td>{{ assignment.course }}</td>
+                <td>{{ assignment.category }}</td>
+                <td>{{ assignment.priority }}</td>
+                <td>{{ assignment.duedate }}</td>
+                <td>{{ assignment.description|safe }}</td>
+            </tr>
+             <br><br>
+        {% else %}
+             <br><br>
+             <em>No assignment entries here so far.</em>
+             <br><br>
+        {% endfor %}
 
-             <!--{% if sort == "title" %}-->
-                 <!--<a href="?sort=title">-->
-             <!--{% endif %}-->
-             <!--{% if sort == "course" %}-->
-                 <!--<a href="?sort=course">-->
-             <!--{% endif %}-->
-             <!--{% if sort == "category" %}-->
-                 <!--<a href="?sort=category">-->
-             <!--{% endif %}-->
-             <!--{% if sort == "duedate" %}-->
-                 <!--<a href="?sort=duedate">-->
-             <!--{% endif %}-->
-             <!--{% if sort == "description" %}-->
-                 <!--<a href="?sort=description">-->
-             <!--{% endif %}-->
+        </table>
+    {% else %}
+        <br><br>
+        <em>You don't have any assignments currently.</em>
+        <br><br>
+    {% endif %}
 
-            <!--<tr>-->
-                <!--<th>Title <a href="/?sort=title"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=title"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>-->
-                <!--<th>Course <a href="/?sort=course"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=course"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>-->
-                <!--<th>Category <a href="/?sort=category"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=category"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>-->
-                <!--<th>Due Date <a href="/?sort=duedate"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=duedate"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>-->
-                <!--<th>Description <a href="/?sort=description"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=description"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>-->
-            <!--</tr>-->
-            <!--{% for assignment in assignments %}-->
-
-                <!--<tr>-->
-                    <!--<td>{{ assignment.title }}</td>-->
-                    <!--<td>{{ assignment.course }}</td>-->
-                    <!--<td>{{ assignment.category }}</td>-->
-                    <!--<td>{{ assignment.duedate }}</td>-->
-                    <!--<td>{{ assignment.description|safe }}</td>-->
-
-                <!--</tr>-->
-            <!--{% else %}-->
-                <!--<em>You don't have any assignments currently.</em>-->
-            <!--{% endfor %}-->
-
-        <!--</table>-->
-    <!--{% else %}-->
-        <!--<em>No assignment entries here so far</em>-->
-    <!--{% endif %}-->
-
-<!--</div>-->
-
+    </div>
+    <br><br>
 {% endblock %}
