@@ -154,7 +154,7 @@ def edit_entry():
     db = get_db()
     cur = db.execute('select * from assignments where id = ?', request.args['editid'])
     assignments = cur.fetchall()
-    return render_template('edit_layout.html', assignments=assignments)
+    return render_template('edit_layout.html', assignments=assignments, username=logged_in_account)
 
 
 @app.route('/edit_assignment', methods=['POST'])
@@ -300,3 +300,10 @@ def input_calendar():
     print (newCal)
     print("hello")
     return render_template('Calendar.html', calendar = newCal, username = logged_in_account)
+
+@app.route('/full_view', methods=['GET'])
+def full_view():
+    db = get_db()
+    cur = db.execute('select * from assignments WHERE id = ?', [request.args['id']])
+    assignments = cur.fetchone()
+    return redirect(url_for('full_view', assignments=assignments, username=logged_in_account))
