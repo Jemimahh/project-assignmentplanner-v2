@@ -35,3 +35,11 @@ arrow {
     margin: 0;
     text-align: center;
 }
+
+.extrapadding {
+    padding-right: 60px;
+}
+
+.extrapadding2 {
+    padding-right: 20px;
+}

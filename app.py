@@ -274,7 +274,7 @@ def input_calendar():
     # them in whatever order and format you need to match the values in your database
     #"SELECT ... username = ? and duedate like ?"[logged_in_account, like_str]
 
-    cur = db.execute("select * from assignments where username = ? and duedate like ? order by id desc ",
+    cur = db.execute("select * from assignments where username = ? and duedate like ? order by duedate ASC",
                      [logged_in_account, like_str])
     assignments = cur.fetchall()
 
