@@ -1,7 +1,7 @@
 {% extends "layout_template.html" %}
 
 {% block body %}
-    
+
 
     <ul class="duedates blacktext">
         <li><a href="?">[all]</a></li>
@@ -55,11 +55,11 @@
 
             <tr>
                 <th>Edit/Delete </th>
-                <th>Title <a href="/?sort=title"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=title"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
-                <th>Course <a href="/?sort=course"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=course"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
-                <th>Category <a href="/?sort=category"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=category"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
-                <th>Due Date <a href="/?sort=duedate"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=duedate"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
-                <th>Description <a href="/?sort=description"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/?arrange=description"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+                <th>Title <a href="/assignments?sort=title"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/assignments?arrange=title"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+                <th>Course <a href="/assignments?sort=course"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/assignments?arrange=course"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+                <th>Category <a href="/assignments?sort=category"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/assignments?arrange=category"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+                <th>Due Date <a href="/assignments?sort=duedate"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/assignments?arrange=duedate"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+                <th>Description <a href="/assignments?sort=description"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/assignments?arrange=description"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
             </tr>
             {% for assignment in assignments %}
 
@@ -73,14 +73,17 @@
                             <button type="submit" class="btn btn-primary glyphicon glyphicon-remove"></button>
                             <input type="hidden" value="{{ assignment.id }}" name="id">
                         </form>
+                        <form action="{{ url_for('full_view') }}" method="get" class="inline">
+                            <button type="submit" class="glyphicon glyphicon-eye-open"></button>
+                            <input type="hidden" value="{{ assignment.id }}" name="id">
+                        </form>
                     </td>
 
                     <td>{{ assignment.title }}</td>
                     <td>{{ assignment.course }}</td>
                     <td>{{ assignment.category }}</td>
                     <td>{{ assignment.duedate }}</td>
-                    <td>{{ assignment.description | truncate(40) | safe }}</td>
-
+                    <td>{{ assignment.description | truncate(40) }}</td>
 
 
                 </tr>
@@ -94,4 +97,5 @@
     {% endif %}
 
     </div>
+
 {% endblock %}
