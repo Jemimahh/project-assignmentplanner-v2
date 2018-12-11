@@ -55,10 +55,10 @@ arrow {
     vertical-align: middle;
     line-height: normal;
     margin: 0;
-    /*position: fixed;*/
+    position: fixed;
     bottom: 0px;
     width: 100%;
-    height: 60px;
+    height: 40px;
 }
 .selected {
     font-weight: bold;

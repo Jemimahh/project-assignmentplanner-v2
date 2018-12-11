@@ -61,6 +61,7 @@
             {% endif %}
 
         </div>
+
         <h1 class="mainHead">Personal Assignment Planner</h1>
         <br><br>
         {% for message in get_flashed_messages() %}
@@ -68,10 +69,8 @@
         {% endfor %}
         <br><br>
         <div class="container text-center">
-
             <!--Body Insert-->
           {% block body %}{% endblock %}
-
         </div>
 
       <footer class="mastfoot mt-auto">
@@ -90,4 +89,5 @@
     <script src="http://getbootstrap.com/docs/4.1/dist/js/bootstrap.min.js"></script>
 
 </body>
+
 </html>

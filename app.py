@@ -76,8 +76,10 @@ def show_assignment():
         assignments = cur.fetchall()
 
     elif "arrange" in request.args:
+
         cur = db.execute('select * from assignments where username = ? order by {} ASC'.format(request.args["arrange"]),
                         [logged_in_account])
+
         assignments = cur.fetchall()
 
     elif "sort" in request.args:
@@ -92,6 +94,7 @@ def show_assignment():
         assignments = cur.fetchall()
 
     cur = db.execute('select distinct duedate from assignments order by duedate asc')
+
 
     duedates = cur.fetchall()
     return render_template('show_assignments.html', assignments=assignments, duedates=duedates,
@@ -157,7 +160,7 @@ def del_assignment():
 @app.route('/edit', methods=['GET'])
 def edit_entry():
     db = get_db()
-    cur = db.execute('select * from assignments where id=?', request.args['editid'])
+    cur = db.execute('select * from assignments where id = ?', request.args['editid'])
     assignments = cur.fetchall()
     return render_template('edit_layout.html', assignments=assignments, username=logged_in_account)
 
@@ -178,6 +181,13 @@ def update_entry():
     # Commits it to the database
     flash('New entry was successfully edited')
     return redirect(url_for('show_assignment'))
+
+@app.route('/full_view', methods=['GET'])
+def full_view():
+    db = get_db()
+    cur = db.execute('select * from assignments where id = ?', [request.args['id']])
+    assignments = cur.fetchall()
+    return render_template('full_view.html', assignments=assignments, username=logged_in_account)
 
 
 @app.route('/create_account', methods=['POST'])
@@ -253,30 +263,31 @@ def logout():
 
 @app.route('/homepage')
 def display_homepage():
-    now = datetime.datetime.now()
-    today = now.strftime("%Y-%m-%d %I:%M")
+#    now = datetime.datetime.now()
+#     today = now.strftime("%Y-%m-%d %I:%M")
+#
+#     db = get_db()
+#
+#     critical = db.execute("select count(*) from assignments where username = ? and priority = 'Critical'",
+#                      [logged_in_account])
+#     high = db.execute("select count(*) from assignments where username = ? and priority = 'High'",
+#                      [logged_in_account])
+#     normal = db.execute("select count(*) from assignments where username = ? and priority = 'Normal'",
+#                      [logged_in_account])
+#     low = db.execute("select count(*) from assignments where username = ? and priority = 'Low'",
+#                      [logged_in_account])
+#
+#     priority1 = critical.fetchone()
+#     number_of_critical = priority1[0]
+#     priority2 = high.fetchone()
+#     number_of_high = priority2[0]
+#     priority3 = normal.fetchone()
+#     number_of_normal = priority3[0]
+#     priority4 = low.fetchone()
+#     number_of_low = priority4[0]
+#
+     return render_template('home.html')
 
-    db = get_db()
-
-    critical = db.execute("select count(*) from assignments where username = ? and priority = 'Critical'",
-                     [logged_in_account])
-    high = db.execute("select count(*) from assignments where username = ? and priority = 'High'",
-                     [logged_in_account])
-    normal = db.execute("select count(*) from assignments where username = ? and priority = 'Normal'",
-                     [logged_in_account])
-    low = db.execute("select count(*) from assignments where username = ? and priority = 'Low'",
-                     [logged_in_account])
-
-    priority1 = critical.fetchone()
-    number_of_critical = priority1[0]
-    priority2 = high.fetchone()
-    number_of_high = priority2[0]
-    priority3 = normal.fetchone()
-    number_of_normal = priority3[0]
-    priority4 = low.fetchone()
-    number_of_low = priority4[0]
-
-    return render_template('home.html', username=logged_in_account, critical=number_of_critical, high=number_of_high, normal=number_of_normal, low=number_of_low, today=today)
 
 @app.route('/calendar')
 def display_calendar():
@@ -318,6 +329,7 @@ def input_calendar():
         #print(mo, yr)
         myCal = calendar.HTMLCalendar(calendar.SUNDAY)
         newCal = myCal.formatmonth(yr, mo)
+
 
         return render_template('Calendar.html', calendar=newCal, username=logged_in_account, assignments=assignments)
 

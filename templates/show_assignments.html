@@ -1,9 +1,9 @@
 {% extends "layout_template.html" %}
 {% block extracss %}
-    .critical {
-        color: #BF0B0B;
-        font-size: 16px;
-        text-shadow:
+.critical {
+    color: #BF0B0B;
+    font-size: 16px;
+    text-shadow:
 		-0.2px -0.2px 0 #890808,
 		0.2px -0.2px 0 #890808,
 		-0.2px 0.2px 0 #890808,
@@ -11,20 +11,20 @@
 
     }
 
-    .high {
-        color: #CC9618;
-        font-size: 16px;
-        text-shadow:
+.high {
+    color: #CC9618;
+    font-size: 16px;
+    text-shadow:
 		-0.2px -0.2px 0 #A7790C,
 		0.2px -0.2px 0 #A7790C,
 		-0.2px 0.2px 0 #A7790C,
 		0.2px 0.2px 0 #A7790C;
     }
 
-    .low {
-        color: #2C7C0C;
-        font-size: 16px;
-        text-shadow:
+.low {
+    color: #2C7C0C;
+    font-size: 16px;
+    text-shadow:
 		-0.2px -0.2px 0 #1A4D05,
 		0.2px -0.2px 0 #1A4D05,
 		-0.2px 0.2px 0 #1A4D05,
@@ -42,20 +42,24 @@
                 Sort by Date
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="?">[all]</a>
-            {% for duedate in duedates %}
-                {% if '' not in duedate %}
-                <a class="dropdown-item" href="?duedate={{ duedate.duedate }}">{{ duedate.duedate }}</a>
-                {% endif %}
-            {% endfor %}
+                <a class="dropdown-item" href="?">[all]</a>
+                {% for duedate in duedates %}
+                    {% if '' not in duedate %}
+                    <a class="dropdown-item" href="?duedate={{ duedate.duedate }}">{{ duedate.duedate }}</a>
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
     </ul>
 
-    <div class="extrapadding2"><a href="./add"><button type="button" class="btn btn-primary">Add Assignments</button></a></div>
+    <div class="extrapadding2">
+        <a href="./add"><button type="button" class="btn btn-primary">Add Assignments</button></a>
+    </div>
+
     <br><br>
+
+    <table class="table">
         {% if assignments %}
-        <table class="table">
              {% if arrange == "title" %}
                 <a href="./?arrange=title">
              {% endif %}
@@ -73,7 +77,7 @@
              {% endif %}
              {% if arrange == "description" %}
                 <a href="./?arrange=description">
-                        {% endif %}
+             {% endif %}
 
              {% if sort == "title" %}
                  <a href="?sort=title">
@@ -102,6 +106,7 @@
                 <th>Priority <a href="/assignments?sort=priority"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/assignments?arrange=priority"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
                 <th>Due Date <a href="/assignments?sort=duedate"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/assignments?arrange=duedate"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
                 <th>Description <a href="/assignments?sort=description"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/assignments?arrange=description"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+
             </tr>
 
             {% for assignment in assignments %}
@@ -125,26 +130,30 @@
                                 <button type="submit" class="btn btn-primary glyphicon glyphicon-remove"></button>
                                 <input type="hidden" value="{{ assignment.id }}" name="id">
                             </form>
+                            <form action="{{ url_for('full_view') }}" method="get" class="inline">
+                                <button type="submit" class="btn btn-primary glyphicon glyphicon-eye-open"></button>
+                                <input type="hidden" value="{{ assignment.id }}" name="id">
+                            </form>
                         </td>
+
                         <td>{{ assignment.title }}</td>
                         <td>{{ assignment.course }}</td>
                         <td>{{ assignment.category }}</td>
                         <td>{{ assignment.priority }}</td>
                         <td>{{ assignment.duedate }}</td>
-                        <td>{{ assignment.description|safe }}</td>
+                        <td>{{ assignment.description | truncate(25) | safe }}</td>
                  </tr>
-            {% else %}
-                <em>No assignment entries here so far.</em>
-                <br><br>
-            {% endfor %}
 
-        </table>
+        {% else %}
+        <em>No assignment entries here so far.</em>
+        <br><br>
+        {% endfor %}
+    </table>
+
     {% else %}
         <em>You don't have any assignments currently.</em>
         <br><br>
     {% endif %}
-
-    </div>
 
     <br><br>
 {% endblock %}
