@@ -64,3 +64,10 @@ arrow {
     font-weight: bold;
     background: #D3D3D3;
 }
+
+/* source: https://www.w3schools.com/css/css_form.asp */
+.input-field {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}

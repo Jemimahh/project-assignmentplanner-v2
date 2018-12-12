@@ -17,21 +17,27 @@
             <!--<p class="dashboard">Moderate: {{ normal }}</p>-->
             <!--<br>-->
             <!--<p class="dashboard">Low: {{ low }}</p>-->
+        <!--</div>-->
+      <!--</div>-->
             <!--Body Insert-->
 
  <div class="container-fluid">
    <h2 class="masthead-brand">Welcome, <span class="username">{{ username }}</span>! </h2>
       <br>
     <div class="wrap">
-      <div class="left-col ">
-        <div class="box ">
-          <h2 class="box-title">Classes</h2>
-          <a href="/classes/add" data-controls-load-lightbox="true" class="box-title-button"><span class="icon add" title="Add Class"></span></a>
-
+      <div class="left-col">
+        <div class="box">
+          <h2 class="box-title">Number of Assignments Per Priority:</h2>
               <div class="empty-box-content">
                 <div class="empty-content">
-                  <p>This is where all your classes will be displayed.</p>
-                  <p>Enter your first class or search for a Teachers.io class using the + button up above.</p>
+                  <br>
+                    <p>Critical: {{ critical }}</p>
+                    <br>
+                    <p>High: {{ high }}</p>
+                    <br>
+                    <p>Moderate: {{ normal }}</p>
+                    <br>
+                    <p>Low: {{ low }}</p>
                 </div>
               </div>
 
@@ -46,10 +52,18 @@
         <div class="empty-box-content">
           <div class="empty-content">
 
-            <p>This is where your assignments, tests and projects will be displayed. You'll be able to view them by class, type and priority.</p>
-           <!-- <p>Add your first homework using the + button up above.</p> -->
-            <p>If entering a <strong>syllabus</strong>, first <a href="/add">add the class</a> and then add multiple homework from the class.</p>
-
+            {% if assignments %}
+                {% for assignment in assignments %}
+                  <li>{{ assignment.title }}  -  {{ assignment.duedate }}</li>
+                  <br>
+                {% else %}
+                  <em>No assignment entries here so far.</em>
+                <br>
+                {% endfor %}
+                <a href="./assignments">See More</a>
+            {% else %}
+              <p>This is where your assignments, tests and projects will be displayed. You'll be able to view them by class, type and priority.</p>
+            {% endif %}
           </div>
         </div>
 
