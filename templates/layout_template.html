@@ -47,7 +47,7 @@
                 <span class="glyphicon glyphicon-calendar"></span>
             </a>
 
-            {% if not session.get(username) %}
+            {% if not session.get('logged_in') %}
             <a href="./login" title="Log In">
                 <span class="glyphicon glyphicon-log-in"></span>
             </a>

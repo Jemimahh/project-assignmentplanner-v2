@@ -47,6 +47,7 @@ class FlaskrTestCase(unittest.TestCase):
         assert b"Wrong username and password. Try again" in rv.data
 
     def test_empty_db(self):
+        self.create("user", "pw", "pw")
         self.login("user", "pw")
         rv = self.app.get('/assignments')
         assert b"You don't have any assignments currently." in rv.data

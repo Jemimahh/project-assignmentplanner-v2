@@ -25,8 +25,6 @@ app.config.update(dict(
 ))
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
-logged_in_account = ""
-
 
 def connect_db():
     """Connects to the specific database."""
@@ -72,74 +70,88 @@ def show_assignment():
 
     if "duedate" in request.args:
         cur = db.execute('select * from assignments where username = ? and duedate = ? order by id desc',
-                         [logged_in_account, request.args["duedate"]])
+                         [session['logged_in'], request.args["duedate"]])
         assignments = cur.fetchall()
 
     elif "arrange" in request.args:
 
         cur = db.execute('select * from assignments where username = ? order by {} ASC'.format(request.args["arrange"]),
-                        [logged_in_account])
+                        [session['logged_in']])
 
         assignments = cur.fetchall()
 
     elif "sort" in request.args:
         cur = db.execute('select * from assignments where username = ? order by {} DESC'.format(request.args["sort"]),
-                        [logged_in_account])
+                        [session['logged_in']])
 
         assignments = cur.fetchall()
 
     else:
 
-        cur = db.execute('select * from assignments where username = ? order by id desc', [logged_in_account])
+        cur = db.execute('select * from assignments where username = ? order by id desc', [session['logged_in']])
         assignments = cur.fetchall()
 
     cur = db.execute('select distinct duedate from assignments order by duedate asc')
 
 
     duedates = cur.fetchall()
-    return render_template('show_assignments.html', assignments=assignments, duedates=duedates,
-                        username=logged_in_account)
+    return render_template('show_assignments.html', assignments=assignments, duedates=duedates)
 
 
 @app.route('/add')
 def redirect_add_assignment():
-    if logged_in_account == "":
-        return redirect(url_for('redirect_login'))
-    return render_template('MainPageLayout.html', username = logged_in_account)
+    if 'logged_in' in session:
+        return render_template('MainPageLayout.html')
+    return redirect(url_for('redirect_login'))
+    #return render_template('MainPageLayout.html', username = logged_in_account)
 
 
 @app.route('/')
 def redirect_opening():
-    if logged_in_account == "":
-        return render_template('OpeningPage.html')
-    return redirect(url_for('display_homepage'))
+    if 'logged_in' in session:
+        return redirect(url_for('display_homepage'))
+    return render_template('OpeningPage.html')
+
 
 
 @app.route('/login')
 def redirect_login():
-    if logged_in_account == "":
-        return render_template('Login.html')
-    return redirect(url_for('display_homepage'))
+    #print("called")
+    #print(session['x'])
+    #if session[session['x']] == False:
+        #return redirect(url_for('display_homepage'))
+    #if logged_in_account == "":
+
+    #print(session['x'])
+    if 'logged_in' in session:
+        return redirect(url_for('display_homepage'))
+    return render_template('Login.html')
 
 
 @app.route('/signup')
 def redirect_signup():
+    if "logged_in" in session:
+        return redirect(url_for('display_homepage'))
+
+    return render_template('CreateAccount.html')
+    '''
     if (logged_in_account == ""):
         return render_template('CreateAccount.html')
     return redirect(url_for('display_homepage'))
     # if (logged_in_account == " "):
     return render_template('CreateAccount.html')
     # return redirect(url_for('display_homepage'))
+    '''
 
 
 @app.route('/add', methods=['POST'])
 def add_assignment():
-    if not session.get(logged_in_account):
+    if not session.get('logged_in'):
         abort(401)
 
     db = get_db()
     db.execute('insert into assignments (username, title, course, category, priority, duedate, description) '
-               'values (?, ?, ?, ?, ?, ?, ?)', [logged_in_account, request.form['title'], request.form['course'],
+               'values (?, ?, ?, ?, ?, ?, ?)', [session['logged_in'], request.form['title'], request.form['course'],
                 request.form['category'], request.form['priority'], request.form['duedate'], request.form['description']])
     # request.form gets request in a post request
     # Puts the values from the show_entries.html form into the database as (title, category, text)
@@ -162,7 +174,7 @@ def edit_entry():
     db = get_db()
     cur = db.execute('select * from assignments where id = ?', request.args['editid'])
     assignments = cur.fetchall()
-    return render_template('edit_layout.html', assignments=assignments, username=logged_in_account)
+    return render_template('edit_layout.html', assignments=assignments)
 
 
 @app.route('/edit_assignment', methods=['POST'])
@@ -187,7 +199,7 @@ def full_view():
     db = get_db()
     cur = db.execute('select * from assignments where id = ?', [request.args['id']])
     assignments = cur.fetchall()
-    return render_template('full_view.html', assignments=assignments, username=logged_in_account)
+    return render_template('full_view.html', assignments=assignments)
 
 
 @app.route('/create_account', methods=['POST'])
@@ -217,10 +229,6 @@ def create_account():
             db.commit()
         flash('Account creation successful.')
 
-    #for record in data:
-    #    print(dict(record))
-    #if logged_in_account == "":
-        #return redirect(url_for('redirect_login'))
     return redirect(url_for('redirect_login'))
 
 
@@ -236,10 +244,7 @@ def login_account():
         password = request.form['password']
 
         if data.get(username) == password:
-            global logged_in_account
-            session[username] = True
-            session['logged_in'] = True
-            logged_in_account = username
+            session['logged_in'] = username
             flash('Logged into ' + username)
             return redirect(url_for('show_assignment'))
 
@@ -253,45 +258,21 @@ def login_account():
 
 @app.route('/logout')
 def logout():
-    global logged_in_account
     session.pop('logged_in', None)
-    session.pop(logged_in_account, None)
     flash('You were logged out')
-    logged_in_account = ""
     return redirect(url_for('redirect_login'))
 
 
 @app.route('/homepage')
 def display_homepage():
-#    now = datetime.datetime.now()
-#     today = now.strftime("%Y-%m-%d %I:%M")
-#
-#     db = get_db()
-#
-#     critical = db.execute("select count(*) from assignments where username = ? and priority = 'Critical'",
-#                      [logged_in_account])
-#     high = db.execute("select count(*) from assignments where username = ? and priority = 'High'",
-#                      [logged_in_account])
-#     normal = db.execute("select count(*) from assignments where username = ? and priority = 'Normal'",
-#                      [logged_in_account])
-#     low = db.execute("select count(*) from assignments where username = ? and priority = 'Low'",
-#                      [logged_in_account])
-#
-#     priority1 = critical.fetchone()
-#     number_of_critical = priority1[0]
-#     priority2 = high.fetchone()
-#     number_of_high = priority2[0]
-#     priority3 = normal.fetchone()
-#     number_of_normal = priority3[0]
-#     priority4 = low.fetchone()
-#     number_of_low = priority4[0]
-#
-     return render_template('home.html')
+    if 'logged_in' in session:
+        return render_template('home.html')
+    return redirect(url_for('redirect_opening'))
 
 
 @app.route('/calendar')
 def display_calendar():
-    return render_template('Calendar.html', username=logged_in_account)
+    return render_template('Calendar.html')
 
 
 @app.route('/showcalendar', methods=['GET'])
@@ -309,7 +290,7 @@ def input_calendar():
     like_str = "{}-{}-%".format(year, month)
 
     cur = db.execute("select * from assignments where username = ? and duedate like ? order by duedate ASC",
-                     [logged_in_account, like_str])
+                     [session['logged_in'], like_str])
 
     assignments = cur.fetchall()
 
@@ -331,6 +312,6 @@ def input_calendar():
         newCal = myCal.formatmonth(yr, mo)
 
 
-        return render_template('Calendar.html', calendar=newCal, username=logged_in_account, assignments=assignments)
+        return render_template('Calendar.html', calendar=newCal, assignments=assignments)
 
     return redirect(url_for('display_calendar'))
