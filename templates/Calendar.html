@@ -59,23 +59,23 @@
     {% if assignments %}
         <table class="table">
             <tr>
-                <th class="text-center">Edit/Delete </th>
-                <th class="text-center">Title </a></th>
-                <th class="text-center">Course </a></th>
-                <th class="text-center">Category </a></th>
-                <th class="text-center">Priority </a></th>
-                <th class="text-center">Due Date </a></th>
-                <th class="text-center">Description </a></th>
+                <th class="text-center">Edit/Delete</th>
+                <th class="text-center">Title</th>
+                <th class="text-center">Course/th>
+                <th class="text-center">Category</th>
+                <th class="text-center">Priority</th>
+                <th class="text-center">Due Date</th>
+                <th class="text-center">Description</th>
             </tr>
 
         {% for assignment in assignments %}
-           {% if assignment.priority == "Critical": %}
+           {% if assignment.priority == "Critical" %}
             <tr class="critical">
-           {% elif assignment.priority == "High": %}
+           {% elif assignment.priority == "High" %}
             <tr class="high">
-           {% elif assignment.priority == "Normal": %}
+           {% elif assignment.priority == "Normal" %}
             <tr class="normal">
-           {% elif assignment.priority == "Low": %}
+           {% elif assignment.priority == "Low" %}
             <tr class="low">
            {% else %}
             <tr>

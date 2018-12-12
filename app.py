@@ -66,36 +66,39 @@ def close_db(error):
 
 @app.route('/assignments')
 def show_assignment():
-    db = get_db()
 
-    if "duedate" in request.args:
-        cur = db.execute('select * from assignments where username = ? and duedate = ? order by id desc',
-                         [session['logged_in'], request.args["duedate"]])
-        assignments = cur.fetchall()
+    if 'logged_in' in session:
+        db = get_db()
 
-    elif "arrange" in request.args:
+        if "duedate" in request.args:
+            cur = db.execute('select * from assignments where username = ? and duedate = ? order by id desc',
+                             [session['logged_in'], request.args["duedate"]])
+            assignments = cur.fetchall()
 
-        cur = db.execute('select * from assignments where username = ? order by {} ASC'.format(request.args["arrange"]),
-                        [session['logged_in']])
+        elif "arrange" in request.args:
 
-        assignments = cur.fetchall()
+            cur = db.execute('select * from assignments where username = ? order by {} ASC'.format(request.args["arrange"]),
+                            [session['logged_in']])
 
-    elif "sort" in request.args:
-        cur = db.execute('select * from assignments where username = ? order by {} DESC'.format(request.args["sort"]),
-                        [session['logged_in']])
+            assignments = cur.fetchall()
 
-        assignments = cur.fetchall()
+        elif "sort" in request.args:
+            cur = db.execute('select * from assignments where username = ? order by {} DESC'.format(request.args["sort"]),
+                            [session['logged_in']])
 
-    else:
+            assignments = cur.fetchall()
 
-        cur = db.execute('select * from assignments where username = ? order by id desc', [session['logged_in']])
-        assignments = cur.fetchall()
+        else:
 
-    cur = db.execute('select distinct duedate from assignments order by duedate asc')
+            cur = db.execute('select * from assignments where username = ? order by id desc', [session['logged_in']])
+            assignments = cur.fetchall()
+
+        cur = db.execute('select distinct duedate from assignments order by duedate asc')
 
 
-    duedates = cur.fetchall()
-    return render_template('show_assignments.html', assignments=assignments, duedates=duedates)
+        duedates = cur.fetchall()
+        return render_template('show_assignments.html', assignments=assignments, duedates=duedates)
+    return redirect(url_for('redirect_login'))
 
 
 @app.route('/add')

@@ -2,6 +2,7 @@ import os
 import app as planner
 import unittest
 import tempfile
+from flask import Flask, request
 
 # source: http://flask.pocoo.org/docs/0.12/testing/
 
@@ -45,6 +46,12 @@ class FlaskrTestCase(unittest.TestCase):
 
         rv = self.login("user", "wrong_pw")
         assert b"Wrong username and password. Try again" in rv.data
+
+    def test_logout(self):
+        self.create("user", "pw", "pw")
+        rv = self.login("user", "pw")
+        rv = self.app.get('/logout', follow_redirects=True)
+        assert b"You were logged out" in rv.data
 
     def test_empty_db(self):
         self.create("user", "pw", "pw")
