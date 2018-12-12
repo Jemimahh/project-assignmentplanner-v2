@@ -78,6 +78,17 @@ class FlaskrTestCase(unittest.TestCase):
         assert b"New assignment was successfully saved." in rv.data
 
 
+    def test_show_assignment(self):
+        self.create("user", "pw", "pw")
+        self.login("user", "pw")
+
+        self.add_entry('title1', 'CS253', 'None', 'High', '1111-11-11T11:11', 'D1')
+        self.add_entry('title2', 'CS253', 'None', 'High', '1111-11-11T11:11', 'D2')
+        rv = self.app.get('/assignments')
+        assert b"title1" in rv.data
+        assert b"title2" in rv.data
+
+
     def delete_entry(self, delete):
         self.create("user", "pw", "pw")
         self.login("user", "pw")
