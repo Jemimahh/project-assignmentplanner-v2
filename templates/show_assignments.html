@@ -143,17 +143,14 @@
                         <td>{{ assignment.duedate }}</td>
                         <td>{{ assignment.description | truncate(25) | safe }}</td>
                  </tr>
-
         {% else %}
         <em>No assignment entries here so far.</em>
         <br><br>
         {% endfor %}
     </table>
-
     {% else %}
         <em>You don't have any assignments currently.</em>
         <br><br>
     {% endif %}
-
-    <br><br>
+    <br><br>h
 {% endblock %}

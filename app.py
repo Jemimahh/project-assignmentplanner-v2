@@ -68,6 +68,9 @@ def close_db(error):
 
 @app.route('/assignments')
 def show_assignment():
+    if logged_in_account == "":
+        return redirect(url_for('redirect_login'))
+
     db = get_db()
 
     if "duedate" in request.args:
@@ -127,9 +130,6 @@ def redirect_signup():
     if (logged_in_account == ""):
         return render_template('CreateAccount.html')
     return redirect(url_for('display_homepage'))
-    # if (logged_in_account == " "):
-    return render_template('CreateAccount.html')
-    # return redirect(url_for('display_homepage'))
 
 
 @app.route('/add', methods=['POST'])
@@ -140,7 +140,8 @@ def add_assignment():
     db = get_db()
     db.execute('insert into assignments (username, title, course, category, priority, duedate, description) '
                'values (?, ?, ?, ?, ?, ?, ?)', [logged_in_account, request.form['title'], request.form['course'],
-                request.form['category'], request.form['priority'], request.form['duedate'], request.form['description']])
+                request.form['category'], request.form['priority'], request.form['duedate'],
+                request.form['description']])
     # request.form gets request in a post request
     # Puts the values from the show_entries.html form into the database as (title, category, text)
     db.commit()
@@ -159,6 +160,8 @@ def del_assignment():
 
 @app.route('/edit', methods=['GET'])
 def edit_entry():
+    if logged_in_account == "":
+        return redirect(url_for('redirect_login'))
     db = get_db()
     cur = db.execute('select * from assignments where id = ?', request.args['editid'])
     assignments = cur.fetchall()
@@ -167,6 +170,8 @@ def edit_entry():
 
 @app.route('/edit_assignment', methods=['POST'])
 def update_entry():
+    if logged_in_account == "":
+        return redirect(url_for('redirect_login'))
     db = get_db()
     theid = request.form['id']
     title = request.form['title']
@@ -184,6 +189,8 @@ def update_entry():
 
 @app.route('/full_view', methods=['GET'])
 def full_view():
+    if logged_in_account == "":
+        return redirect(url_for('redirect_login'))
     db = get_db()
     cur = db.execute('select * from assignments where id = ?', [request.args['id']])
     assignments = cur.fetchall()
@@ -194,12 +201,9 @@ def full_view():
 def create_account():
     db = get_db()
     validate = db.execute('select username from accounts where username=?', [request.form['username']])
-    data = db.execute('select * from accounts')
 
     if validate.fetchall():
         flash('The username already exists. Try with another username')
-        # for record in data:
-        #    print(dict(record))
         return redirect(url_for('redirect_signup'))
     else:
         password = request.form['password']
@@ -207,8 +211,6 @@ def create_account():
 
         if password != re_password:
             flash('Passwords do not match. Try again.')
-            #for record in data:
-            #    print(dict(record))
             return redirect(url_for('redirect_signup'))
         else:
 
@@ -217,10 +219,6 @@ def create_account():
             db.commit()
         flash('Account creation successful.')
 
-    #for record in data:
-    #    print(dict(record))
-    #if logged_in_account == "":
-        #return redirect(url_for('redirect_login'))
     return redirect(url_for('redirect_login'))
 
 
@@ -263,11 +261,16 @@ def logout():
 
 @app.route('/homepage')
 def display_homepage():
-#    now = datetime.datetime.now()
+    if logged_in_account == "":
+        return redirect(url_for('redirect_login'))
+
+    return render_template('home.html', username=logged_in_account)
+
+#     now = datetime.datetime.now()
 #     today = now.strftime("%Y-%m-%d %I:%M")
-#
+
 #     db = get_db()
-#
+
 #     critical = db.execute("select count(*) from assignments where username = ? and priority = 'Critical'",
 #                      [logged_in_account])
 #     high = db.execute("select count(*) from assignments where username = ? and priority = 'High'",
@@ -276,7 +279,7 @@ def display_homepage():
 #                      [logged_in_account])
 #     low = db.execute("select count(*) from assignments where username = ? and priority = 'Low'",
 #                      [logged_in_account])
-#
+
 #     priority1 = critical.fetchone()
 #     number_of_critical = priority1[0]
 #     priority2 = high.fetchone()
@@ -285,9 +288,6 @@ def display_homepage():
 #     number_of_normal = priority3[0]
 #     priority4 = low.fetchone()
 #     number_of_low = priority4[0]
-#
-     return render_template('home.html')
-
 
 @app.route('/calendar')
 def display_calendar():
@@ -296,7 +296,6 @@ def display_calendar():
 
 @app.route('/showcalendar', methods=['GET'])
 def input_calendar():
-
     db = get_db()
 
     month = request.args['month']
