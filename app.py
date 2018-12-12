@@ -175,7 +175,7 @@ def del_assignment():
 @app.route('/edit', methods=['GET'])
 def edit_entry():
     db = get_db()
-    cur = db.execute('select * from assignments where id = ?', request.args['editid'])
+    cur = db.execute('select * from assignments where id = ?', [request.args['editid']])
     assignments = cur.fetchall()
     return render_template('edit_layout.html', assignments=assignments)
 
