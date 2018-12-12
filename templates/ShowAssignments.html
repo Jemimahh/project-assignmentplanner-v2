@@ -1,41 +1,51 @@
 {% extends "layout_template.html" %}
 {% block extracss %}
     .critical {
-    color: #BF0B0B;
-    font-size: 16px;
-    text-shadow:
-    -0.2px -0.2px 0 #890808,
-    0.2px -0.2px 0 #890808,
-    -0.2px 0.2px 0 #890808,
-    0.2px 0.2px 0 #890808;
-
+        color: #BF0B0B;
+        font-size: 16px;
+        text-shadow:
+        -0.2px -0.2px 0 #890808,
+        0.2px -0.2px 0 #890808,
+        -0.2px 0.2px 0 #890808,
+        0.2px 0.2px 0 #890808;
     }
 
     .high {
-    color: #CC9618;
-    font-size: 16px;
-    text-shadow:
-    -0.2px -0.2px 0 #A7790C,
-    0.2px -0.2px 0 #A7790C,
-    -0.2px 0.2px 0 #A7790C,
-    0.2px 0.2px 0 #A7790C;
+        color: #CC9618;
+        font-size: 16px;
+        text-shadow:
+        -0.2px -0.2px 0 #A7790C,
+        0.2px -0.2px 0 #A7790C,
+        -0.2px 0.2px 0 #A7790C,
+        0.2px 0.2px 0 #A7790C;
     }
 
     .low {
-    color: #2C7C0C;
-    font-size: 16px;
-    text-shadow:
-    -0.2px -0.2px 0 #1A4D05,
-    0.2px -0.2px 0 #1A4D05,
-    -0.2px 0.2px 0 #1A4D05,
-    0.2px 0.2px 0 #1A4D05;
-
+        color: #2C7C0C;
+        font-size: 16px;
+        text-shadow:
+        -0.2px -0.2px 0 #1A4D05,
+        0.2px -0.2px 0 #1A4D05,
+        -0.2px 0.2px 0 #1A4D05,
+        0.2px 0.2px 0 #1A4D05;
     }
+
 {% endblock %}
 {% block body %}
 
     <!--Show all assignments page-->
-
+<div class="jumbotron jumbotron-fluid bordered">
+        <div class="container">
+            <div class="media">
+                <div class="media-body">
+                    <h2 class="mt-0">Show Assignments</h2>
+                    <p>Displayed below are all of the assignments you have added. To add more, click the "Add Assignments" button below.
+                    If you want to sort your assignments by date, see the "Sort by Date" dropdown button for a list of options.
+                    </p>
+                </div>
+            </div>
+        </div>
+</div>
     <ul class="duedates">
         <div class="dropdown extrapadding">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

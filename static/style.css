@@ -55,16 +55,15 @@ arrow {
     vertical-align: middle;
     line-height: normal;
     margin: 0;
-    /*position: fixed;*/
+    position: fixed;
     bottom: 0px;
     width: 100%;
-    height: 60px;
+    height: 40px;
 }
 .selected {
     font-weight: bold;
     background: #D3D3D3;
 }
-
 
 /* source: https://www.w3schools.com/css/css_form.asp */
 .input-field {

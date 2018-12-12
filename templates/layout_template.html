@@ -61,24 +61,25 @@
             {% endif %}
 
         </div>
+
         <h1 class="mainHead">Personal Assignment Planner</h1>
         <br><br>
         {% for message in get_flashed_messages() %}
             <div class="flash text-center">{{ message }}</div>
         {% endfor %}
         <br><br>
-        <div class="container text-center">
 
+        <div class="container text-center">
             <!--Body Insert-->
           {% block body %}{% endblock %}
-
         </div>
 
-      <footer class="mastfoot mt-auto">
-        <div class="inner">
-            <p>&copy; 2018 MangoTeam.com<p>
-        </div>
-      </footer>
+
+    <footer class="mastfoot mt-auto">
+         <div class="inner">
+             <p>&copy; 2018 MangoTeam.com<p>
+         </div>
+    </footer>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
