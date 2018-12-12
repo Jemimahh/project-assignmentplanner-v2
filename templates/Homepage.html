@@ -1,0 +1,76 @@
+{% extends "layout_template.html" %}
+{% block body %}
+
+<!--Home page once logged in-->
+
+    <!--<div class="container-fluid">-->
+      <!--<h2 class="masthead-brand">Welcome, <span class="username">{{ username }}</span>! </h2>-->
+      <!--<br>-->
+      <!--<div class="row">-->
+        <!--<div class="column left">-->
+          <!--<h3>Number of Assignments Per Priority:</h3>-->
+            <!--<br>-->
+            <!--<p class="dashboard">Critical: {{ critical }}</p>-->
+            <!--<br>-->
+            <!--<p class="dashboard">High: {{ high }}</p>-->
+            <!--<br>-->
+            <!--<p class="dashboard">Moderate: {{ normal }}</p>-->
+            <!--<br>-->
+            <!--<p class="dashboard">Low: {{ low }}</p>-->
+        <!--</div>-->
+      <!--</div>-->
+            <!--Body Insert-->
+
+ <div class="container-fluid">
+   <h2 class="masthead-brand">Welcome, <span class="username">{{ username }}</span>! </h2>
+      <br>
+    <div class="wrap">
+      <div class="left-col">
+        <div class="box">
+          <h2 class="box-title">Number of Assignments Per Priority:</h2>
+              <div class="empty-box-content">
+                <div class="empty-content">
+                  <br>
+                    <p>Critical: {{ critical }}</p>
+                    <br>
+                    <p>High: {{ high }}</p>
+                    <br>
+                    <p>Normal: {{ normal }}</p>
+                    <br>
+                    <p>Low: {{ low }}</p>
+                </div>
+              </div>
+
+          <ul class="box-content classes-list"></ul>
+        </div>
+      </div>
+    </div>
+    <div class="right-col">
+      <div class="box">
+        <h2 class="box-title">Homework</h2>
+
+        <div class="empty-box-content">
+          <div class="empty-content">
+
+            {% if assignments %}
+                {% for assignment in assignments %}
+                  <li>{{ assignment.title }}  -  {{ assignment.duedate }}</li>
+                  <br>
+                {% else %}
+                  <em>No assignment entries here so far.</em>
+                <br>
+                {% endfor %}
+                <a href="./assignments">See More</a>
+            {% else %}
+              <p>This is where your assignments, tests and projects will be displayed. You'll be able to view them by class, type and priority.</p>
+            {% endif %}
+          </div>
+        </div>
+
+        <ul class="box-content homework-list "></ul>
+
+      </div>
+    </div>
+ </div>
+
+{% endblock %}

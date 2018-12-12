@@ -35,82 +35,94 @@
 
 {% block body %}
 
-
-<form action="{{ url_for('input_calendar') }}" method="GET">
-    <dl>
-        <dt>Type in the numerical value of the month:
-      <dd><input type="text" size="30" name="month">
-        <dt>Type in the numerical value of the year:
-      <dd><input type="text" size="30" name="year">
-      <dd><input type="submit" value="Show Calendar">
-    </dl>
-</form>
-<br>
-
-{% if calendar != "" %}
-<div> {{ calendar|safe }} </div>
-
-{% else %}
-<p> error </p>
-{% endif %}
-<br>
-<div class="extrapadding2"><a href="./add"><button type="button" class="btn btn-primary">Add Assignments</button></a></div>
-
-    {% if assignments %}
-        <table class="table">
-            <tr>
-                <th class="text-center">Edit/Delete </th>
-                <th class="text-center">Title </a></th>
-                <th class="text-center">Course </a></th>
-                <th class="text-center">Category </a></th>
-                <th class="text-center">Priority </a></th>
-                <th class="text-center">Due Date </a></th>
-                <th class="text-center">Description </a></th>
-            </tr>
-
-        {% for assignment in assignments %}
-           {% if assignment.priority == "Critical": %}
-            <tr class="critical">
-           {% elif assignment.priority == "High": %}
-            <tr class="high">
-           {% elif assignment.priority == "Normal": %}
-            <tr class="normal">
-           {% elif assignment.priority == "Low": %}
-            <tr class="low">
-           {% else %}
-            <tr>
-            {% endif %}
-                <td>
-                    <form action="{{ url_for('edit_entry') }}" method="get" class="inline">
-                        <button type="submit" class="btn btn-primary glyphicon glyphicon-pencil"></button>
-                        <input type="hidden" value="{{ assignment.id }}" name="editid">
-                    </form>
-                    <form action="{{ url_for('del_assignment') }}" method="post" class="inline">
-                        <button type="submit" class="btn btn-primary glyphicon glyphicon-remove"></button>
-                        <input type="hidden" value="{{ assignment.id }}" name="id">
-                    </form>
-                  </td>
-                <td>{{ assignment.title }}</td>
-                <td>{{ assignment.course }}</td>
-                <td>{{ assignment.category }}</td>
-                <td>{{ assignment.priority }}</td>
-                <td>{{ assignment.duedate }}</td>
-                <td>{{ assignment.description|safe }}</td>
-            </tr>
-             <br><br>
-        {% else %}
-             <br><br>
-             <em>No assignment entries here so far.</em>
-             <br><br>
-        {% endfor %}
-
-        </table>
-    {% else %}
-        <br><br>
-        <em>You don't have any assignments currently.</em>
-        <br><br>
-    {% endif %}
-
+    <div class="jumbotron jumbotron-fluid bordered">
+            <div class="container">
+                <div class="media">
+                    <div class="media-body">
+                        <h2 class="mt-0">Calendar View</h2>
+                        <p>To see a current calendar of any month, please enter the numerical values for the month
+                            and the year below (both are required). Any assignments that have a due date for the month
+                            entered will be displayed below the calendar.
+                        </p>
+                    </div>
+                </div>
+            </div>
     </div>
-    <br><br>
+
+    <form action="{{ url_for('input_calendar') }}" method="GET">
+        <dl>
+            <dt>Type in the numerical value of the month:
+          <dd><input type="text" size="30" name="month">
+            <dt>Type in the numerical value of the year:
+          <dd><input type="text" size="30" name="year">
+          <dd><input type="submit" value="Show Calendar">
+        </dl>
+    </form>
+    <br>
+
+    {% if calendar != "" %}
+    <div> {{ calendar|safe }} </div>
+
+    {% else %}
+    <p> error </p>
+    {% endif %}
+    <br>
+    <div class="extrapadding2"><a href="./add"><button type="button" class="btn btn-primary">Add Assignments</button></a></div>
+
+        {% if assignments %}
+            <table class="table">
+                <tr>
+                    <th class="text-center">Edit/Delete</th>
+                    <th class="text-center">Title</th>
+                    <th class="text-center">Course/th>
+                    <th class="text-center">Category</th>
+                    <th class="text-center">Priority</th>
+                    <th class="text-center">Due Date</th>
+                    <th class="text-center">Description</th>
+                </tr>
+
+            {% for assignment in assignments %}
+               {% if assignment.priority == "Critical" %}
+                <tr class="critical">
+               {% elif assignment.priority == "High" %}
+                <tr class="high">
+               {% elif assignment.priority == "Normal" %}
+                <tr class="normal">
+               {% elif assignment.priority == "Low" %}
+                <tr class="low">
+               {% else %}
+                <tr>
+                {% endif %}
+                    <td>
+                        <form action="{{ url_for('edit_entry') }}" method="get" class="inline">
+                            <button type="submit" class="btn btn-primary glyphicon glyphicon-pencil"></button>
+                            <input type="hidden" value="{{ assignment.id }}" name="editid">
+                        </form>
+                        <form action="{{ url_for('del_assignment') }}" method="post" class="inline">
+                            <button type="submit" class="btn btn-primary glyphicon glyphicon-remove"></button>
+                            <input type="hidden" value="{{ assignment.id }}" name="id">
+                        </form>
+                      </td>
+                    <td>{{ assignment.title }}</td>
+                    <td>{{ assignment.course }}</td>
+                    <td>{{ assignment.category }}</td>
+                    <td>{{ assignment.priority }}</td>
+                    <td>{{ assignment.duedate }}</td>
+                    <td>{{ assignment.description|safe }}</td>
+                </tr>
+                 <br><br>
+            {% else %}
+                 <br><br>
+                 <em>No assignment entries here so far.</em>
+                 <br><br>
+            {% endfor %}
+
+            </table>
+        {% else %}
+            <br><br>
+            <em>You don't have any assignments currently.</em>
+            <br><br>
+        {% endif %}
+        <br><br>
+
 {% endblock %}

@@ -4,13 +4,12 @@
 
 {% block body %}
 
-
+    <div class="input-field">
     <a href="./add"><button type="button" class="btn btn-primary">Add assignments</button></a>
     <br><br>
     <a href="./assignments"><button type="button" class="btn btn-primary">View all assignments</button></a>
     <br>
     <br>
-
     {% for assignment in assignments %}
         <form action="{{ url_for('update_entry') }}" method="post" class="update-entry">
             <dl>
@@ -69,5 +68,6 @@
             </dl>
         </form>
     {% endfor %}
+    </div>
     <br><br>
 {% endblock %}
