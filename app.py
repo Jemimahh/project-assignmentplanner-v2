@@ -149,9 +149,10 @@ def display_homepage():
         priority4 = low.fetchone()
         number_of_low = priority4[0]
 
-        return render_template('home.html', username=username, critical=number_of_critical,
+        return render_template('Homepage.html', username=username, critical=number_of_critical,
                                high=number_of_high, normal=number_of_normal, low=number_of_low, assignments=assignments)
-    return redirect(url_for('redirect_opening'))
+
+    return render_template('OpeningPage.html')
 
 
 @app.route('/assignments')
@@ -188,9 +189,9 @@ def show_assignment():
 
 
         duedates = cur.fetchall()
-        return render_template('show_assignments.html', assignments=assignments, duedates=duedates)
+        return render_template('ShowAssignments.html', assignments=assignments, duedates=duedates)
 
-    return redirect(url_for('redirect_login'))
+    return render_template('Login.html')
 
 
 @app.route('/delete', methods=['POST'])
@@ -201,7 +202,7 @@ def del_assignment():
         db.commit()
         flash('Assignment has been deleted')
         return redirect(url_for('show_assignment'))
-    return redirect(url_for('redirect_login'))
+    return render_template('Login.html')
 
 
 @app.route('/edit', methods=['GET'])
@@ -210,8 +211,8 @@ def edit_entry():
         db = get_db()
         cur = db.execute('select * from assignments where id = ?', [request.args['editid']])
         assignments = cur.fetchall()
-        return render_template('edit_layout.html', assignments=assignments)
-    return redirect(url_for('redirect_login'))
+        return render_template('EditAssignment.html', assignments=assignments)
+    return render_template('Login.html')
 
 
 @app.route('/edit_assignment', methods=['POST'])
@@ -231,7 +232,7 @@ def update_entry():
         # Commits it to the database
         flash('New entry was successfully edited')
         return redirect(url_for('show_assignment'))
-    return redirect(url_for('redirect_login'))
+    return render_template('Login.html')
 
 
 @app.route('/add', methods=['POST'])
@@ -255,8 +256,8 @@ def add_assignment():
 def redirect_add_assignment():
     if 'logged_in' in session:
         username = session['logged_in']
-        return render_template('MainPageLayout.html', username=username)
-    return redirect(url_for('redirect_login'))
+        return render_template('AddAssignment.html', username=username)
+    return render_template('Login.html')
 
 
 @app.route('/')
@@ -287,14 +288,14 @@ def full_view():
         cur = db.execute('select * from assignments where id = ?', [request.args['id']])
         assignments = cur.fetchall()
         return render_template('full_view.html', assignments=assignments)
-    return redirect(url_for('redirect_login'))
+    return render_template('Login.html')
 
 
 @app.route('/calendar')
 def display_calendar():
     if 'logged_in' in session:
         return render_template('Calendar.html')
-    return redirect(url_for('redirect_login'))
+    return render_template('Login.html')
 
 
 @app.route('/showcalendar', methods=['GET'])
@@ -338,4 +339,4 @@ def input_calendar():
 
         return redirect(url_for('display_calendar'))
 
-    return redirect(url_for('redirect_login'))
+    return render_template('Login.html')
