@@ -71,3 +71,8 @@ arrow {
   background-color: #f2f2f2;
   padding: 20px;
 }
+
+.full-view {
+    table-layout: fixed;
+    word-wrap: break-word;
+}

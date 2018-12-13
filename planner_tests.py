@@ -144,6 +144,15 @@ class FlaskrTestCase(unittest.TestCase):
         assert b"2222-22-22T22:22" in rv.data
         assert b"D1-edit" in rv.data
 
+    def test_full_view(self):
+        self.create("user", "pw", "pw")
+        self.login("user", "pw")
+
+        self.add_entry('title1', 'CS253.1', 'None', 'High', '1111-11-11T11:11', 'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD')
+        rv = self.app.get('/full_view?id=1')
+        assert b"DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD" in rv.data
+        assert b"..." not in rv.data
+
     def test_calendar(self):
         self.create("user", "pw", "pw")
         self.login("user", "pw")

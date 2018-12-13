@@ -64,102 +64,103 @@
 
     <div class="extrapadding2"><a href="./add"><button type="button" class="btn btn-primary">Add Assignments</button></a></div>
     <br><br>
-    <table class="table">
-        {% if assignments %}
+
+    {% if assignments %}
+        <table class="table">
             {% if arrange == "title" %}
                 <a href="./?arrange=title"></a>
             {% endif %}
-        {% if arrange == "course" %}
-            <a href="./?arrange=course"></a>
-        {% endif %}
-        {% if arrange == "category" %}
-            <a href="./?arrange=category"></a>
-        {% endif %}
-        {% if arrange == "priority" %}
-            <a href="./?arrange=priority"></a>
-        {% endif %}
-        {% if arrange == "duedate" %}
-            <a href="./?arrange=duedate"></a>
-        {% endif %}
-        {% if arrange == "description" %}
-            <a href="./?arrange=description"></a>
-        {% endif %}
-
-        {% if sort == "title" %}
-            <a href="?sort=title"></a>
-        {% endif %}
-        {% if sort == "course" %}
-            <a href="?sort=course"></a>
-        {% endif %}
-        {% if sort == "category" %}
-            <a href="?sort=category"></a>
-        {% endif %}
-        {% if sort == "priority" %}
-            <a href="?sort=priority"></a>
-        {% endif %}
-        {% if sort == "duedate" %}
-            <a href="?sort=duedate"></a>
-        {% endif %}
-        {% if sort == "description" %}
-            <a href="?sort=description"></a>
-        {% endif %}
-
-        <tr>
-            <th>Edit/Delete </th>
-
-            <th>Title <a href="/assignments?sort=title"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/assignments?arrange=title"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
-            <th>Course <a href="/assignments?sort=course"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/assignments?arrange=course"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
-            <th>Category <a href="/assignments?sort=category"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/assignments?arrange=category"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
-            <th>Priority <a href="/assignments?sort=priority"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/assignments?arrange=priority"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
-            <th>Due Date <a href="/assignments?sort=duedate"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/assignments?arrange=duedate"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
-            <th>Description <a href="/assignments?sort=description"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/assignments?arrange=description"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
-
-        </tr>
-
-        {% for assignment in assignments %}
-            {% if assignment.priority == "Critical" %}
-                <tr class="critical">
-                    {% elif assignment.priority == "High": %}
-                <tr class="high">
-                    {% elif assignment.priority == "Normal": %}
-                <tr class="normal">
-                    {% elif assignment.priority == "Low": %}
-                <tr class="low">
-                    {% else %}
-                <tr>
+            {% if arrange == "course" %}
+                <a href="./?arrange=course"></a>
             {% endif %}
-        <td>
-            <form action="{{ url_for('edit_entry') }}" method="get" class="inline">
-                <button type="submit" class="btn btn-primary glyphicon glyphicon-pencil"></button>
-                <input type="hidden" value="{{ assignment.id }}" name="editid">
-            </form>
-            <form action="{{ url_for('del_assignment') }}" method="post" class="inline">
-                <button type="submit" class="btn btn-primary glyphicon glyphicon-remove"></button>
-                <input type="hidden" value="{{ assignment.id }}" name="id">
-            </form>
-            <form action="{{ url_for('full_view') }}" method="get" class="inline">
-                <button type="submit" class="btn btn-primary glyphicon glyphicon-eye-open"></button>
-                <input type="hidden" value="{{ assignment.id }}" name="id">
-            </form>
-        </td>
+            {% if arrange == "category" %}
+                <a href="./?arrange=category"></a>
+            {% endif %}
+            {% if arrange == "priority" %}
+                <a href="./?arrange=priority"></a>
+            {% endif %}
+            {% if arrange == "duedate" %}
+                <a href="./?arrange=duedate"></a>
+            {% endif %}
+            {% if arrange == "description" %}
+                <a href="./?arrange=description"></a>
+            {% endif %}
 
-        <td>{{ assignment.title }}</td>
-        <td>{{ assignment.course }}</td>
-        <td>{{ assignment.category }}</td>
-        <td>{{ assignment.priority }}</td>
-        <td>{{ assignment.duedate }}</td>
-        <td>{{ assignment.description | truncate(25) | safe }}</td>
-        </tr>
-        {% else %}
-            <em>No assignment entries here so far.</em>
-            <br><br>
-        {% endfor %}
+            {% if sort == "title" %}
+                <a href="?sort=title"></a>
+            {% endif %}
+            {% if sort == "course" %}
+                <a href="?sort=course"></a>
+            {% endif %}
+            {% if sort == "category" %}
+                <a href="?sort=category"></a>
+            {% endif %}
+            {% if sort == "priority" %}
+                <a href="?sort=priority"></a>
+            {% endif %}
+            {% if sort == "duedate" %}
+                <a href="?sort=duedate"></a>
+            {% endif %}
+            {% if sort == "description" %}
+                <a href="?sort=description"></a>
+            {% endif %}
 
-            </table>
-        {% else %}
-            <em>You don't have any assignments currently.</em>
-            <br><br>
-        {% endif %}
+            <tr>
+                <th>Edit/Delete/View </th>
+
+                <th>Title <a href="/assignments?sort=title"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/assignments?arrange=title"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+                <th>Course <a href="/assignments?sort=course"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/assignments?arrange=course"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+                <th>Category <a href="/assignments?sort=category"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/assignments?arrange=category"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+                <th>Priority <a href="/assignments?sort=priority"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/assignments?arrange=priority"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+                <th>Due Date <a href="/assignments?sort=duedate"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/assignments?arrange=duedate"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+                <th>Description <a href="/assignments?sort=description"><span class="glyphicon glyphicon-chevron-down arrow"></span></a><a href="/assignments?arrange=description"><span class="glyphicon glyphicon-chevron-up arrow"></span></a></th>
+
+            </tr>
+
+            {% for assignment in assignments %}
+                {% if assignment.priority == "Critical" %}
+                    <tr class="critical">
+                        {% elif assignment.priority == "High": %}
+                    <tr class="high">
+                        {% elif assignment.priority == "Normal": %}
+                    <tr class="normal">
+                        {% elif assignment.priority == "Low": %}
+                    <tr class="low">
+                        {% else %}
+                    <tr>
+                {% endif %}
+            <td>
+                <form action="{{ url_for('edit_entry') }}" method="get" class="inline">
+                    <button type="submit" class="btn btn-primary glyphicon glyphicon-pencil" title="Edit"></button>
+                    <input type="hidden" value="{{ assignment.id }}" name="editid">
+                </form>
+                <form action="{{ url_for('del_assignment') }}" method="post" class="inline">
+                    <button type="submit" class="btn btn-primary glyphicon glyphicon-remove" title="Delete"></button>
+                    <input type="hidden" value="{{ assignment.id }}" name="id">
+                </form>
+                <form action="{{ url_for('full_view') }}" method="get" class="inline">
+                    <button type="submit" class="btn btn-primary glyphicon glyphicon-eye-open" title="Full View"></button>
+                    <input type="hidden" value="{{ assignment.id }}" name="id">
+                </form>
+            </td>
+
+            <td>{{ assignment.title }}</td>
+            <td>{{ assignment.course }}</td>
+            <td>{{ assignment.category }}</td>
+            <td>{{ assignment.priority }}</td>
+            <td>{{ assignment.duedate }}</td>
+            <td>{{ assignment.description | truncate(25) | safe }}</td>
+            </tr>
+            {% else %}
+                <em>No assignment entries here so far.</em>
+                <br><br>
+            {% endfor %}
+
+        </table>
+    {% else %}
+        <em>You don't have any assignments currently.</em>
+        <br><br>
+    {% endif %}
 
     </div>
 
