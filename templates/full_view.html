@@ -38,7 +38,7 @@
 <a href="./assignments"><button type="button" class="btn btn-primary">View all assignments</button></a>
 
 <br><br>
-    <table class="table">
+    <table class="table" style="table-layout: fixed; word-wrap: break-word">
 
             <tr>
                 <th>Edit/Delete </th>
@@ -71,10 +71,6 @@
                             </form>
                             <form action="{{ url_for('del_assignment') }}" method="post" class="inline">
                                 <button type="submit" class="btn btn-primary glyphicon glyphicon-remove"></button>
-                                <input type="hidden" value="{{ assignment.id }}" name="id">
-                            </form>
-                            <form action="{{ url_for('full_view') }}" method="get" class="inline">
-                                <button type="submit" class="btn btn-primary glyphicon glyphicon-eye-open"></button>
                                 <input type="hidden" value="{{ assignment.id }}" name="id">
                             </form>
                         </td>
