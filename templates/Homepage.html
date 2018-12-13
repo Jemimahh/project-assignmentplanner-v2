@@ -9,7 +9,8 @@
     <div class="wrap">
       <div class="left-col">
         <div class="box">
-          <h3 class="box-title">Number of Assignments Per Priority:</h3>
+          <div class="container"><h3 class="box-title">Number of Assignments Per Priority:</h3></div>
+            <br><hr class="my-4" size="10"><br>
               <div class="empty-box-content">
                 <div class="empty-content">
                   <br>
@@ -20,6 +21,7 @@
                     <p>Normal: {{ normal }}</p>
                     <br>
                     <p>Low: {{ low }}</p>
+                    <br>
                 </div>
               </div>
 
@@ -30,7 +32,7 @@
     <div class="right-col">
       <div class="box">
         <h2 class="box-title">Homework</h2>
-
+        <br><hr class="my-4"><br>
         <div class="empty-box-content">
           <div class="empty-content">
 
@@ -43,8 +45,10 @@
                 <br>
                 {% endfor %}
                 <a href="./assignments">See More</a>
+              <br>
             {% else %}
-              <p>This is where your assignments, tests and projects will be displayed. You'll be able to view them by class, type and priority.</p>
+              <p>This is where your assignments, tests and projects will be displayed. <br> You'll be able to view them by class, type and priority.</p>
+              <br>
             {% endif %}
           </div>
         </div>
