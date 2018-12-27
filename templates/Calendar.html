@@ -102,13 +102,17 @@
                             <button type="submit" class="btn btn-primary glyphicon glyphicon-remove"></button>
                             <input type="hidden" value="{{ assignment.id }}" name="id">
                         </form>
+                        <form action="{{ url_for('full_view') }}" method="get" class="inline">
+                            <button type="submit" class="btn btn-primary glyphicon glyphicon-eye-open"></button>
+                            <input type="hidden" value="{{ assignment.id }}" name="id">
+                        </form>
                       </td>
                     <td>{{ assignment.title }}</td>
                     <td>{{ assignment.course }}</td>
                     <td>{{ assignment.category }}</td>
                     <td>{{ assignment.priority }}</td>
                     <td>{{ assignment.duedate }}</td>
-                    <td>{{ assignment.description|safe }}</td>
+                    <td>{{ assignment.description| truncate(25) |safe }}</td>
                 </tr>
                  <br><br>
             {% else %}

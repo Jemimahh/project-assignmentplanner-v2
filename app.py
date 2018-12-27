@@ -186,7 +186,6 @@ def show_assignment():
 
         cur = db.execute('select distinct duedate from assignments where username = ? order by duedate asc', [username])
 
-
         duedates = cur.fetchall()
         return render_template('ShowAssignments.html', assignments=assignments, duedates=duedates)
 
@@ -325,6 +324,10 @@ def input_calendar():
 
         if year == "":
             flash("Year cannot be empty.")
+
+        else:
+            if len(year) != 4:
+                flash("Year should be displayed as 'YYYY'")
 
         if month != "" and year != "":
             mo = int(request.args['month'])
