@@ -9,7 +9,6 @@
 
 import os
 import calendar
-import datetime
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
     render_template, flash
@@ -330,10 +329,8 @@ def input_calendar():
         if month != "" and year != "":
             mo = int(request.args['month'])
             yr = int(request.args['year'])
-            #print(mo, yr)
             myCal = calendar.HTMLCalendar(calendar.SUNDAY)
             newCal = myCal.formatmonth(yr, mo)
-
 
             return render_template('Calendar.html', calendar=newCal, assignments=assignments)
 
